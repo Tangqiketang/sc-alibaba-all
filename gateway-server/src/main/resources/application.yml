@@ -25,14 +25,3 @@ spring:
           filters:
             #发送到下游之前,原来路径截取前面几位 /demo/hi  ->发送到serviceHi  /hi
             - StripPrefix=1
-            #使用自己定义继承的那个filter
-            - RequestTime=true
-            #使用限流过滤器
-            - name: RequestRateLimiter
-              args:
-                #用于限流的键的解析器的 Bean 对象的名字。
-                key-resolver: '#{@limiterConditionKeyResolver}'
-                #令牌桶每秒填充平均速率。
-                redis-rate-limiter.replenishRate: 10
-                #令牌桶总容量
-                redis-rate-limiter.burstCapacity: 100
