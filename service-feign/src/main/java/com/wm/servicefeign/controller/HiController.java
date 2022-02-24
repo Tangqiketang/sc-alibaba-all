@@ -22,7 +22,7 @@ public class HiController {
     @Resource
     private ServiceHiByFeign serviceHiByFeign;
 
-    //通过ribbon去调用其他服务
+    //通过loadBalancer去调用其他服务
     @GetMapping(value = "/hi")
     public String hi(@RequestParam String name) {
         return serviceHiByLoadBalancer.hiserviceByLoadBalancer( name );
