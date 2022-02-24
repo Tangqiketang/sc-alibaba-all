@@ -10,7 +10,7 @@
 
   <modules>
     <module>service-feign</module>
-    <module>service-hi</module>
+    <module>service-hi</module><module>gateway-server</module>
   </modules>
 
   <properties>
