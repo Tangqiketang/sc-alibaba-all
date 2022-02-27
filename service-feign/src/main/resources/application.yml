@@ -7,3 +7,12 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        port: 18765
+        dashboard: localhost:8748
+
+
+feign:
+  sentinel:
+    enabled: true

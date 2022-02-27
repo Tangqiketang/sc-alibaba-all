@@ -11,6 +11,10 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        port: 18080
+        dashboard: localhost:8748
     gateway:
       discovery:
         locator:
@@ -21,6 +25,14 @@ spring:
           uri: lb://service-hi
           predicates:
             - Path=/servicehi/**
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+          filters:
+            #发送到下游之前,原来路径截取前面几位 /demo/hi  ->发送到serviceHi  /hi
+            - StripPrefix=1
+        - id: service-feign
+          uri: lb://service-feign
+          predicates:
+            - Path=/servicefeign/**
             - After=2017-01-20T17:42:47.789-07:00[America/Denver]
           filters:
             #发送到下游之前,原来路径截取前面几位 /demo/hi  ->发送到serviceHi  /hi

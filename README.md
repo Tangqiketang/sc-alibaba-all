@@ -5,13 +5,11 @@ service-hi: 被feign调用的服务
 service-feign: 使用feign或ribbon调用service-hi
     8765-
 
+sentinel:
+8748
+java -Dserver.port=8748 -Dcsp.sentinel.dashboard.server=localhost:8748 -Dproject.name=sentinel-dashboard -jar sentinel-dashboard-1.8.1.jar
 
-hystrix-turbine: 整合所有hystrix dashboard
-    8775
-config-server: 配置中心,从git拉取配置
-    8088
-config-client: 演示如何从配置中心获取配置属性
-    8881
+
 gateway-server: 网关
     8080
     
