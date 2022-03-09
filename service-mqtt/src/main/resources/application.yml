@@ -1,0 +1,24 @@
+server:
+  port: 21883  #8762-8764
+
+spring:
+  application:
+    name: service-mqtt
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        port: 18762
+        dashboard: localhost:8748
+
+
+mqtt:
+  url: tcp://192.168.41.128:1883 #推送信息的连接地址，如果有多个，用逗号隔开，如：tcp://127.0.0.1:61613,tcp://192.168.1.61:61613
+  username: wm
+  password: 123
+  consumer:
+    clientId: mqttConsumerWm
+  producer:
+    clientId: mqttProducerWm
