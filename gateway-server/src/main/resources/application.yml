@@ -20,6 +20,19 @@ spring:
         locator:
           enabled: false
           lowerCaseServiceId: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+          # 允许任何域名使用
+            allowedOriginPatterns: "*"
+            # 允许任何头
+            allowedHeaders: "*"
+            # 允许任何方法(post、get等)
+            allowedMethods: "*"
+            # sessionid 多次访问一致
+            allowCredentials: true
+            # 允许来自所有域名(allowedOrigins)的所有请求方式(allowedMethods)发出CORS请求
+            add-to-simple-url-handler-mapping: true
       routes:
         - id: service-hi
           uri: lb://service-hi
