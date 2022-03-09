@@ -1,4 +1,4 @@
-nacos:注册中心
+nacos:注册中心 startup.cmd -m standalone
     8848  http://localhost:8848/nacos
 service-hi: 被feign调用的服务
     8762-8764
