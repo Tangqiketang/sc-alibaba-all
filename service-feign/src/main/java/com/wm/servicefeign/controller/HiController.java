@@ -34,4 +34,5 @@ public class HiController {
         return serviceHiByFeign.getHiFromServiceHi(name);
     }
 
+
 }

@@ -12,7 +12,7 @@ service-mqtt: 用于消费或发送mqtt
 sentinel:
 8748
 java -Dserver.port=8748 -Dcsp.sentinel.dashboard.server=localhost:8748 -Dproject.name=sentinel-dashboard -jar sentinel-dashboard-1.8.1.jar
-
+sentinel/sentinel
 
 gateway-server: 网关
     8080

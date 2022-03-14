@@ -1,5 +1,7 @@
 package com.wm.servicefeign.service.loadbalancer;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +33,9 @@ public class ServiceHiByLoadBalancer {
     private LoadBalancerClient loadBalancerClient;
 
 
+
+    @SentinelResource(value="hiserviceByLoadBalancer",fallback = "hiError",fallbackClass = ServiceHiByLoadBalancer.class,
+            blockHandler = "testBlockHandler",blockHandlerClass = ServiceHiByLoadBalancer.class)
     public String hiserviceByLoadBalancer(String name){
         System.out.println("aaa:"+loadBalancerClient.choose("service-hi")+"+++++++++++++++");
         return restTemplate.getForObject("http://service-hi/hi?name="+name,String.class);
@@ -38,6 +43,9 @@ public class ServiceHiByLoadBalancer {
 
     public String hiError(String name) {
         return "hi,"+name+",sorry,error!";
+    }
+    public String testBlockHandler(String name, BlockException ex) {
+        return "hi,"+name+",testBlockHandler!";
     }
 
 }
