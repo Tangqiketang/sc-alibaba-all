@@ -13,6 +13,7 @@
     <module>service-hi</module>
     <module>gateway-server</module>
     <module>service-mqtt</module>
+    <module>service-auth</module>
   </modules>
 
   <properties>
@@ -73,6 +74,7 @@
         <artifactId>spring-plugin-metadata</artifactId>
         <version>${spring.plugin.version}</version>
       </dependency>
+
     </dependencies>
   </dependencyManagement>
 
