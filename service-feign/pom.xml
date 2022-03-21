@@ -15,11 +15,11 @@
 
     <dependencies>
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.wm</groupId>
             <artifactId>cloud-logging-starter</artifactId>
             <version>${parent.project.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!--必须引入starter-web才能注册到nacos中去-->
         <dependency>
