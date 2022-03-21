@@ -3,35 +3,35 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>sc-alibaba-all</artifactId>
         <groupId>com.wm</groupId>
         <version>0.0.1</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>service-hi</artifactId>
-    <version>${parent.project.version}</version>
-    <packaging>jar</packaging>
+    <artifactId>cloud-logging-starter</artifactId>
+
 
     <dependencies>
-        <!--必须引入starter-web才能注册到nacos中去-->
+        <!--包含configuration注解 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        <!--yml中属性提示 -->
+        <dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+       </dependency>
 
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-
-        <!--sentinel监控-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
     </dependencies>
+
     
 </project>

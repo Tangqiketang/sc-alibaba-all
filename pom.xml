@@ -6,7 +6,7 @@
 
   <groupId>com.wm</groupId>
   <artifactId>sc-alibaba-all</artifactId><packaging>pom</packaging>
-  <version>0.0.1-SNAPSHOTHOT</version>
+  <version>0.0.1</version>
 
   <modules>
     <module>service-feign</module>
@@ -14,9 +14,11 @@
     <module>gateway-server</module>
     <module>service-mqtt</module>
     <module>service-auth</module>
+    <module>cloud-logging-starter</module>
   </modules>
 
   <properties>
+    <parent.project.version>0.0.1</parent.project.version>
     <java.version>1.8</java.version>
     <spring-boot.version>2.4.4</spring-boot.version>
     <spring-cloud.version>2020.0.2</spring-cloud.version>
