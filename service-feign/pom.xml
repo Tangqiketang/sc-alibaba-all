@@ -7,13 +7,20 @@
     <parent>
         <artifactId>sc-alibaba-all</artifactId>
         <groupId>com.wm</groupId>
-        <version>0.0.1-SNAPSHOTHOT</version>
+        <version>0.0.1</version>
     </parent>
 
     <artifactId>service-feign</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.wm</groupId>
+            <artifactId>cloud-logging-starter</artifactId>
+            <version>${parent.project.version}</version>
+        </dependency>
+
         <!--必须引入starter-web才能注册到nacos中去-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

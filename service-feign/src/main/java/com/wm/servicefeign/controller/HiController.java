@@ -1,5 +1,6 @@
 package com.wm.servicefeign.controller;
 
+import com.wm.logging.anotation.LogPrint;
 import com.wm.servicefeign.service.feign.ServiceHiByFeign;
 import com.wm.servicefeign.service.loadbalancer.ServiceHiByLoadBalancer;
 import org.springframework.web.bind.annotation.GetMapping;
