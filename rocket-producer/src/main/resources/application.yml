@@ -1,0 +1,37 @@
+server:
+  port: 8865  #8765-
+spring:
+  application:
+    name: rocket-producer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    # Spring Cloud Stream 配置项
+    stream:
+      bindings:
+        wm1-output:
+          destination: WM1-TOPIC
+          content-type: application/json
+        wm2-output:
+          destination: WM2-TOPIC
+          content-type: application/json
+      # Spring Cloud Stream RocketMQ 配置项
+      rocketmq:
+        binder:
+          name-server: 192.168.40.131:9876
+        bindings:
+          wm1-output:
+            producer:
+              group: wmproducer-group
+              sync: true
+          wm2-output:
+            producer:
+              group: wmproducer-group2
+              sync: true
+
+
+
+feign:
+  sentinel:
+    enabled: true
