@@ -20,7 +20,7 @@ spring:
           destination: WM3-TOPIC
           content-type: application/json
           producer:
-            partition-key-expression: payload['id'] # 分区 key 表达式。该表达式基于 Spring EL，从消息中获得分区 key。
+            partition-key-expression: payload['id'] # 分区 key 表达式。从消息体中获得分区 key，如订单号。表示根据idhash后发送到一个队列中，确保同一队列顺序
       # Spring Cloud Stream RocketMQ 配置项
       rocketmq:
         binder:
