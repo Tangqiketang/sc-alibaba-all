@@ -37,8 +37,13 @@ public class BaseTest {
     }
 
     @Test
-    public void testTag(){
-        rocketSendService.sendTag();
+    public void testTag2(){
+        rocketSendService.sendTopic2Tag();
+    }
+
+    @Test
+    public void testTopic3Tag3ByOrder(){
+       rocketSendService.sendTopic3Tag3ByOrder();
     }
 
 }

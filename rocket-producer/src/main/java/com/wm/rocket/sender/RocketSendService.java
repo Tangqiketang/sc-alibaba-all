@@ -8,6 +8,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Random;
 
 /**
  * 描述:
@@ -49,12 +50,10 @@ public class RocketSendService {
     }
 
 
-    public void sendTag(){
-        int i=20;
+    public void sendTopic2Tag(){
         for (String tag : new String[]{"tag1", "tag2", "tag3"}) {
             JSONObject msg = new JSONObject();
-            i++;
-            msg.put("mycontent","wmTagContent"+i);
+            msg.put("mycontent","wmTagContent  "+tag);
             Message<JSONObject> springMsg = MessageBuilder.withPayload(msg)
                     .setHeader(MessageConst.PROPERTY_TAGS, tag) // 设置 Tag
                     .build();
@@ -62,6 +61,22 @@ public class RocketSendService {
         }
     }
 
+
+
+    public void sendTopic3Tag3ByOrder(){
+        Random random = new Random();
+        int id = random.nextInt(10000);
+        for (int i=0;i<10;i++) {
+            JSONObject msg = new JSONObject();
+            msg.put("id",id);
+            msg.put("i",i);
+            msg.put("mycontent","wmTagContent  order test"+" tag3");
+            Message<JSONObject> springMsg = MessageBuilder.withPayload(msg)
+                    .setHeader(MessageConst.PROPERTY_TAGS, "tag3") // 设置 Tag
+                    .build();
+            myOutput.wm3Output().send(springMsg);
+        }
+    }
 
 
 

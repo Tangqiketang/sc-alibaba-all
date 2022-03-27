@@ -10,4 +10,7 @@ public interface MyOutput {
 
     @Output("wm2-output")
     MessageChannel wm2Output();
+
+    @Output("wm3-output")
+    MessageChannel wm3Output();
 }

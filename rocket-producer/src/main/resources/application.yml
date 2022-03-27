@@ -16,6 +16,11 @@ spring:
         wm2-output:
           destination: WM2-TOPIC
           content-type: application/json
+        wm3-output:
+          destination: WM3-TOPIC
+          content-type: application/json
+          producer:
+            partition-key-expression: payload['id'] # 分区 key 表达式。该表达式基于 Spring EL，从消息中获得分区 key。
       # Spring Cloud Stream RocketMQ 配置项
       rocketmq:
         binder:
@@ -28,6 +33,10 @@ spring:
           wm2-output:
             producer:
               group: wmproducer-group2
+              sync: true
+          wm3-output:
+            producer:
+              group: wmproducer-group3
               sync: true
 
 
