@@ -27,7 +27,8 @@ public class RockerListener {
         log.info("wm1[线程编号:{} 消息内容：{}]", Thread.currentThread().getId(), message);
     }
 
-    @StreamListener(MyInput.WM2_INPUT)
+    /**指定只接收tag2的，以及异常处理**/
+    @StreamListener(value=MyInput.WM2_INPUT,condition = "headers['rocketmq_TAGS'] == 'tag2'")
     public void listenTopic2(String message) {
         log.info("wm2[线程编号:{} 消息内容：{}]", Thread.currentThread().getId(), message);
         //System.out.println(a);
@@ -35,6 +36,7 @@ public class RockerListener {
         //throw new RuntimeException("故意抛错");
     }
 
+    /**顺序消费 **/
     @StreamListener(MyInput.WM3_INPUT)
     public void listenTopic3(String message) {
         log.info("wm3[线程编号:{} 消息内容：{}]", Thread.currentThread().getId(), message);

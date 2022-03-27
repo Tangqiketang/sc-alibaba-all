@@ -36,7 +36,7 @@ spring:
               enabled: true # 是否开启消费，默认为 true
               broadcasting: false #集群模式和广播模式，组里所有消费者都能消费到消息
               orderly: false #不顺序消费
-              tags: tag2 #指定tag
+              #tags: tag2||tag3 #指定只接收多个tag
               concurrency: 1 #此topic及tag下consumer端线程池2个
 
               maxAttempts: 1 #禁用消费端的重试，此重试是消费端的功能会影响消费速度，不推荐。改由broker控制的重试
