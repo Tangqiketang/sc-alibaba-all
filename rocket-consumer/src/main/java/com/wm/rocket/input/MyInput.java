@@ -9,6 +9,7 @@ public interface MyInput {
     String WM1_INPUT = "wm1-input";
     String WM2_INPUT = "wm2-input";
     String WM3_INPUT = "wm3-input";
+    String WM4_INPUT = "wm4-input";
 
     @Input(WM1_INPUT)
     SubscribableChannel wm1Input();
@@ -18,4 +19,7 @@ public interface MyInput {
 
     @Input(WM3_INPUT)
     SubscribableChannel wm3Input();
+
+    @Input(WM4_INPUT)
+    SubscribableChannel wm4Input();
 }

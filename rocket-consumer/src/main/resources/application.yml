@@ -21,6 +21,10 @@ spring:
           destination: WM3-TOPIC
           content-type: application/json
           group: wm3-consumer-group-topic-01
+        wm4-input:
+          destination: WM4-TOPIC
+          content-type: application/json
+          group: wm4-consumer-group-topic-01
       rocketmq:
         binder:
           name-server: 192.168.40.131:9876
@@ -51,7 +55,12 @@ spring:
 
               maxAttempts: 1 #禁用消费端的重试，此重试是消费端的功能会影响消费速度，不推荐。改由broker控制的重试
               delay-level-when-next-consume: 0 #-1：不重试直接进死信队列；（一般默认为 0由broker控制重试，级别3，10秒.需自身保证幂等）.（大于0值就是延迟级别由消费端控制重试策略）
-
+          wm4-input:
+            consumer:
+              enabled: true # 是否开启消费，默认为 true
+              broadcasting: false
+              maxAttempts: 1 #禁用重试
+              orderly: true #顺序消费所有消息(顺序消费的前提是所有消息都在一个 MessageQueue中,默认四个？)
 
 feign:
   sentinel:

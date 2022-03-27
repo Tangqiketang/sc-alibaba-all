@@ -42,6 +42,12 @@ public class RockerListener {
         log.info("wm3[线程编号:{} 消息内容：{}]", Thread.currentThread().getId(), message);
     }
 
+    /**事务消费 **/
+    @StreamListener(MyInput.WM4_INPUT)
+    public void listenTopic4(String message) {
+        log.info("wm4[线程编号:{} 消息内容：{}]", Thread.currentThread().getId(), message);
+    }
+
     /**********************异常处理****************************************/
     @ServiceActivator(inputChannel = "WM2-TOPIC.wm2-consumer-group-topic-01.errors")
     public void handleError(ErrorMessage errorMessage) {

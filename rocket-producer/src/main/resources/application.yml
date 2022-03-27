@@ -21,6 +21,9 @@ spring:
           content-type: application/json
           producer:
             partition-key-expression: payload['id'] # 分区 key 表达式。从消息体中获得分区 key，如订单号。表示根据idhash后发送到一个队列中，确保同一队列顺序
+        wm4-output:
+          destination: WM4-TOPIC
+          content-type: application/json
       # Spring Cloud Stream RocketMQ 配置项
       rocketmq:
         binder:
@@ -38,7 +41,11 @@ spring:
             producer:
               group: wmproducer-group3
               sync: true
-
+          wm4-output:
+            producer:
+              group: wmproducer-group4
+              sync: true
+              transactional: true # 是否发送事务消息，默认为 false。
 
 
 feign:

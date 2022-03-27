@@ -62,7 +62,7 @@ public class RocketSendService {
     }
 
 
-
+    /**顺序消费,按照id或则如orderId(不是消息id)hash之后进同一个队列 **/
     public void sendTopic3Tag3ByOrder(){
         Random random = new Random();
         int id = random.nextInt(10000);
@@ -76,6 +76,28 @@ public class RocketSendService {
                     .build();
             myOutput.wm3Output().send(springMsg);
         }
+    }
+
+
+    /**
+     * 事务消息
+     * @return
+     */
+    public void sendTransaction() {
+        JSONObject msg = new JSONObject();
+        msg.put("id",new Random().nextInt());
+
+        JSONObject args = new JSONObject();
+        args.put("args1",1);
+        args.put("args2","2");
+
+        Message<JSONObject> springMsg = MessageBuilder.withPayload(msg)
+                .setHeader("args", args.toJSONString()) // 设置 Tag
+                .build();
+        System.out.println("beforeSend:"+System.currentTimeMillis());
+        myOutput.wm4Output().send(springMsg);
+        System.out.println("AfterSend:"+System.currentTimeMillis());
+
     }
 
 

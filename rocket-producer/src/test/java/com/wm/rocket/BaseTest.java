@@ -46,5 +46,10 @@ public class BaseTest {
        rocketSendService.sendTopic3Tag3ByOrder();
     }
 
+    @Test
+    public void testTransactionTag4(){
+        rocketSendService.sendTransaction();
+    }
+
 }
 
