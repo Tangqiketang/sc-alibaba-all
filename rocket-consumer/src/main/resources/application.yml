@@ -1,0 +1,67 @@
+server:
+  port: 8866
+spring:
+  application:
+    name: rocket-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    stream:
+      bindings:
+        wm1-input:
+          destination: WM1-TOPIC
+          content-type: application/json
+          group: wm1-consumer-group-topic-01  # 消费者分组,命名规则：组名+topic名
+        wm2-input:
+          destination: WM2-TOPIC
+          content-type: application/json
+          group: wm2-consumer-group-topic-01
+        wm3-input:
+          destination: WM3-TOPIC
+          content-type: application/json
+          group: wm3-consumer-group-topic-01
+        wm4-input:
+          destination: WM4-TOPIC
+          content-type: application/json
+          group: wm4-consumer-group-topic-01
+      rocketmq:
+        binder:
+          name-server: 192.168.40.131:9876
+        bindings:
+          wm1-input:
+            consumer:
+              enabled: true # 是否开启消费，默认为 true
+              broadcasting: false
+              maxAttempts: 1 #禁用重试
+              orderly: true #顺序消费所有消息(顺序消费的前提是所有消息都在一个 MessageQueue中,默认四个？)
+          wm2-input:
+            consumer:
+              enabled: true # 是否开启消费，默认为 true
+              broadcasting: false #集群模式和广播模式，组里所有消费者都能消费到消息
+              orderly: false #不顺序消费
+              #tags: tag2||tag3 #指定只接收多个tag
+              concurrency: 1 #此topic及tag下consumer端线程池2个
+
+              maxAttempts: 1 #禁用消费端的重试，此重试是消费端的功能会影响消费速度，不推荐。改由broker控制的重试
+              delay-level-when-next-consume: 0 #-1：不重试直接进死信队列；（一般默认为 0由broker控制重试，级别3，10秒.需自身保证幂等）.（大于0值就是延迟级别由消费端控制重试策略）
+          wm3-input:
+            consumer:
+              enabled: true # 是否开启消费，默认为 true
+              broadcasting: false #集群模式和广播模式，组里所有消费者都能消费到消息
+              orderly: true #顺序消费
+              tags: tag3 #指定tag
+              concurrency: 1 #此topic及tag下consumer端线程池2个
+
+              maxAttempts: 1 #禁用消费端的重试，此重试是消费端的功能会影响消费速度，不推荐。改由broker控制的重试
+              delay-level-when-next-consume: 0 #-1：不重试直接进死信队列；（一般默认为 0由broker控制重试，级别3，10秒.需自身保证幂等）.（大于0值就是延迟级别由消费端控制重试策略）
+          wm4-input:
+            consumer:
+              enabled: true # 是否开启消费，默认为 true
+              broadcasting: false
+              maxAttempts: 1 #禁用重试
+              orderly: true #顺序消费所有消息(顺序消费的前提是所有消息都在一个 MessageQueue中,默认四个？)
+
+feign:
+  sentinel:
+    enabled: true

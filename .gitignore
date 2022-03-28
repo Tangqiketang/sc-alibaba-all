@@ -1,0 +1,5 @@
+/gateway-server/target/classes/
+/service-hi/target/classes/
+/service-feign/target/classes/
+/rocket-consumer/target/classes/
+/rocket-producer/target/
