@@ -1,0 +1,34 @@
+server:
+  port: 28885  #8762-8764
+
+spring:
+  application:
+    name: service-mqtt-broker
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        port: 18762
+        dashboard: localhost:8748
+
+
+
+mqtt:
+  broker:
+    id: broker-1
+    sslEnable: true
+    normalEnable: true
+    sslPort: 8885
+    port: 1883
+    sslPassword: 123456
+    websocketSslPort: 9995
+    websocketPath: /mqtt
+    keepAlive: 300
+    useEpoll: false
+    soBackLog: 128
+    password-expired: -1
+
+
+
