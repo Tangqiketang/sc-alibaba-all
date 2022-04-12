@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SenderManager {
 
     /**
-     * 发送信息
+     * 发送各种类型的MqttMessage信息
      *用于服务端向客户端下发消息，通过clientID 找到当时的channel
      */
     public static void sendMessage(MqttMessage msg, String clientId, Integer packetId, boolean flush) {
@@ -31,8 +31,8 @@ public class SenderManager {
 
 
     /**
-     * 发送信息
-     * 用于服务端向客户端发送响应消息
+     * 发送各种类型的MqttMessage信息
+     *
      */
     public static void responseMsg(ContextBo contextBo, MqttMessage msg, Integer packetId, boolean flush) {
         String pid = packetId == null || packetId <= 0 ? "" : String.valueOf(packetId);
@@ -47,7 +47,7 @@ public class SenderManager {
     }
 
     /**
-     * 向单个client发送publish消息
+     * 向单个client发送指定类型MqttPublishMessage消息
      *
      */
     public static void pubMsg(MqttPublishMessage msg, ContextBo contextBo) {

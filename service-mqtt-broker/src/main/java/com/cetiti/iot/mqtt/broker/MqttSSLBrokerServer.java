@@ -1,7 +1,7 @@
 package com.cetiti.iot.mqtt.broker;
 
 import com.cetiti.iot.mqtt.config.BrokerProperties;
-import com.cetiti.iot.mqtt.handler.HandlerFatory;
+import com.cetiti.iot.mqtt.handler.HandlerFactory;
 import com.cetiti.iot.mqtt.handler.MqttReceiveHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -47,7 +47,7 @@ public class MqttSSLBrokerServer implements CommandLineRunner,AbstarctBroker{
     private EventLoopGroup sslWorkerGroup = null;
     private Channel sslChannel = null;
     @Resource
-    private HandlerFatory handlerFatory;
+    private HandlerFactory handlerFactory;
 
     @Override
     public void run(String... args) throws Exception {
@@ -92,7 +92,7 @@ public class MqttSSLBrokerServer implements CommandLineRunner,AbstarctBroker{
                         p.addLast(new MqttDecoder());
                         p.addLast(MqttEncoder.INSTANCE);
                         //处理类中构造进具体的处理bean工厂
-                        p.addLast(new MqttReceiveHandler(handlerFatory));
+                        p.addLast(new MqttReceiveHandler(handlerFactory));
                     }
                 })
                 .option(ChannelOption.SO_BACKLOG, brokerProperties.getSoBacklog())

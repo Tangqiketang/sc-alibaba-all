@@ -124,6 +124,18 @@ public class SessionManager {
         }
     }
 
+    /**
+     *  当client发起disconnect请求，使用该方法更新存储关系 同时关闭相关链接
+     * */
+    public static void disConnect(String clientId){
+        try{
+            removeContextByClientId(clientId);
+        }catch (Exception e){
+            log.warn("MQTT连接断开异常", e);
+        }
+
+    }
+
 
 
 
