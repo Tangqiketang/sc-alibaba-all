@@ -1,4 +1,4 @@
-package com.cetiti.iot.mqtt.util;
+package com.cetiti.com.cetiti.iot.mqtt.util;
 
 /**
  * 描述:
