@@ -1,0 +1,50 @@
+server:
+  port: 27775
+
+spring:
+  application:
+    name: service-iot
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        port: 18762
+        dashboard: localhost:8748
+    # Spring Cloud Stream 配置项
+    stream:
+      bindings:
+        property_post:
+          destination: property_post
+          content-type: application/json
+
+      # Spring Cloud Stream RocketMQ 配置项
+      rocketmq:
+        binder:
+          name-server: 192.168.41.128:9876
+        bindings:
+          property_post:
+            producer:
+              group: broker-group1
+              sync: true
+
+
+
+mqtt:
+  broker:
+    id: broker-1
+    sslEnable: true
+    normalEnable: true
+    sslPort: 8885
+    port: 1883
+    sslPassword: 123456
+    websocketSslPort: 9995
+    websocketPath: /mqtt
+    keepAlive: 300
+    useEpoll: false
+    soBackLog: 128
+    password-expired: -1
+
+
+
