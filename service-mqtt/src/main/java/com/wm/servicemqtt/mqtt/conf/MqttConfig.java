@@ -1,14 +1,18 @@
 package com.wm.servicemqtt.mqtt.conf;
 
 
+import com.netflix.client.config.IClientConfigKey;
 import com.wm.servicemqtt.mqtt.receiveHandler.MqttCallbackHandle;
 import com.wm.servicemqtt.mqtt.topic.TopicName;
+import com.wm.servicemqtt.mqtt.util.SslUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.internal.security.SSLSocketFactoryFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.DirectChannel;
@@ -20,9 +24,20 @@ import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
+import org.springframework.util.ResourceUtils;
 
 import javax.annotation.Resource;
+import javax.net.ssl.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.SecureRandom;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.Arrays;
+import java.util.Properties;
 
 /**
  * 描述:
@@ -45,6 +60,9 @@ public class MqttConfig {
     @Value("${mqtt.url}")
     private String hostUrl;
 
+    @Resource
+    private SslUtil sslUtil;
+
 
 /************************************** connect *****************************************************/
 
@@ -54,20 +72,29 @@ public class MqttConfig {
      */
     @Bean
     public MqttConnectOptions getMqttConnectOptions(){
-        MqttConnectOptions mqttConnectOptions=new MqttConnectOptions();
-        // 设置是否清空session,这里如果设置为false表示服务器会保留客户端的连接记录，
-        // 这里设置为true表示每次连接到服务器都以新的身份连接
-        mqttConnectOptions.setCleanSession(true);
-        mqttConnectOptions.setUserName(username);
-        mqttConnectOptions.setPassword(password.toCharArray());
-        mqttConnectOptions.setServerURIs(StringUtils.split(hostUrl,","));
-        // 设置超时时间 单位为秒
-        mqttConnectOptions.setConnectionTimeout(10);
-        // 设置会话心跳时间 单位为秒 服务器会每隔1.5*20秒的时间向客户端发送心跳判断客户端是否在线，但这个方法并没有重连的机制
-        mqttConnectOptions.setKeepAliveInterval(20);
-        // 设置“遗嘱”消息的话题，若客户端与服务器之间的连接意外中断，服务器将发布客户端的“遗嘱”消息。
-        mqttConnectOptions.setWill(TopicName.DEFAULT_WILL_TOPIC.getValue(), "i.lost.connect".getBytes(), 2, false);
-        return mqttConnectOptions;
+        try{
+            MqttConnectOptions mqttConnectOptions=new MqttConnectOptions();
+            // 设置是否清空session,这里如果设置为false表示服务器会保留客户端的连接记录，
+            // 这里设置为true表示每次连接到服务器都以新的身份连接
+            mqttConnectOptions.setCleanSession(true);
+            mqttConnectOptions.setUserName(username);
+            mqttConnectOptions.setPassword(password.toCharArray());
+            mqttConnectOptions.setServerURIs(StringUtils.split(hostUrl,","));
+            // 设置超时时间 单位为秒
+            mqttConnectOptions.setConnectionTimeout(10);
+            // 设置会话心跳时间 单位为秒 服务器会每隔1.5*20秒的时间向客户端发送心跳判断客户端是否在线，但这个方法并没有重连的机制
+            mqttConnectOptions.setKeepAliveInterval(20);
+            // 设置“遗嘱”消息的话题，若客户端与服务器之间的连接意外中断，服务器将发布客户端的“遗嘱”消息。
+            mqttConnectOptions.setWill(TopicName.DEFAULT_WILL_TOPIC.getValue(), "i.lost.connect".getBytes(), 2, false);
+            //SSL认证
+            mqttConnectOptions.setHttpsHostnameVerificationEnabled(false);
+            mqttConnectOptions.setSocketFactory(sslUtil.getSocketFactoryFromResourcePath("keystore/server.crt"));
+
+            return mqttConnectOptions;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 /************************************** producer *****************************************************/

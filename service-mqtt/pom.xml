@@ -43,6 +43,14 @@
             <artifactId>spring-integration-mqtt</artifactId>
         </dependency>
 
+        <!-- 证书加密 -->
+        <dependency>
+            <groupId>bouncycastle</groupId>
+            <artifactId>bcprov-jdk15</artifactId>
+            <version>140</version>
+        </dependency>
+
+
         <!-- commons -->
         <dependency>
             <groupId>commons-io</groupId>
@@ -56,5 +64,23 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <finalName>service-mqtt</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
