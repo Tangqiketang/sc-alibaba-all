@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.internal.security.SSLSocketFactoryFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,14 +52,8 @@ import java.util.Properties;
 @Slf4j
 public class MqttConfig {
 
-    @Value("${mqtt.username}")
-    private String username;
-
-    @Value("${mqtt.password}")
-    private String password;
-
-    @Value("${mqtt.url}")
-    private String hostUrl;
+    @Autowired
+    private MqttProperties mqttProperties;
 
     @Resource
     private SslUtil sslUtil;
@@ -77,13 +72,15 @@ public class MqttConfig {
             // 设置是否清空session,这里如果设置为false表示服务器会保留客户端的连接记录，
             // 这里设置为true表示每次连接到服务器都以新的身份连接
             mqttConnectOptions.setCleanSession(true);
-            mqttConnectOptions.setUserName(username);
-            mqttConnectOptions.setPassword(password.toCharArray());
-            mqttConnectOptions.setServerURIs(StringUtils.split(hostUrl,","));
+            mqttConnectOptions.setUserName(mqttProperties.getUsername());
+            mqttConnectOptions.setPassword(mqttProperties.getPassword().toCharArray());
+            mqttConnectOptions.setServerURIs(StringUtils.split(mqttProperties.getUrl(),","));
             // 设置超时时间 单位为秒
-            mqttConnectOptions.setConnectionTimeout(10);
+            mqttConnectOptions.setConnectionTimeout(60);
             // 设置会话心跳时间 单位为秒 服务器会每隔1.5*20秒的时间向客户端发送心跳判断客户端是否在线，但这个方法并没有重连的机制
-            mqttConnectOptions.setKeepAliveInterval(20);
+            mqttConnectOptions.setKeepAliveInterval(60);
+            //自动重连
+            mqttConnectOptions.setAutomaticReconnect(true);
             // 设置“遗嘱”消息的话题，若客户端与服务器之间的连接意外中断，服务器将发布客户端的“遗嘱”消息。
             mqttConnectOptions.setWill(TopicName.DEFAULT_WILL_TOPIC.getValue(), "i.lost.connect".getBytes(), 2, false);
             //SSL认证
@@ -99,8 +96,6 @@ public class MqttConfig {
 
 /************************************** producer *****************************************************/
 
-    @Value("${mqtt.producer.clientId}")
-    private String clientId;
 
     /**
      * 生产者通道生产工厂
@@ -128,7 +123,7 @@ public class MqttConfig {
     @Bean
     @ServiceActivator(inputChannel = "mqttOutboundChannel")
     public MessageHandler mqttOutbound() {
-        MqttPahoMessageHandler messageHandler =  new MqttPahoMessageHandler(clientId, mqttClientFactory());
+        MqttPahoMessageHandler messageHandler =  new MqttPahoMessageHandler(mqttProperties.getClientId(), mqttClientFactory());
         messageHandler.setAsync(true);
         messageHandler.setDefaultTopic(TopicName.DEFAULT_PRODUCER_TOPIC.getValue());
         //解决当客户端订阅某一个主题时，会收到之前推送客户端发送的消息retained=false
@@ -138,15 +133,13 @@ public class MqttConfig {
 
 /************************************** consumer *****************************************************/
 
-    @Value("${mqtt.consumer.clientId}")
-    private String consumerId;
 
     @Resource
     private MqttCallbackHandle mqttCallbackHandle;
 
     @Bean
     public MessageProducerSupport mqttInbound() {
-        MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter(consumerId,
+        MqttPahoMessageDrivenChannelAdapter adapter = new MqttPahoMessageDrivenChannelAdapter(mqttProperties.getClientId(),
                 mqttClientFactory());
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
