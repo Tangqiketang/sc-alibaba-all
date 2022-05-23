@@ -1,19 +1,15 @@
 package com.wm.servicemqtt.mqtt.conf;
 
 
-import com.netflix.client.config.IClientConfigKey;
 import com.wm.servicemqtt.mqtt.receiveHandler.MqttCallbackHandle;
 import com.wm.servicemqtt.mqtt.topic.TopicName;
 import com.wm.servicemqtt.mqtt.util.SslUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.internal.security.SSLSocketFactoryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.DirectChannel;
@@ -25,20 +21,9 @@ import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
-import org.springframework.util.ResourceUtils;
 
 import javax.annotation.Resource;
-import javax.net.ssl.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.SecureRandom;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 import java.util.Arrays;
-import java.util.Properties;
 
 /**
  * 描述:
