@@ -39,6 +39,21 @@
              <groupId>com.alibaba.cloud</groupId>
              <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
          </dependency>
+
+
+        <!-- 引入swagger3包 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!-- 引入swagger-bootstrap-ui包，优化UI页面，可不加 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.8.5</version>
+        </dependency>
+
      </dependencies>
 
 

@@ -1,20 +1,24 @@
 server:
   port: 8080
 
-
 spring:
-  main:
-    allow-bean-definition-overriding: true
-  application:
-    name: gateway-server
   cloud:
     nacos:
+      config:
+        server-addr: 192.168.0.100:8848  #nacos地址
+        namespace: f739f38b-f593-432b-9458-5912ed89dafd
+        refresh-enabled: true
+        group: DEFAULT_GROUP
+        file-extension: yml
+        shared-configs[0]:
+          data-id: common.yml # 共享配置
+          group: DEFAULT_GROUP
+          refresh: true
+      #暴露的地址
       discovery:
-        server-addr: 127.0.0.1:8848
-    sentinel:
-      transport:
-        port: 18080
-        dashboard: localhost:8748
+        namespace: ${spring.cloud.nacos.config.namespace}
+        server-addr: ${spring.cloud.nacos.config.server-addr}
+        ip: 192.168.0.100  #注册的ip地址
     gateway:
       discovery:
         locator:
@@ -23,7 +27,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-          # 允许任何域名使用
+            # 允许任何域名使用
             allowedOriginPatterns: "*"
             # 允许任何头
             allowedHeaders: "*"
@@ -50,3 +54,27 @@ spring:
           filters:
             #发送到下游之前,原来路径截取前面几位 /demo/hi  ->发送到serviceHi  /hi
             - StripPrefix=1
+        - id: service-shardingjdbc
+          uri: lb://service-shardingjdbc
+          predicates:
+            - Path=/serviceshardingjdbc/**
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+          filters:
+            #发送到下游之前,原来路径截取前面几位 /demo/hi  ->发送到serviceHi  /hi
+            - StripPrefix=1
+
+
+####### 日志级别 #######
+logging:
+  file:
+    path: /opt/${spring.application.name}/logs/
+  level:
+    root: info
+    com:
+      wm:
+        sharding: debug
+##### swagger ###################
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true # false关闭swagger-ui界面 但不关闭openapi

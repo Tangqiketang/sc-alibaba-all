@@ -15,11 +15,18 @@
 
     <dependencies>
 
-        <!--<dependency>
+        <!--自定义日志组件  <dependency>
             <groupId>com.wm</groupId>
             <artifactId>cloud-logging-starter</artifactId>
             <version>${parent.project.version}</version>
         </dependency>-->
+
+        <dependency>
+            <groupId>com.wm</groupId>
+            <artifactId>common-util</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
 
         <!--必须引入starter-web才能注册到nacos中去-->
         <dependency>
@@ -30,6 +37,13 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+
+        <!--获取nacos配置中心的配置 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
 
         <!--feign 引入openfeign，必须要引入loadbalancer，否则无法启动-->
         <dependency>
@@ -48,5 +62,7 @@
         </dependency>
 
     </dependencies>
+
+
 
 </project>

@@ -12,7 +12,7 @@
 
     <artifactId>service-mqtt</artifactId>
 
-    <version>${parent.project.version}</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
 

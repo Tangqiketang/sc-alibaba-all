@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
  */
 public class MyStringUtils {
 
+    //Map<String, String> paramMaps = Splitter.on(",").withKeyValueSeparator("=").split(cliendArray[1]);
 
 
     public String random(){

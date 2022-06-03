@@ -5,7 +5,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.wm</groupId>
-  <artifactId>sc-alibaba-all</artifactId><packaging>pom</packaging>
+  <artifactId>sc-alibaba-all</artifactId>
+  <packaging>pom</packaging>
   <version>0.0.1</version>
 
   <modules>
@@ -13,22 +14,25 @@
     <module>service-hi</module>
     <module>gateway-server</module>
     <module>service-mqtt</module>
-    <module>service-auth</module>
     <module>cloud-logging-starter</module>
     <module>common-util</module>
     <module>rocket-producer</module>
     <module>rocket-consumer</module>
     <module>service-mqtt-broker</module>
+    <module>dubbo-sample</module>
+    <module>service-shardingjdbc</module>
   </modules>
 
   <properties>
     <parent.project.version>0.0.1</parent.project.version>
     <java.version>1.8</java.version>
-    <fastjson.version>1.2.7</fastjson.version>
-    <spring-boot.version>2.2.13.RELEASE</spring-boot.version>
+    <fastjson.version>1.2.83</fastjson.version>
+    <spring.boot.version>2.2.13.RELEASE</spring.boot.version>
     <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
     <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
     <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
+    <maven.plugin.version>3.8.1</maven.plugin.version>
+    <swagger.version>3.0.0</swagger.version>
 
   </properties>
 
@@ -43,6 +47,55 @@
       <artifactId>lombok</artifactId>
       <optional>true</optional>
     </dependency>
+
+    <!--log -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.17.0</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j-api</artifactId>
+          <groupId>org.apache.logging.log4j</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>2.17.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>2.17.0</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j-api</artifactId>
+          <groupId>org.apache.logging.log4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>log4j-core</artifactId>
+          <groupId>org.apache.logging.log4j</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-to-slf4j</artifactId>
+      <version>2.17.0</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j-api</artifactId>
+          <groupId>org.apache.logging.log4j</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
   </dependencies>
 
   <dependencyManagement>
@@ -51,7 +104,7 @@
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring-boot.version}</version>
+        <version>${spring.boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -88,26 +141,34 @@
         <artifactId>fastjson</artifactId>
         <version>${fastjson.version}</version>
       </dependency>
+      <!--swagger3 -->
+      <dependency>
+        <groupId>io.springfox</groupId>
+        <artifactId>springfox-boot-starter</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
 
 
-
-
   <build>
+    <finalName>${project.name}</finalName>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.plugin.version}</version>
         <configuration>
-          <source>8</source>
-          <target>8</target>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <encoding>UTF-8</encoding>
+          <compilerArgs>
+            <arg>-parameters</arg>
+          </compilerArgs>
         </configuration>
       </plugin>
     </plugins>
@@ -120,14 +181,31 @@
         <directory>src/main/java</directory>
         <includes>
           <include>**/*.xml</include>
-          <include>**/*.json</include>
-          <include>**/*.ftl</include>
         </includes>
       </resource>
     </resources>
 
-  </build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring.boot.version}</version>
+          <configuration>
+            <finalName>${project.build.finalName}</finalName>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
 
+  </build>
 
 
 </project>
