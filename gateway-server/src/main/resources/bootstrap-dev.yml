@@ -62,6 +62,14 @@ spring:
           filters:
             #发送到下游之前,原来路径截取前面几位 /demo/hi  ->发送到serviceHi  /hi
             - StripPrefix=1
+        - id: service-web
+          uri: lb://service-web
+          predicates:
+            - Path=/serviceweb/**
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+          filters:
+            #发送到下游之前,原来路径截取前面几位 /demo/hi  ->发送到serviceHi  /hi
+            - StripPrefix=1
 
 
 ####### 日志级别 #######

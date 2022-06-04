@@ -8,6 +8,7 @@ service-feign: 使用feign或ribbon调用service-hi
 dubbo-producer: 8770-
 
 service-shardingjdbc: 8800
+service-web: 8900
 
 service-mqtt: 用于消费或发送mqtt
     21883
