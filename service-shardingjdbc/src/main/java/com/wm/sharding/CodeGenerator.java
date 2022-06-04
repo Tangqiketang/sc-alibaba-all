@@ -76,7 +76,7 @@ public class CodeGenerator {
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("123456");
-        dsc.setUrl("jdbc:mysql://192.168.40.131:3306/sc-alibaba-all?characterEncoding=UTF-8&zeroDateTimeBehavior" +
+        dsc.setUrl("jdbc:mysql://192.168.40.131:3306/service-shardingjdbc?characterEncoding=UTF-8&zeroDateTimeBehavior" +
                 "=convertToNull&useSSL=true&verifyServerCertificate=false");
         mpg.setDataSource(dsc);
 
