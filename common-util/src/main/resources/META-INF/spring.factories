@@ -1,2 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.wm.common.exception.GlobalExceptionController
+com.wm.common.exception.GlobalExceptionController,\
+com.wm.common.config.JacksonConfig,\
+com.wm.common.config.LocalDateTimeSerializerConfig

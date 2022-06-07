@@ -3,15 +3,14 @@ package com.wm.common.exception;
 
 import com.wm.common.vo.base.BaseResp;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.ResourceUrlProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +23,32 @@ import java.util.*;
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionController {
+
+	@Autowired
+	private ResourceUrlProvider resourceUrlProvider;
+
+	/**
+	 * 处理静态资源的版本
+	 *
+	 * @return
+	 */
+	@ModelAttribute("urls")
+	public ResourceUrlProvider urls() {
+		return this.resourceUrlProvider;
+	}
+
+	/**
+	 * 统一contextPath输出
+	 *
+	 * @param request
+	 * @return
+	 */
+	@ModelAttribute("contextPath")
+	public String contextPath(HttpServletRequest request) {
+		return request.getContextPath();
+	}
+
+
 
 	/**
 	 * 自定义错误，前台传入参数有误

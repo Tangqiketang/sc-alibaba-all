@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 public class ServiceHiByLoadBalancer {
 
     @Bean
-    @LoadBalanced
+    @LoadBalanced  //如果使用这个注解,则必须使用服务名称进行调用
     RestTemplate restTemplate() {
         return new RestTemplate();
     }
