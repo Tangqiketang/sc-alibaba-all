@@ -21,7 +21,8 @@
     <module>service-mqtt-broker</module>
     <module>dubbo-sample</module>
     <module>service-shardingjdbc</module>
-      <module>service-web</module>
+    <module>service-web</module>
+    <module>wm-practice</module>
   </modules>
 
   <properties>

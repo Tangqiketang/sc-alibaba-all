@@ -39,6 +39,21 @@
             <artifactId>fastjson</artifactId>
         </dependency>
 
+        <!--时间类工具 -->
+        <dependency>
+          <groupId>com.github.xkzhangsan</groupId>
+          <artifactId>xk-time</artifactId>
+          <version>3.0.1</version>
+        </dependency>
+
+        <!--guava工具包 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.0</version>
+        </dependency>
+
+
     </dependencies>
 
 

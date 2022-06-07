@@ -29,11 +29,10 @@ public class HmacSha {
             String[] sortedKeys = (String[])params.keySet().toArray(new String[0]);
             Arrays.sort(sortedKeys);
             StringBuilder canonicalizedQueryString = new StringBuilder();
-            String[] var5 = sortedKeys;
-            int var6 = sortedKeys.length;
+            String[] sortedKeysArr = sortedKeys;
 
-            for(int var7 = 0; var7 < var6; ++var7) {
-                String key = var5[var7];
+            for(int i = 0; i < sortedKeys.length; ++i) {
+                String key = sortedKeysArr[i];
                 if (!"sign".equalsIgnoreCase(key)) {
                     canonicalizedQueryString.append(key).append((String)params.get(key));
                 }
@@ -44,8 +43,8 @@ public class HmacSha {
                 mac.init(secretKey);
                 byte[] data = mac.doFinal(canonicalizedQueryString.toString().getBytes("utf-8"));
                 return bytesToHexString(data);
-            } catch (Exception var9) {
-                var9.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
                 return null;
             }
         } else {
