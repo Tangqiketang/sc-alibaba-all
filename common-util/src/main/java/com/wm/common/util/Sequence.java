@@ -53,7 +53,7 @@ public class Sequence {
      * 时间戳左移动位
      */
     private final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
-    private final long sequenceMask = -1L ^ (-1L << sequenceBits);
+    private final long sequenceMask = -1L ^ (-1L << sequenceBits);  //12个1111 1111 1111
 
     private final long workerId;
 
@@ -189,6 +189,7 @@ public class Sequence {
                 | sequence;
     }
 
+    //重新获取下一秒或之后的秒
     protected long tilNextMillis(long lastTimestamp) {
         long timestamp = timeGen();
         while (timestamp <= lastTimestamp) {

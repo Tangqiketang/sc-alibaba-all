@@ -2,6 +2,7 @@ package com.wm.common.util;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,18 @@ public class StringKit {
      */
     public static Map<String,String> splitterOn2Map(String split1,String split2,String source){
         return Splitter.on(split1).withKeyValueSeparator(split2).split(source);
+    }
+
+
+    /**
+     * 左侧补齐
+     * @param s      bik
+     * @param total  5 总长度
+     * @param padStr a 用该字符补齐
+     * @return       aa+bik
+     */
+    public static String leftPad(String s,int total,String padStr){
+        return StringUtils.leftPad(s, total, padStr);
     }
 
 

@@ -18,10 +18,56 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
           <groupId>io.reactivex</groupId>
           <artifactId>rxjava</artifactId>
           <version>1.0.10</version>
         </dependency>
+
+        <!-- fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
+        <!--时间类工具 -->
+        <dependency>
+          <groupId>com.github.xkzhangsan</groupId>
+          <artifactId>xk-time</artifactId>
+          <version>3.0.1</version>
+        </dependency>
+
+        <!--guava工具包 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <!-- hutool java工具类库  -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+
+        <!--httpclient包 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+
 
     </dependencies>
 

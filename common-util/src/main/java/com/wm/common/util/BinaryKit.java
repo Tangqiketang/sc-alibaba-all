@@ -47,4 +47,23 @@ public class BinaryKit {
     }
 
 
+    /**
+     * 取多少位1
+     * @param nBits  5
+     * @return 1111 1
+     */
+    public static long getnBits(long nBits){
+        //-1L: 64个111111111
+        //-1L<<nBits 11111+n个00
+        return -1L ^ (-1L << nBits);
+    }
+
+
+    /************************ ************************************************/
+    // -1L 二进制 111111111111
+    //
+    public static void main(String[] args) {
+        System.out.println(getnBits(2));
+    }
+
 }
