@@ -7,6 +7,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @auther WangMin
  * @create 2022-06-06 17:30
  */
-//@Configuration
+@Configuration
 public class RestTemplateConfig {
 
     @Bean
