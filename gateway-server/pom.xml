@@ -54,6 +54,9 @@
             <version>1.8.5</version>
         </dependency>
 
+
+        <!-- OAuth2资源服务器-->
+
      </dependencies>
 
 

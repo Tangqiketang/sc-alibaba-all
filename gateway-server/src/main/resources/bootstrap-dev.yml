@@ -22,7 +22,7 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: false
+          enabled: false  #不启用服务发现
           lowerCaseServiceId: true
       globalcors:
         cors-configurations:
