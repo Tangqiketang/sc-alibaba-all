@@ -61,21 +61,23 @@ public class IpcCameraController {
     @ApiOperation(value = "分页按Long时间查询", notes = "分页按Long时间查询")
     @GetMapping("/getByLongTimePage")
     @ResponseBody
-    public BaseResp<Object> getByLongTimePage(
+    public BaseResp<IPage<Object>> getByLongTimePage(
             @ApiParam(value = "产品编号") @RequestParam(required = true) String productKey,
             @ApiParam(value = "开始时间")@RequestParam(name="startTime",required = true)Long startTime,
             @ApiParam(value = "结束时间")@RequestParam(name="endTime",required = true)Long endTime,
             @Min(value = 1, message = "最小值为1") @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
             @Range(min = 1, max = 100, message = "pageSize必须在1到100之间")@RequestParam(name="pageSize", defaultValue="10") Integer pageSize){
+        BaseResp<IPage<Object>> result = new BaseResp<>();
         IPage<Object> page = new Page<>(pageNo,pageSize);
-        //Page<Object> list = service.xxxx;
-        return null;
+        Page<Object> list = null;
+        result.setResult(list);
+        return result;
     }
 
     @ApiOperation(value = "分页按LocalDateTime时间查询", notes = "分页按LocalDateTime时间查询")
     @GetMapping("/getByLocalDateTimePage")
     @ResponseBody
-    public String getByLocalDateTimePage(
+    public BaseResp<IPage<Object>> getByLocalDateTimePage(
             @ApiParam(value = "产品编号") @RequestParam(required = true) String productKey,
             @ApiParam(value = "开始时间", required = true) @RequestParam(name = "startTime")
             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startTime,
@@ -84,8 +86,12 @@ public class IpcCameraController {
             @Min(value = 1, message = "最小值为1") @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
             @Range(min = 1, max = 100, message = "pageSize必须在1到100之间")@RequestParam(name="pageSize", defaultValue="10") Integer pageSize){
 
+        BaseResp<IPage<Object>> result = new BaseResp<>();
+        IPage<Object> page = new Page<>(pageNo,pageSize);
         //WHERE create_time BETWEEN #{startTime} AND #{endTime}
-        return null;
+        Page<Object> list = null;
+        result.setResult(list);
+        return result;
     }
 
 
