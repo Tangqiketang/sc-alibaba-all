@@ -14,4 +14,14 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+
+    <sql id="whereDemo">
+        <where>
+            <if test="userName !=null and userName !=''">
+				a.username like CONCAT('%',#{userName}, '%')
+			</if>
+
+        </where>
+    </sql>
+
 </mapper>
