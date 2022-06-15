@@ -1,6 +1,6 @@
 package com.wm.sharding.service.impl;
 
-import com.wm.sharding.entity.IpcCamera;
+import com.wm.sharding.model.entity.IpcCamera;
 import com.wm.sharding.mapper.IpcCameraMapper;
 import com.wm.sharding.service.IIpcCameraService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

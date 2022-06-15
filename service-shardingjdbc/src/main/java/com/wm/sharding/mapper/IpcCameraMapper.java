@@ -1,6 +1,6 @@
 package com.wm.sharding.mapper;
 
-import com.wm.sharding.entity.IpcCamera;
+import com.wm.sharding.model.entity.IpcCamera;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

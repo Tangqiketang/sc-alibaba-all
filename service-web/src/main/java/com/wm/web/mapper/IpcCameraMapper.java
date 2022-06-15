@@ -1,6 +1,6 @@
 package com.wm.web.mapper;
 
-import com.wm.web.entity.IpcCamera;
+import com.wm.web.model.entity.IpcCamera;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

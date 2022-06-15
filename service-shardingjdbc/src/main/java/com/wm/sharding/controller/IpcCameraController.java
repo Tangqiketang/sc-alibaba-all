@@ -3,7 +3,7 @@ package com.wm.sharding.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wm.common.vo.base.BaseResp;
-import com.wm.sharding.entity.IpcCamera;
+import com.wm.sharding.model.entity.IpcCamera;
 import com.wm.sharding.mapper.IpcCameraMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

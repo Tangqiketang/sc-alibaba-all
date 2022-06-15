@@ -1,6 +1,6 @@
 package com.wm.web.service.impl;
 
-import com.wm.web.entity.IpcCamera;
+import com.wm.web.model.entity.IpcCamera;
 import com.wm.web.mapper.IpcCameraMapper;
 import com.wm.web.service.IIpcCameraService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

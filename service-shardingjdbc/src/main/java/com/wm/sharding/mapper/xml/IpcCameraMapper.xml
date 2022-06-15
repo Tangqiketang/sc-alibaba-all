@@ -3,7 +3,7 @@
 <mapper namespace="com.wm.sharding.mapper.IpcCameraMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.wm.sharding.entity.IpcCamera">
+    <resultMap id="BaseResultMap" type="com.wm.sharding.model.entity.IpcCamera">
         <id column="id" property="id" />
         <result column="camera_status" property="cameraStatus" />
         <result column="camera_name" property="cameraName" />

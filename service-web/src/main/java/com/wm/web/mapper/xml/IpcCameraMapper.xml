@@ -3,7 +3,7 @@
 <mapper namespace="com.wm.web.mapper.IpcCameraMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.wm.web.entity.IpcCamera">
+    <resultMap id="BaseResultMap" type="com.wm.web.model.entity.IpcCamera">
         <id column="id" property="id" />
         <result column="camera_status" property="cameraStatus" />
         <result column="camera_name" property="cameraName" />

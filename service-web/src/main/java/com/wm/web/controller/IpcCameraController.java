@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wm.common.vo.base.BaseResp;
-import com.wm.web.entity.IpcCamera;
+import com.wm.web.model.entity.IpcCamera;
 import com.wm.web.mapper.IpcCameraMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -93,7 +93,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent(null);
-        pc.setEntity("com.wm.sharding.entity");
+        pc.setEntity("com.wm.sharding.model.entity");
         pc.setMapper("com.wm.sharding.mapper");
         pc.setXml("com.wm.sharding.mapper.xml");
         String generateCaS = scanner("!!!是否覆盖当前的controller和service(是:1)");
