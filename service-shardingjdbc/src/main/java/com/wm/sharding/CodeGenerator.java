@@ -95,7 +95,7 @@ public class CodeGenerator {
         pc.setParent(null);
         pc.setEntity("com.wm.sharding.entity");
         pc.setMapper("com.wm.sharding.mapper");
-        pc.setXml("com.wm.sharding.entity.xml");
+        pc.setXml("com.wm.sharding.mapper.xml");
         String generateCaS = scanner("!!!是否覆盖当前的controller和service(是:1)");
         if ("1".equals(generateCaS)) {
             pc.setService("com.wm.sharding.service");       //本项目没用，生成之后删掉

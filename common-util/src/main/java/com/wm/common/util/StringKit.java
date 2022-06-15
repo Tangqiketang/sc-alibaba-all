@@ -1,5 +1,6 @@
 package com.wm.common.util;
 
+import cn.hutool.core.util.StrUtil;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import org.apache.commons.lang3.StringUtils;
@@ -70,6 +71,17 @@ public class StringKit {
      */
     public static String leftPad(String s,int total,String padStr){
         return StringUtils.leftPad(s, total, padStr);
+    }
+
+
+    /**
+     * 将字符串前缀删除
+     * @param source  ROLE_ADMIN
+     * @param rmKey ROLE_
+     * @return  ADMIN
+     */
+    public static String removePrefix(String source,String rmKey){
+        return StrUtil.removePrefix(source,rmKey);
     }
 
 

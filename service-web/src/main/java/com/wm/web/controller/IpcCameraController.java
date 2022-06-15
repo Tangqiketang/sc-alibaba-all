@@ -62,6 +62,7 @@ public class IpcCameraController {
     @GetMapping("/getByLongTimePage")
     @ResponseBody
     public BaseResp<Object> getByLongTimePage(
+            @ApiParam(value = "产品编号") @RequestParam(required = true) String productKey,
             @ApiParam(value = "开始时间")@RequestParam(name="startTime",required = true)Long startTime,
             @ApiParam(value = "结束时间")@RequestParam(name="endTime",required = true)Long endTime,
             @Min(value = 1, message = "最小值为1") @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
@@ -75,6 +76,7 @@ public class IpcCameraController {
     @GetMapping("/getByLocalDateTimePage")
     @ResponseBody
     public String getByLocalDateTimePage(
+            @ApiParam(value = "产品编号") @RequestParam(required = true) String productKey,
             @ApiParam(value = "开始时间", required = true) @RequestParam(name = "startTime")
             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startTime,
             @ApiParam(value = "结束时间", required = true) @RequestParam(name = "endTime")

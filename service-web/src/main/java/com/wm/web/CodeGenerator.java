@@ -95,7 +95,7 @@ public class CodeGenerator {
         pc.setParent(null);
         pc.setEntity("com.wm.web.entity");
         pc.setMapper("com.wm.web.mapper");
-        pc.setXml("com.wm.web.entity.xml");
+        pc.setXml("com.wm.web.mapper.xml");
         String generateCaS = scanner("!!!是否覆盖当前的controller和service(是:1)");
         if ("1".equals(generateCaS)) {
             pc.setService("com.wm.web.service");       //本项目没用，生成之后删掉
