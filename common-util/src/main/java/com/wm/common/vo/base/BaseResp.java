@@ -26,6 +26,14 @@ public class BaseResp<T> implements Serializable {
         super();
     }
 
+    public static <T> BaseResp<T> ok(T t){
+		BaseResp<T> result = new BaseResp<T>();
+		result.setResult(t);
+		result.setCode(0);
+		return result;
+    }
+
+
     public BaseResp(int code, String desc) {
         super();
         this.code = code;

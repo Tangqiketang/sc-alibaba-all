@@ -50,6 +50,23 @@ public class IpcCameraController {
     }
 
 
+    //查询详情
+    @ApiOperation(value = "查询xxx详情", notes = "查询xxx详情")
+    @GetMapping("/getXXXDetail")
+    @ResponseBody
+    public BaseResp<Object> getXXXDetail(
+            @ApiParam(value = "唯一编号") @RequestParam(required = true) String userKey,
+            @ApiParam(value = "产品编号") @RequestParam(required = true) String productKey,
+            @ApiParam(value = "设备名称") @RequestParam(required = true) String deviceName){
+        BaseResp rsp = new BaseResp();
+        Object obj = new Object();
+        return BaseResp.ok(obj);
+    }
+
+
+
+
+
     @GetMapping("/test")
     @ResponseBody
     public String test(){

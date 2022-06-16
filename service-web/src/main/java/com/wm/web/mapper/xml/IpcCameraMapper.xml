@@ -18,10 +18,10 @@
     <sql id="whereDemo">
         <where>
             <if test="userName !=null and userName !=''">
-				a.username like CONCAT('%',#{userName}, '%')
+				and a.username like CONCAT('%',#{userName}, '%')
 			</if>
-			<if test="startTime !=null and startTime !=''">
-				a.create_time &gt;= #{startTime}
+			<if test="startTime !=null">
+				and a.create_time &gt;= #{startTime}
 			</if>
 
         </where>
