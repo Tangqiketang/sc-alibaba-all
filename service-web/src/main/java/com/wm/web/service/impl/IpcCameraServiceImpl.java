@@ -1,10 +1,13 @@
 package com.wm.web.service.impl;
 
-import com.wm.web.model.entity.IpcCamera;
-import com.wm.web.mapper.IpcCameraMapper;
-import com.wm.web.service.IIpcCameraService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wm.web.mapper.IpcCameraMapper;
+import com.wm.web.model.entity.IpcCamera;
+import com.wm.web.service.IIpcCameraService;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -16,5 +19,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class IpcCameraServiceImpl extends ServiceImpl<IpcCameraMapper, IpcCamera> implements IIpcCameraService {
-
+    @Resource
+    private TaskExecutor taskExecutor;
 }
