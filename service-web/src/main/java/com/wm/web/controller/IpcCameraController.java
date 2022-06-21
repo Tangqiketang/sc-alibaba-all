@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wm.common.vo.base.BaseResp;
 import com.wm.web.model.entity.IpcCamera;
 import com.wm.web.mapper.IpcCameraMapper;
+import com.wm.web.service.IIpcCameraService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -111,6 +112,14 @@ public class IpcCameraController {
         return result;
     }
 
+    @Resource
+    private IIpcCameraService iIpcCameraService;
+
+    @GetMapping("/test12")
+    @ResponseBody
+    public String test12(){
+        return iIpcCameraService.asycDo();
+    }
 
 }
 

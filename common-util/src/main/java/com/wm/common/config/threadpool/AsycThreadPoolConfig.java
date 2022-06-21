@@ -3,6 +3,7 @@ package com.wm.common.config.threadpool;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
@@ -19,6 +20,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Getter
 @EnableAsync(proxyTargetClass = true)
 @Configuration
+@ConditionalOnProperty(prefix = "wm.threadPool", name="enable",havingValue = "true",matchIfMissing = false)
 public class AsycThreadPoolConfig {
     /**
      *  线程池维护线程的最小数量.
@@ -41,7 +43,7 @@ public class AsycThreadPoolConfig {
     @Value("${threadPool.nameFix:wmAsycExecutor-}")
     private String threadNamePrefix;
 
-    @Bean(name = "taskExecutor")
+    @Bean(name = "wmTaskExecutor")
     public TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new CustomThreadPoolTaskExecutor();
         executor.setCorePoolSize(corePoolSize);

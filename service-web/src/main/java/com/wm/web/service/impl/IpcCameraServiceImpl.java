@@ -5,6 +5,7 @@ import com.wm.web.mapper.IpcCameraMapper;
 import com.wm.web.model.entity.IpcCamera;
 import com.wm.web.service.IIpcCameraService;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,5 +21,11 @@ import javax.annotation.Resource;
 @Service
 public class IpcCameraServiceImpl extends ServiceImpl<IpcCameraMapper, IpcCamera> implements IIpcCameraService {
     @Resource
-    private TaskExecutor taskExecutor;
+    private TaskExecutor wmTaskExecutor;
+
+    @Async(value = "wmTaskExecutor")
+    @Override
+    public String asycDo() {
+        return String.valueOf(System.currentTimeMillis());
+    }
 }
