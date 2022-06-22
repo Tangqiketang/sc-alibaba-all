@@ -1,6 +1,8 @@
 package com.wm.web.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wm.redis.redissionlock.RedissonDistributedLock;
+import com.wm.redis.util.RedisKit;
 import com.wm.web.mapper.IpcCameraMapper;
 import com.wm.web.model.entity.IpcCamera;
 import com.wm.web.service.IIpcCameraService;
@@ -22,6 +24,13 @@ import javax.annotation.Resource;
 public class IpcCameraServiceImpl extends ServiceImpl<IpcCameraMapper, IpcCamera> implements IIpcCameraService {
     @Resource
     private TaskExecutor wmTaskExecutor;
+
+    @Resource
+    private RedissonDistributedLock redissonDistributedLock;
+
+    @Resource
+    private RedisKit redisKit;
+
 
     @Async(value = "wmTaskExecutor")
     @Override
