@@ -1,3 +1,8 @@
+项目为微服务开发脚手架。
+本着各模块独立的原则。
+集成日志模块cloud-logging-starter，通过注解形式开启组件。
+
+
 nacos:注册中心 startup.cmd -m standalone
     8848  http://localhost:8848/nacos
 service-hi: 被feign调用的服务
