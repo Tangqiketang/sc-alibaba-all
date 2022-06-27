@@ -10,7 +10,8 @@ public enum TopicName {
     DEFAULT_WILL_TOPIC(3,"send/device/connect/lost","xxx"),
     DEVICE_ONLINE(4,"/device/online/#","xxx"),
     DEVICE_aaa(5,"/t/#","xxx"),
-    DEVICE_OFFLINE(6,"/device/offline/#","xxx");
+    DEVICE_WM(6,"$share/abc//wm/test","xxx"),
+    DEVICE_OFFLINE(7,"/device/offline/#","xxx");
 
 
     private final Integer key;
