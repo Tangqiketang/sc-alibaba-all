@@ -1,6 +1,8 @@
 package com.wm.common.exception;
 
 
+import com.wm.common.exception.meta.ServiceException;
+import com.wm.common.exception.meta.SysExceptionEnum;
 import com.wm.common.vo.base.BaseResp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,15 +59,14 @@ public class GlobalExceptionController {
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 */
-	@ExceptionHandler(ReqException.class)
+	@ExceptionHandler(ServiceException.class)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public Map<String,Object> handleReqException(HttpServletRequest req, ReqException ex, HttpServletResponse response) throws UnsupportedEncodingException{
-		Map<String,Object> errorMap = new HashMap<String,Object>();
-		errorMap.put("code", ex.getCode());
-		errorMap.put("desc",ex.getMessage());
-		log.error("code:{},detail:{}",ex.getCode(),ex.getMessage());
-		return errorMap;
+	public BaseResp handleReqException(HttpServletRequest req, ServiceException ex, HttpServletResponse response) throws UnsupportedEncodingException{
+		BaseResp rsp = new BaseResp();
+		rsp.setCode(ex.getExceptionEnum().getCode());
+		rsp.setDesc(ex.getExceptionEnum().getMessage());
+		return rsp;
 	}
 	
 	@ExceptionHandler(Exception.class)
@@ -105,7 +106,6 @@ public class GlobalExceptionController {
 			rsp.setDesc(SysExceptionEnum.BAD_REQUEST_PARAM_ERROR.getMessage());
 		} else {
 			log.error("[{}]_{}", SysExceptionEnum.SYSTEM_ERROR.getCode(), e.getMessage(), e);
-			//e.printStackTrace();
 			rsp.setCode(SysExceptionEnum.SYSTEM_ERROR.getCode());
 			rsp.setDesc(SysExceptionEnum.SYSTEM_ERROR.getMessage());
 		}

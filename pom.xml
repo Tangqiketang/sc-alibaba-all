@@ -23,6 +23,7 @@
     <module>service-shardingjdbc</module>
     <module>service-web</module>
     <module>wm-practice</module>
+    <module>cloud-redis-starter</module>
   </modules>
 
   <properties>
@@ -38,6 +39,8 @@
     <guava.version>23.0</guava.version>
     <hutool.version>5.7.20</hutool.version>
     <httpclient.version>4.5.13</httpclient.version>
+    <redisson-starter.version>3.16.1</redisson-starter.version>
+    <commons-io.version>2.7</commons-io.version>
   </properties>
 
   <dependencies>
@@ -151,6 +154,18 @@
         <artifactId>springfox-boot-starter</artifactId>
         <version>${swagger.version}</version>
       </dependency>
+      <!-- 在Redis基础上的一个Java实用工具包 -->
+      <dependency>
+        <groupId>org.redisson</groupId>
+        <artifactId>redisson-spring-boot-starter</artifactId>
+        <version>${redisson-starter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 

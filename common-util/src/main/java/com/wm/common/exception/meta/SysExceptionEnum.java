@@ -1,7 +1,5 @@
-package com.wm.common.exception;
+package com.wm.common.exception.meta;
 
-
-import com.wm.common.exception.meta.ExceptionEnum;
 
 /**
  * @Description:

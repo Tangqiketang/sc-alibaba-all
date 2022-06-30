@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IIpcCameraService extends IService<IpcCamera> {
 
+    String asycDo();
 }
