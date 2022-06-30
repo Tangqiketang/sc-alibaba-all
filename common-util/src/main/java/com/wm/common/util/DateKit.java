@@ -123,43 +123,57 @@ public class DateKit {
     /********************************* 根据某一天为坐标来获取其他时间  ***************************************************/
 
     /**
-     * 获取当前月的第一天的凌晨
-     * @param localDateTime 2022-06-07 12:20
-     * @return  2022-06-01 00:00
+     * 获取某一天的凌晨
+     * @param localDate 2022-06-07
+     * @return  2022-06-07 00:00
      */
-    public static LocalDateTime getFirstDayStartOfMonth(LocalDateTime localDateTime){
-        return localDateTime.with(TemporalAdjusters.firstDayOfMonth())
-                .withHour(0).withMinute(0).withSecond(0);
+    public static LocalDateTime getDayStartOfDay(LocalDate localDate){
+        return localDate.atStartOfDay();
     }
     /**
-     * 获取当前月的第一天的23:59:59
-     * @param localDateTime 2022-06-07 12:20
-     * @return  2022-06-01 23:59:59
+     * 获取某一天的23:59:59.999
+     * @param localDate 2022-06-07
+     * @return  2022-06-07 00:00
      */
-    public static LocalDateTime getFirstDayEndOfMonth(LocalDateTime localDateTime){
-        return localDateTime.with(TemporalAdjusters.firstDayOfMonth())
-                .withHour(23).withMinute(59).withSecond(59);
+    public static LocalDateTime getEndDayOfDay(LocalDate localDate){
+        return LocalDateTime.of(localDate,LocalTime.MAX);
+    }
+
+
+    /**
+     * 获取当前月的第一天的凌晨
+     * @param localDate 2022-06-07
+     * @return  2022-06-01 00:00:00 000
+     */
+    public static LocalDateTime getFirstDayStartOfMonth(LocalDate localDate){
+        return localDate.with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay();
+    }
+    /**
+     * 获取当前月的第一天的23:59:59 9999
+     * @param localDate 2022-06-07
+     * @return  2022-06-01 23:59:59 9999
+     */
+    public static LocalDateTime getFirstDayEndOfMonth(LocalDate localDate){
+        return LocalDateTime.of(localDate.with(TemporalAdjusters.firstDayOfMonth()),LocalTime.MAX);
     }
 
     /**
-     * 获取当前月的最后一天的23:59:59
-     * @param localDateTime 2022-06-07 12:20
-     * @return  2022-06-30 23:59:59
+     * 获取当前月的最后一天的23:59:59 99999
+     * @param localDate 2022-06-07
+     * @return  2022-06-30 23:59:59 9999
      */
-    public static LocalDateTime getLastDayEndOfMonth(LocalDateTime localDateTime){
-        return localDateTime.with(TemporalAdjusters.lastDayOfMonth())
-                .withHour(23).withMinute(59).withSecond(59);
+    public static LocalDateTime getLastDayEndOfMonth(LocalDate localDate){
+        return LocalDateTime.of(localDate.with(TemporalAdjusters.lastDayOfMonth()),LocalTime.MAX);
     }
 
 
     /**
      * 获取下个月的第一天的凌晨
-     * @param localDateTime 2022-06-07 12:20
-     * @return 2022-07-01 00:00
+     * @param localDate 2022-06-07
+     * @return 2022-07-01 00:00:00 0000
      */
-    public static LocalDateTime getFirstDayStartOfNextMonth(LocalDateTime localDateTime){
-        return localDateTime.with(TemporalAdjusters.firstDayOfNextMonth())
-                .withHour(0).withMinute(0).withSecond(0);
+    public static LocalDateTime getFirstDayStartOfNextMonth(LocalDate localDate){
+        return localDate.with(TemporalAdjusters.firstDayOfNextMonth()).atStartOfDay();
     }
 
     /**
@@ -269,14 +283,14 @@ public class DateKit {
 
     public static void main(String[] args) {
         LocalDateTime localDateTime = LocalDateTime.now(); //2022年6月7号 星期二
-        System.out.println("dayofWeek:"+localDateTime.getDayOfWeek());  //TUESDAY
+/*        System.out.println("dayofWeek:"+localDateTime.getDayOfWeek());  //TUESDAY
         System.out.println("dayofWeekValue:"+localDateTime.getDayOfWeek().getValue());  //2
         System.out.println("dayofMonth:"+localDateTime.getDayOfMonth()); //7
         System.out.println("dayofyear:"+localDateTime.getDayOfYear()); //158
         System.out.println("month:"+localDateTime.getMonth()); //JUNE
-        System.out.println("monthValue:"+localDateTime.getMonthValue());  //6
+        System.out.println("monthValue:"+localDateTime.getMonthValue());  //6*/
 
-
+        System.out.println(getEndDayOfDay(LocalDate.now()));
 
     }
 
