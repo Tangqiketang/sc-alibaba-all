@@ -92,6 +92,15 @@ public class DateKit {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
+    /**
+     * 获取精确到分的时间戳
+     * @param localDateTime
+     * @return
+     */
+    public static long getTimeMills(LocalDateTime localDateTime) {
+        return LocalDateTime.of(localDateTime.getYear(), localDateTime.getMonth(), localDateTime.getDayOfMonth(), localDateTime.getHour(), localDateTime.getMinute(), 0)
+                .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
 
     /************************************** 查询  ******************************************/
     //LocalDateTime localDateTime = LocalDateTime.now(); //2022年6月7号 星期二
@@ -289,8 +298,7 @@ public class DateKit {
         System.out.println("dayofyear:"+localDateTime.getDayOfYear()); //158
         System.out.println("month:"+localDateTime.getMonth()); //JUNE
         System.out.println("monthValue:"+localDateTime.getMonthValue());  //6*/
-
-        System.out.println(getEndDayOfDay(LocalDate.now()));
+        System.out.println(localDateTime2long(LocalDateTime.now()));
 
     }
 

@@ -22,6 +22,7 @@
 			</if>
 			<if test="startTime !=null">
 				and a.create_time &gt;= #{startTime}
+				group by DATE_FORMAT(a.create_time,'%Y-%m-%d %Y%m%d%H%i%s')
 			</if>
 
         </where>
