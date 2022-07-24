@@ -15,7 +15,6 @@
     <module>gateway-server</module>
     <module>service-mqtt</module>
     <module>cloud-logging-starter</module>
-    <module>common-util</module>
     <module>rocket-producer</module>
     <module>rocket-consumer</module>
     <module>service-mqtt-broker</module>
@@ -24,6 +23,8 @@
     <module>service-web</module>
     <module>wm-practice</module>
     <module>cloud-redis-starter</module>
+    <module>common-core</module>
+    <module>auth-server</module>
   </modules>
 
   <properties>
@@ -41,6 +42,9 @@
     <httpclient.version>4.5.13</httpclient.version>
     <redisson-starter.version>3.16.1</redisson-starter.version>
     <commons-io.version>2.7</commons-io.version>
+
+    <security-oauth2.version>2.3.8.RELEASE</security-oauth2.version>
+    <security-jwt.version>1.1.0.RELEASE</security-jwt.version>
   </properties>
 
   <dependencies>
@@ -165,7 +169,17 @@
         <artifactId>commons-io</artifactId>
         <version>${commons-io.version}</version>
       </dependency>
-
+      <!-- 加入spring security spring security oauth2的处理 -->
+      <dependency>
+        <groupId>org.springframework.security.oauth</groupId>
+        <artifactId>spring-security-oauth2</artifactId>
+        <version>${security-oauth2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-jwt</artifactId>
+        <version>${security-jwt.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

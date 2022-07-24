@@ -33,6 +33,9 @@ import java.util.Map;
 @EnableConfigurationProperties({RedisProperties.class, CacheManagerProperties.class})
 public class RedisConfig extends CachingConfigurerSupport {
 
+    //缓存增加前缀
+    private static final String springCachePrex = "wm-springcache";
+
     //key value的序列化方式
     @Bean
     public RedisSerializer<String> redisKeySerializer() {
@@ -61,7 +64,9 @@ public class RedisConfig extends CachingConfigurerSupport {
     //@Cacheable(value = "user", key = "#username")  //表示取出username作为key
     //@CachePut(value = "user", key = "#sysUser.username", unless="#result == null")
     //@CacheEvict(value = "user", key = "#sysUser.username")
+    //@Cacheable(value = {"menuById"}, key = "#id", condition = "#conditionValue > 1")  condition
     //@Cacheable(cacheNames="缓存组件的名称",keyGenerator="myKeyGenerator")  //表示取出username作为key
+    //@Cacheable(cacheNames = "auth", key = "'oauth-client:'+#clientId")
 
     //自定义key
     @Autowired
@@ -74,7 +79,7 @@ public class RedisConfig extends CachingConfigurerSupport {
             , RedisSerializer<String> redisKeySerializer, RedisSerializer<Object> redisValueSerializer) {
         RedisCacheConfiguration difConf = getDefConf(redisKeySerializer, redisValueSerializer).entryTtl(Duration.ofHours(1));
 
-        //自定义的缓存过期时间配置
+        //自定义的缓存过期时间配置.默认一小时。或者配置文件中配置
         int configSize = cacheManagerProperties.getConfigs() == null ? 0 : cacheManagerProperties.getConfigs().size();
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>(configSize);
         if (configSize > 0) {
@@ -104,10 +109,12 @@ public class RedisConfig extends CachingConfigurerSupport {
         };
     }
 
+
+
     private RedisCacheConfiguration getDefConf(RedisSerializer<String> redisKeySerializer, RedisSerializer<Object> redisValueSerializer) {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
-                .computePrefixWith(cacheName -> "cache".concat(":").concat(cacheName).concat(":"))
+                .computePrefixWith(cacheName -> springCachePrex.concat(":").concat(cacheName).concat(":"))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisKeySerializer))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisValueSerializer));
     }

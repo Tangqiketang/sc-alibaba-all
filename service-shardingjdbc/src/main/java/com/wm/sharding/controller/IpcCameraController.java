@@ -2,9 +2,9 @@ package com.wm.sharding.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.wm.common.vo.base.BaseResp;
-import com.wm.sharding.model.entity.IpcCamera;
+import com.wm.core.model.vo.base.BaseResp;
 import com.wm.sharding.mapper.IpcCameraMapper;
+import com.wm.sharding.model.entity.IpcCamera;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class IpcCameraController {
     public BaseResp insertCamera(@Validated @RequestBody IpcCamera camera ){
         BaseResp rsp = new BaseResp();
         ipcCameraMapper.insert(camera);
-        rsp.setCode(0);
+        rsp.setCode("0");
         return rsp;
     }
 

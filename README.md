@@ -5,6 +5,7 @@
 
 nacos:注册中心 startup.cmd -m standalone
     8848  http://localhost:8848/nacos
+
 service-hi: 被feign调用的服务
     8762-8764
 service-feign: 使用feign或ribbon调用service-hi
@@ -26,6 +27,8 @@ sentinel/sentinel
 
 gateway-server: 网关
     8080
+auth-server:认证中心
+    8081
     
     
 

@@ -23,7 +23,7 @@ public class CacheManagerProperties {
     @Getter
     public static class CacheConfig {
         private String key;
-
+        //秒
         private long second = 60;
     }
 
