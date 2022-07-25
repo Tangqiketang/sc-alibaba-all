@@ -53,6 +53,14 @@
         </root>
     </springProfile>
 
+    <!--hik环境:打印控制台-->
+    <springProfile name="hik">
+        <root level="${LOG_LEVEL}">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="asyncFileAppender"/>
+        </root>
+    </springProfile>
+
 
     <!--生产环境:打印控制台和输出到文件-->
     <springProfile name="prod">
