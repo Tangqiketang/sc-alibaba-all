@@ -4,9 +4,9 @@ package com.wm.web.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.wm.common.vo.base.BaseResp;
-import com.wm.web.model.entity.IpcCamera;
+import com.wm.core.model.vo.base.BaseResp;
 import com.wm.web.mapper.IpcCameraMapper;
+import com.wm.web.model.entity.IpcCamera;
 import com.wm.web.service.IIpcCameraService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,7 +46,7 @@ public class IpcCameraController {
     public BaseResp insertCamera(@Validated @RequestBody IpcCamera camera ){
         BaseResp rsp = new BaseResp();
         ipcCameraMapper.insert(camera);
-        rsp.setCode(0);
+        rsp.setCode("0");
         return rsp;
     }
 
@@ -107,6 +107,8 @@ public class IpcCameraController {
         BaseResp<IPage<Object>> result = new BaseResp<>();
         IPage<Object> page = new Page<>(pageNo,pageSize);
         //WHERE create_time BETWEEN #{startTime} AND #{endTime}
+        //queryWrapper.eq(UserDeviceDetector::getImei,imei).in(UserDeviceDetector::getSleepStatusChange,Arrays.asList(1,2));
+        //queryWrapper.apply("date_format(create_time,'%Y-%m-%d')={0}",queryDate);
         Page<Object> list = null;
         result.setResult(list);
         return result;

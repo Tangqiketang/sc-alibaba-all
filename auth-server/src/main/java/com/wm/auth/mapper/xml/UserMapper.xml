@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wm.auth.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wm.auth.model.entity.User">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="nickname" property="nickname" />
+        <result column="gender" property="gender" />
+        <result column="password" property="password" />
+        <result column="dept_id" property="deptId" />
+        <result column="avatar" property="avatar" />
+        <result column="phone" property="phone" />
+        <result column="status" property="status" />
+        <result column="email" property="email" />
+        <result column="birthday" property="birthday" />
+        <result column="deleted" property="deleted" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 用户认证信息映射 -->
+    <resultMap id="AuthUserMap" type="com.wm.auth.model.dto.AuthUserDTO">
+        <id property="userId" column="userId" jdbcType="BIGINT"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="BOOLEAN"/>
+        <result property="deptId" column="deptId" jdbcType="BIGINT"></result>
+        <collection property="roles" ofType="string" javaType="list">
+            <result column="roleCode"></result>
+        </collection>
+    </resultMap>
+
+    <select id="selectUserAuth" resultMap="com.wm.auth.mapper.UserMapper.AuthUserMap">
+        SELECT
+            t1.id userId,
+            t1.username as username,
+            t1.nickname as nickname,
+            t1.password as password,
+            t1.status as status,
+            t1.dept_id as deptId ,
+            t3.role_code as roleCode
+        FROM
+            sys_user t1
+                LEFT JOIN sys_user_role t2 ON t2.user_id = t1.id
+                LEFT JOIN sys_role t3 ON t3.id = t2.role_id
+        WHERE
+            t1.username = #{username} and t1.deleted=0
+    </select>
+
+</mapper>

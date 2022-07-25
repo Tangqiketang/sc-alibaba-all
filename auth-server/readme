@@ -1,0 +1,7 @@
+1.认证的时候需要传客户端id密码。用户名密码。 拿到token之后，只需要传token
+2.忽略的url不需要传token，但也拿不到用户信息
+3.clientservcie验证client再进到security自带的/oauth/token接口，但是可以自己覆盖这个接口
+4.不忽略的url如果不在数据库中插入权限管理，则只认证不鉴权
+
+1.
+2.
