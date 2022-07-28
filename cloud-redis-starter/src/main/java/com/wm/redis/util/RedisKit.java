@@ -115,6 +115,25 @@ public class RedisKit {
     }
 
 
+    public void multiSave(Map<String, String> source) {
+        redisTemplate.executePipelined((RedisCallback<Object>) connection -> {
+            // 这里逻辑简单不会抛异常
+            // 否则需要加上try...catch...finally防止链接未正常关闭 造成泄漏
+            connection.openPipeline();
+            source.forEach((key, value) -> {
+                // hset zset都是可以用的，但是要序列化
+                connection.set(RedisSerializer.string().serialize(key),
+                        RedisSerializer.json().serialize(value));
+                // 设置过期时间 10天
+                connection.expire(RedisSerializer.string().serialize(key), TimeUnit.DAYS.toSeconds(10));
+            });
+            connection.close();
+            // executePipelined源码要求RedisCallback必须返回null，否则抛异常
+            return null;
+        });
+    }
+
+
     /**
      * 一次性添加数组到   过期时间的  缓存，不用多次连接，节省开销
      *

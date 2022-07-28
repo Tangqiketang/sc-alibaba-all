@@ -4,6 +4,7 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.wm.auth.security.core.refresh.PreAuthenticatedUserDetailsService;
 import com.wm.auth.security.core.user.SysUserDetail;
+import com.wm.auth.security.core.user.SysUserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -30,7 +30,10 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 
 import javax.annotation.Resource;
 import java.security.KeyPair;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 描述: 认证服务器配置
@@ -46,7 +49,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Resource
     private ClientDetailsService clientDetailsServiceImpl;
     @Resource
+    private SysUserDetailServiceImpl sysUserDetailsServiceImpl;
+    @Resource
     private AuthenticationManager authenticationManager;
+    @Resource
+    private PreAuthenticatedUserDetailsService preAuthenticatedUserDetailsService;
 
 
     /**
@@ -78,8 +85,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authenticationManager(authenticationManager)
                 //.accessTokenConverter(jwtAccessTokenConverter()) 使用chain来替代
                 .tokenEnhancer(tokenEnhancerChain)
-                .tokenGranter(compositeTokenGranter);
-                //.tokenServices(tokenServices(endpoints));
+                .tokenGranter(compositeTokenGranter)
+                .tokenServices(tokenServices(endpoints));
     }
 
 
@@ -149,26 +156,24 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public DefaultTokenServices tokenServices(AuthorizationServerEndpointsConfigurer endpoints) {
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setTokenStore(endpoints.getTokenStore());
-        tokenServices.setSupportRefreshToken(true);
         tokenServices.setClientDetailsService(clientDetailsServiceImpl);
-        tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
 
-        // 多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map
-        Map<String, UserDetailsService> clientUserDetailsServiceMap = new HashMap<>();
-        //clientUserDetailsServiceMap.put(SecurityConstants.ADMIN_CLIENT_ID, sysUserDetailsService); // 系统管理客户端
-        //clientUserDetailsServiceMap.put(SecurityConstants.APP_CLIENT_ID, memberUserDetailsService); // Android、IOS、H5 移动客户端
-        //clientUserDetailsServiceMap.put(SecurityConstants.WEAPP_CLIENT_ID, memberUserDetailsService); // 微信小程序客户端
+        TokenEnhancerChain tokenEnhancerChain = (TokenEnhancerChain) endpoints.getTokenEnhancer();
+        tokenServices.setTokenEnhancer(tokenEnhancerChain);
 
-        // 刷新token模式下，重写预认证提供者替换其AuthenticationManager，可自定义根据客户端ID和认证方式区分用户体系获取认证用户信息
-        PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
-        provider.setPreAuthenticatedUserDetailsService(new PreAuthenticatedUserDetailsService<>(clientUserDetailsServiceMap));
-        tokenServices.setAuthenticationManager(new ProviderManager(Arrays.asList(provider)));
-
+        // 支持使用refresh token刷新access token
+        tokenServices.setSupportRefreshToken(true);
         /** refresh_token有两种使用方式：重复使用(true)、非重复使用(false)，默认为true
          *  1 重复使用：access_token过期刷新时， refresh_token过期时间未改变，仍以初次生成的时间为准
          *  2 非重复使用：access_token过期刷新时， refresh_token过期时间延续，在refresh_token有效期内刷新便永不失效达到无需再次登录的目的
          */
         tokenServices.setReuseRefreshToken(true);
+
+        // 刷新token模式下，重写预认证提供者替换其AuthenticationManager，可自定义根据客户端ID和认证方式区分用户体系获取认证用户信息
+        PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+        provider.setPreAuthenticatedUserDetailsService(preAuthenticatedUserDetailsService);
+        tokenServices.setAuthenticationManager(new ProviderManager(Arrays.asList(provider)));
+
         return tokenServices;
 
     }
