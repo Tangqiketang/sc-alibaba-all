@@ -86,7 +86,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 //.accessTokenConverter(jwtAccessTokenConverter()) 使用chain来替代
                 .tokenEnhancer(tokenEnhancerChain)
                 .tokenGranter(compositeTokenGranter)
-                .tokenServices(tokenServices(endpoints));
+
+                .userDetailsService(sysUserDetailsServiceImpl).reuseRefreshTokens(true);
+                //.tokenServices(tokenServices(endpoints));
     }
 
 

@@ -39,7 +39,7 @@ public class CodeGenerator {
     public static void entityGenerator() {
 
         String[] tables = new String[]{
-                "sys_user","sys_role","sys_user_role","sys_oauth_client"
+                "sys_menu","sys_permission","sys_role_menu","sys_role_permission"
         };
         InjectionConfig injectionConfig = new InjectionConfig() {
             //自定义属性注入:abc
@@ -82,7 +82,7 @@ public class CodeGenerator {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setTablePrefix(new String[]{"sys_"});// 此处可以修改为您的表前缀
+        //strategy.setTablePrefix(new String[]{"sys_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);

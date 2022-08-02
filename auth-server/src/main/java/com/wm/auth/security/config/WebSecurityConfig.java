@@ -32,7 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().antMatchers("/oauth/**", "/sms-code").permitAll()
+                .authorizeRequests().antMatchers("/oauth/**").permitAll()
+                //menu这里虽然不拦截,其实在网关层已经做了拦截
+                .antMatchers("/menu/**").permitAll()
                 .antMatchers("/webjars/**", "/doc.html", "/swagger-resources/**", "/v2/api-docs","/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
