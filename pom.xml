@@ -13,9 +13,7 @@
     <module>service-feign</module>
     <module>service-hi</module>
     <module>gateway-server</module>
-    <module>service-mqtt</module>
     <module>cloud-logging-starter</module>
-    <module>service-mqtt-broker</module>
     <module>dubbo-sample</module>
     <module>service-shardingjdbc</module>
     <module>service-web</module>
@@ -24,6 +22,7 @@
     <module>common-core</module>
     <module>auth-server</module>
     <module>rocketmq</module>
+    <module>mqtt-module</module>
   </modules>
 
   <properties>
