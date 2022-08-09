@@ -15,8 +15,6 @@
     <module>gateway-server</module>
     <module>service-mqtt</module>
     <module>cloud-logging-starter</module>
-    <module>rocket-producer</module>
-    <module>rocket-consumer</module>
     <module>service-mqtt-broker</module>
     <module>dubbo-sample</module>
     <module>service-shardingjdbc</module>
@@ -25,6 +23,7 @@
     <module>cloud-redis-starter</module>
     <module>common-core</module>
     <module>auth-server</module>
+    <module>rocketmq</module>
   </modules>
 
   <properties>

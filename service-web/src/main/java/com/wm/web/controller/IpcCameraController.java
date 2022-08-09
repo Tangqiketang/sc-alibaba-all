@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wm.core.model.vo.base.BaseResp;
+import com.wm.redis.spi.TestSpiService;
 import com.wm.web.mapper.IpcCameraMapper;
 import com.wm.web.model.entity.IpcCamera;
 import com.wm.web.service.IIpcCameraService;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
+import java.util.ServiceLoader;
 
 /**
  * <p>
@@ -121,6 +123,17 @@ public class IpcCameraController {
     @ResponseBody
     public String test12(){
         return iIpcCameraService.asycDo();
+    }
+
+
+    @GetMapping("/testspi")
+    @ResponseBody
+    public String testspi(){
+        ServiceLoader<TestSpiService> internetServices = ServiceLoader.load(TestSpiService.class);
+        for (TestSpiService internetService : internetServices) {
+            System.out.println(internetService.getServiceImplName());
+        }
+        return null;
     }
 
 }

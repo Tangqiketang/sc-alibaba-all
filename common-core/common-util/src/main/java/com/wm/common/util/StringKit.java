@@ -95,4 +95,11 @@ public class StringKit {
         return RandomStringUtils.randomAlphanumeric(n).toLowerCase();
     }
 
+    /**
+     * 首字母变大写
+     * @param fieldName  hello
+     * @return  Hello
+     */
+    public String capitalize(String fieldName){ return StringUtils.capitalize(fieldName); }
+
 }
