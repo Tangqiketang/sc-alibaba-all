@@ -61,11 +61,11 @@ public class RedisConfig extends CachingConfigurerSupport {
 
 
     /***************************************** spring cacheManager **********************************************************/
-    //@Cacheable(value = "user", key = "#username")  //表示取出username作为key
+    //@Cacheable(value = "user", key = "#username")  //表示取出username作为key  放入
     //@CachePut(value = "user", key = "#sysUser.username", unless="#result == null")
-    //@CacheEvict(value = "user", key = "#sysUser.username")
+    //@CacheEvict(value = "user", key = "#sysUser.username")   删除
     //@Cacheable(value = {"menuById"}, key = "#id", condition = "#conditionValue > 1")  condition
-    //@Cacheable(cacheNames="缓存组件的名称",keyGenerator="myKeyGenerator")  //表示取出username作为key
+    //@Cacheable(cacheNames="缓存组件的名称",keyGenerator="myKeyGenerator")
     //@Cacheable(cacheNames = "auth", key = "'oauth-client:'+#clientId")
 
     //自定义key

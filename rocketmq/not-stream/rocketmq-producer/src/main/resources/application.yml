@@ -1,0 +1,27 @@
+server:
+  port: 8866
+spring:
+  application:
+    name: rocketmq-producer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+rocketmq:
+  name-server: 192.168.40.131:9876
+  producer:
+    group: rocketmq-producer1
+    access-key: xxxx
+    secret-key: yyyy
+    max-message-size: 10485760  #客户端限制的消息大小，超过报错，同时服务端也会限制，所以需要跟服务端配合使用
+    send-message-timeout: 5000 #发送消息超时时间，单位毫秒 默认10000
+    compress-message-body-threshold: 1048576
+    retry-next-server: false
+    customized-trace-topic: xxx
+    enable-msg-trace: false
+    retry-times-when-send-async-failed: 2
+    retry-times-when-send-failed: 2
+
+
+

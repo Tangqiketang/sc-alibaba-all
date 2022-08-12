@@ -43,7 +43,7 @@ if [ $? -eq "0" ]; then
 echo ">>>  $PROJECT_NAME  is already running PID=${pid} <<<"
 stop
 else
-nohup java -Xms512m -Xmx2048m  -jar $PROJECT_JAR  -Dfastjson.parser.safeMode=true  --spring.cloud.nacos.discovery.ip=$NACOS_DISCOVERY_IP --spring.cloud.nacos.config.server-addr=$NACOS_IP --spring.cloud.nacos.config.namespace=$PROJECT_NAMESPACE &
+nohup java -Xms512m -Xmx2048m  -jar $PROJECT_JAR  -Dfastjson.parser.safeMode=true  --spring.cloud.nacos.discovery.ip=$NACOS_DISCOVERY_IP --spring.cloud.nacos.config.server-addr=$NACOS_IP --spring.cloud.nacos.config.namespace=$PROJECT_NAMESPACE > /dev/null 2>&1 &
 echo ">>> start  $PROJECT_NAME successed PID=$! <<<"
 fi
 }

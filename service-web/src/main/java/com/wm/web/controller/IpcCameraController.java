@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wm.core.model.vo.base.BaseResp;
+import com.wm.redis.constant.BusinessTypeEnum;
 import com.wm.redis.spi.TestSpiService;
+import com.wm.redis.util.RedisKit;
 import com.wm.web.mapper.IpcCameraMapper;
 import com.wm.web.model.entity.IpcCamera;
 import com.wm.web.service.IIpcCameraService;
@@ -22,7 +24,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -134,6 +139,45 @@ public class IpcCameraController {
             System.out.println(internetService.getServiceImplName());
         }
         return null;
+    }
+
+    @Resource
+    private RedisKit redisKit;
+
+    @GetMapping("/testredis")
+    @ResponseBody
+    public String testredis(){
+        List<IpcCamera> list = ipcCameraMapper.selectList(new LambdaQueryWrapper<IpcCamera>());
+        Map<String,Object> map= list.stream().collect(Collectors.toMap(IpcCamera::getCameraName, a -> (Object)a,(k1, k2)->k1));
+        String key = "cameraKey";
+/*        redisKit.opsForHash().putAll(key,map);
+
+        Map<String,Object> fieldValue = redisKit.opsForHash().entries(key);
+        IpcCamera result = (IpcCamera) fieldValue.get("name1");
+
+       redisKit.set("aaa",list.get(0));
+        String ccc = (String) redisKit.get("aaa");
+        IpcCamera bbb = (IpcCamera) redisKit.get("aaa");*/
+
+/*        redisKit.setBit("a0",0L,true);
+        redisKit.setBit("a1",1L,true);
+        redisKit.setBit("a2",2L,true);
+        redisKit.setBit("a3",3L,true);
+        redisKit.setBit("a4",4L,true);
+        redisKit.setBit("a5",5L,true);
+        redisKit.setBit("a6",6L,true);
+        redisKit.setBit("a7",7L,true);
+        redisKit.setBit("a8",8L,true);
+        redisKit.setBit("a9",9L,true);
+        redisKit.setBit("a10",10L,true);
+
+        List<Long> result = redisKit.getBitList("a10");
+        System.out.println(JSON.toJSONString(result));*/
+
+
+        return redisKit.generate(BusinessTypeEnum.ORDER,8);
+
+        //return JSON.toJSONString(null);
     }
 
 }

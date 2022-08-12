@@ -1,15 +1,13 @@
 package com.wm.common.util;
 
-import com.xkzhangsan.time.holiday.HolidayUtil;
-import org.apache.tomcat.jni.Local;
-
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * 描述:
@@ -90,6 +88,21 @@ public class DateKit {
     public static LocalDate date2LocalDate(Date date){
         if(null == date) { return null; }
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    /**
+     * 获取UTC格式，世界标准时间。2019-12-18T15:25:30.176Z
+     * @param localDateTime
+     * @return 2019-12-18T15:25:30.176Z
+     */
+    public static String getISO8601Time(LocalDateTime localDateTime) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zdt = localDateTime.atZone(zoneId);
+        Date date = Date.from(zdt.toInstant());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        TimeZone utc = TimeZone.getTimeZone("UTC");
+        df.setTimeZone(utc);
+        return df.format(date);
     }
 
     /**

@@ -24,7 +24,7 @@ spring:
         port: 18765
         dashboard: localhost:8748
   datasource:
-    url: jdbc:mysql://192.168.40.131:3306/service-web?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.40.131:3306/service-web?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
