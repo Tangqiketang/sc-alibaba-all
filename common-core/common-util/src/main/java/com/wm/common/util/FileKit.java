@@ -41,7 +41,11 @@ public class FileKit {
             sysLocation = sysLocation+"/"+moduleName+"/";
         }
 
-        return Boolean.TRUE.equals(saveFile(file, sysLocation, realName)) ? realName : "";
+        Boolean success = saveFile(file, sysLocation, realName);
+        if(success){
+            return sysLocation+realName;
+        }
+        return "";
     }
 
 
