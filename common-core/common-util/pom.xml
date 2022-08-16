@@ -51,6 +51,15 @@
             <artifactId>fastjson</artifactId>
         </dependency>
 
+
+        <!-- 对象拷贝 -->
+        <dependency>
+            <groupId>uk.com.robust-it</groupId>
+            <artifactId>cloning</artifactId>
+            <version>1.9.12</version>
+        </dependency>
+
+
         <!--时间类工具 -->
         <dependency>
           <groupId>com.github.xkzhangsan</groupId>
