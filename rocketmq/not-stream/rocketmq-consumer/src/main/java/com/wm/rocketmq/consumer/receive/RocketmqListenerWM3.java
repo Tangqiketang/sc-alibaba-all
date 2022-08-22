@@ -35,9 +35,9 @@ public class RocketmqListenerWM3 implements RocketMQListener<JSONObject> , Rocke
         consumer.setConsumeThreadMax(20);
 
         // 每次拉取的间隔，单位为毫秒.默认0秒
-        consumer.setPullInterval(1000);
-        // 每次拉取实际数量.默认32
-        consumer.setPullBatchSize(10);
+        consumer.setPullInterval(3000);
+        //每次拉取实际数量.默认32*1*4。 实际拉取数量= pullBatchSize*broker数量*N个队列数量=32*1*4
+        consumer.setPullBatchSize(32);
 
     }
 }

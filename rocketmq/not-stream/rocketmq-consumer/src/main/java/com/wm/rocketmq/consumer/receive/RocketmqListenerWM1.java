@@ -24,18 +24,18 @@ public class RocketmqListenerWM1 implements RocketMQListener<JSONObject> , Rocke
     public void onMessage(JSONObject jsonObject) {
         //幂等性。将已经处理的消息存入redis库中，每次处理前先进行查询操作，判断当前消息是否成功处理。
         //每个队列轮询获取
-        log.info("topic1"+Thread.currentThread().getName()+System.currentTimeMillis()/1000+"收到消息:"+jsonObject);
+        log.info("topic1"+Thread.currentThread().getName()+"||"+System.currentTimeMillis()/1000+"收到消息:"+jsonObject);
     }
 
     @Override
     public void prepareStart(DefaultMQPushConsumer consumer) {
         //consumer.setConsumeThreadMin(20);
         //consumer.setConsumeThreadMax(20);
-        consumer.setConsumeThreadMin(4);
-        consumer.setConsumeThreadMax(4);
+        consumer.setConsumeThreadMin(20);
+        consumer.setConsumeThreadMax(20);
         // 每次拉取的间隔，单位为毫秒
         consumer.setPullInterval(1000);
-        // 每次拉取实际数量.默认32
-        consumer.setPullBatchSize(32);
+        // 每次拉取实际数量.默认32*1*4。 实际拉取数量= pullBatchSize*broker数量*N个队列数量=1*1*4
+        consumer.setPullBatchSize(1);
     }
 }

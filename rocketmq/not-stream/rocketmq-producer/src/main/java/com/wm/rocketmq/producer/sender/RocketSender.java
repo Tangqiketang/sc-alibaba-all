@@ -28,15 +28,32 @@ public class RocketSender {
 
     //同步消息
     public void sendWM1(){
-        for(int i=0;i<50;i++){
+        for(int i=0;i<100;i++){
             JSONObject msg = new JSONObject();
             msg.put("mycontent","wm01");
             Message<JSONObject> spingMsg = MessageBuilder.withPayload(msg).build();
             rocketMQTemplate.send("WM1-TOPIC",spingMsg);
         }
     }
-    //异步
     public void sendWM2(){
+        for(int i=0;i<100;i++){
+            JSONObject msg = new JSONObject();
+            msg.put("mycontent","wm02");
+            Message<JSONObject> spingMsg = MessageBuilder.withPayload(msg).build();
+            rocketMQTemplate.send("WM2-TOPIC",spingMsg);
+        }
+    }
+    public void sendWM3(){
+        for(int i=0;i<1000;i++){
+            JSONObject msg = new JSONObject();
+            msg.put("mycontent","wm03");
+            Message<JSONObject> spingMsg = MessageBuilder.withPayload(msg).build();
+            rocketMQTemplate.send("WM3-TOPIC",spingMsg);
+        }
+    }
+
+    //异步
+    public void sendWM2Async(){
         JSONObject msg = new JSONObject();
         msg.put("mycontent","wm02");
         Message<JSONObject> spingMsg = MessageBuilder.withPayload(msg).build();
@@ -116,6 +133,15 @@ public class RocketSender {
         System.out.println("beforeSend:"+System.currentTimeMillis());
         rocketMQTemplate.send(springMsg);
         System.out.println("AfterSend:"+System.currentTimeMillis());
+    }
 
+    // 如果消费者没有回馈消息，则不会发送下一条消息
+    public void reply() {
+        for (int i = 1; i <= 10; i++) {
+            String text = "回馈消息" + "--" + i;
+            log.info("发送" + text);
+            String obj = rocketMQTemplate.sendAndReceive("wm_reply_topic", text,String.class);
+            log.info("消费者返回的消息：" + obj);
+        }
     }
 }
