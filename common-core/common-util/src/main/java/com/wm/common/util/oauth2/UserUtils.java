@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 描述:
+ * 描述: springsecurity体系oauth2对应的权限工具
  *
  * @auther WangMin
  * @create 2022-08-01 14:05

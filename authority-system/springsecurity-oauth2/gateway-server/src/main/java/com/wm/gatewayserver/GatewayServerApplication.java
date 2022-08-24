@@ -8,9 +8,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * 描述:
  * 网关服务
- *
- * @auther WangMin
- * @create 2022-02-16 15:18
  */
 @SpringBootApplication
 @EnableDiscoveryClient

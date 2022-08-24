@@ -12,7 +12,6 @@
   <modules>
     <module>service-feign</module>
     <module>service-hi</module>
-    <module>gateway-server</module>
     <module>cloud-logging-starter</module>
     <module>dubbo-sample</module>
     <module>service-shardingjdbc</module>
@@ -20,9 +19,9 @@
     <module>wm-practice</module>
     <module>cloud-redis-starter</module>
     <module>common-core</module>
-    <module>auth-server</module>
     <module>rocketmq</module>
     <module>mqtt-module</module>
+    <module>authority-system</module>
   </modules>
 
   <properties>
