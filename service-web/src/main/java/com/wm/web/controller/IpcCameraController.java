@@ -8,6 +8,7 @@ import com.wm.core.model.vo.base.BaseResp;
 import com.wm.redis.constant.BusinessTypeEnum;
 import com.wm.redis.spi.TestSpiService;
 import com.wm.redis.util.RedisKit;
+import com.wm.web.aop.annotation.NoRepeatSubmit;
 import com.wm.web.mapper.IpcCameraMapper;
 import com.wm.web.model.entity.IpcCamera;
 import com.wm.web.service.IIpcCameraService;
@@ -77,6 +78,7 @@ public class IpcCameraController {
 
     @GetMapping("/test")
     @ResponseBody
+    @NoRepeatSubmit
     public String test(){
         LambdaQueryWrapper<IpcCamera> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         return ipcCameraMapper.selectList(lambdaQueryWrapper).toString();

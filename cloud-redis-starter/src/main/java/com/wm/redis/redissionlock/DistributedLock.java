@@ -14,15 +14,6 @@ public interface DistributedLock {
      */
     ZLock lock(String key, long leaseTime, TimeUnit unit, boolean isFair) throws Exception;
 
-    default ZLock lock(String key, long leaseTime, TimeUnit unit) throws Exception {
-        return this.lock(key, leaseTime, unit, false);
-    }
-    default ZLock lock(String key, boolean isFair) throws Exception {
-        return this.lock(key, -1, null, isFair);
-    }
-    default ZLock lock(String key) throws Exception {
-        return this.lock(key, -1, null, false);
-    }
 
     /**
      * 尝试获取锁，如果锁不可用则等待最多waitTime时间后放弃
@@ -37,12 +28,6 @@ public interface DistributedLock {
 
     default ZLock tryLock(String key, long waitTime, long leaseTime, TimeUnit unit) throws Exception {
         return this.tryLock(key, waitTime, leaseTime, unit, false);
-    }
-    default ZLock tryLock(String key, long waitTime, TimeUnit unit, boolean isFair) throws Exception {
-        return this.tryLock(key, waitTime, -1, unit, isFair);
-    }
-    default ZLock tryLock(String key, long waitTime, TimeUnit unit) throws Exception {
-        return this.tryLock(key, waitTime, -1, unit, false);
     }
 
     /**
