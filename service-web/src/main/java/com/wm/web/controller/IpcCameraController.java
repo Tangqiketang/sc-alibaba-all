@@ -72,14 +72,11 @@ public class IpcCameraController {
         return BaseResp.ok(obj);
     }
 
-
-
-
-
     @GetMapping("/test")
     @ResponseBody
     @NoRepeatSubmit
     public String test(){
+
         LambdaQueryWrapper<IpcCamera> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         return ipcCameraMapper.selectList(lambdaQueryWrapper).toString();
     }

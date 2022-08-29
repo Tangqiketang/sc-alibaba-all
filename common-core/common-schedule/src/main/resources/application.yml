@@ -1,0 +1,31 @@
+##需要把该配置配到主项目中才能生效持久化到数据库
+spring:
+  #quartz定时任务相关配置参数
+  quartz:
+    #相关属性配置
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: common-schedule
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: true #开启集群
+            clusterCheckinInterval: 10000
+            useProperties: false
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 8 #线程核心线程数大小
+            threadPriority: 4 #线程创建后优先集分配
+            threadsInheritContextClassLoaderOfInitializingThread: true
+    #数据库存储方式
+    job-store-type: jdbc
+    #运行后初始化表结构
+    jdbc.initialize-schema: never
+
+
+
+
