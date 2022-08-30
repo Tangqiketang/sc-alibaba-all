@@ -91,14 +91,15 @@ springfox:
     swagger-ui:
       enabled: true # false关闭swagger-ui界面 但不关闭openapi
 
-##########security#############
+
 security:
   ignoreUrls:
     # 登录接口
-    - /authserver/oauth/token/**
-    # Knife4j swagger
-    - /webjars/**
-    - /doc.html
-    - /swagger-ui/index.html
-    - /swagger-resources/**
-    - /*/v2/api-docs
+    - /userrbac/oauth/token/*
+    - /serviceweb/camera/test
+
+
+token:
+  secret: TiWTxo77X25ijD8SPZzT4r8E+juzmWQRysqTc+fVmz/xv7uRBBd6VJYHn3xQeeSBz4NtbBRmxnSE/0FODPY7vA==
+  expire: 259200000
+  need: true

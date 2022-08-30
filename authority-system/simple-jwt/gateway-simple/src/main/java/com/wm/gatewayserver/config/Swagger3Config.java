@@ -38,7 +38,7 @@ public class Swagger3Config implements SwaggerResourcesProvider {
     private String self;
 
     @Autowired
-    public Swagger3Config(RouteLocator routeLocator,GatewayProperties gatewayProperties) {
+    public Swagger3Config(RouteLocator routeLocator, GatewayProperties gatewayProperties) {
         this.routeLocator = routeLocator;
         this.gatewayProperties=gatewayProperties;
     }
