@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 
 /**
  * <p>
- * 用户信息表 前端控制器
+ * 用户信息表
  * </p>
  *
  * @author Wang Min
@@ -16,6 +16,11 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/user")
 public class SysUserController {
+
+
+    //微信小程序注册
+
+
 
 }
 

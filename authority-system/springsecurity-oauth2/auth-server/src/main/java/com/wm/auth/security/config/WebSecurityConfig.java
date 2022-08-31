@@ -35,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/oauth/**").permitAll()
                 //menu这里虽然不拦截,其实在网关层已经做了拦截
                 .antMatchers("/menu/**").permitAll()
+                .antMatchers("/user/**").permitAll()
                 .antMatchers("/webjars/**", "/doc.html", "/swagger-resources/**", "/v2/api-docs","/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
