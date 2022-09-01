@@ -1,10 +1,14 @@
 package com.wm.auth.security.core.user;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wm.auth.mapper.RoleMapper;
+import com.wm.auth.mapper.SysWxUserMapper;
 import com.wm.auth.mapper.UserMapper;
 import com.wm.auth.mapper.UserRoleMapper;
 import com.wm.auth.model.dto.AuthUserDTO;
+import com.wm.auth.model.entity.SysWxUser;
+import com.wm.common.util.oauth2.enums.AuthenticationIdentityEnum;
 import com.wm.core.model.vo.base.ResultCode;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -35,6 +39,8 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
     private UserRoleMapper userRoleMapper;
     @Resource
     private RoleMapper roleMapper;
+    @Resource
+    private SysWxUserMapper sysWxUserMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -53,7 +59,7 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
         result.setPassword(BCRYPT+authUserDTO.getPassword());  //{bcrypt}$2a$10$xVWsNOhHrCxh5UbpCE7/HuJ.PAOKcYAqRxD2CO2nVnJS.IAXkr5aq
         result.setUserId(authUserDTO.getUserId());
         result.setDeptId(authUserDTO.getDeptId());
-        //result.setAuthenticationIdentity();
+        result.setAuthenticationIdentity(AuthenticationIdentityEnum.USERNAME.getValue());
 
         if (result == null) {
             throw new UsernameNotFoundException(ResultCode.USER_NOT_EXIST.getMsg());
@@ -80,4 +86,27 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
         AuthUserDTO authUserDTO = userMapper.selectUserAuth(username);
         return authUserDTO;
     }
+
+    public WxUserDetails loadUserByOpenId(String openId) {
+        SysWxUser sysWxUser = sysWxUserMapper.selectOne(new LambdaQueryWrapper<SysWxUser>().eq(SysWxUser::getOpenId,openId));
+        if(null==sysWxUser){
+            return null;
+        }
+        WxUserDetails result = new WxUserDetails();
+        result.setPhone(sysWxUser.getPhone());
+        result.setWxId(sysWxUser.getId().longValue());
+        result.setEnabled(true);
+        result.setUsername(sysWxUser.getNickName());
+        result.setAuthenticationIdentity(AuthenticationIdentityEnum.OPENID.getValue());
+
+        if (!result.isEnabled()) {
+            throw new DisabledException("该账户已被禁用!");
+        } else if (!result.isAccountNonLocked()) {
+            throw new LockedException("该账号已被锁定!");
+        } else if (!result.isAccountNonExpired()) {
+            throw new AccountExpiredException("该账号已过期!");
+        }
+        return result;
+    }
+
 }

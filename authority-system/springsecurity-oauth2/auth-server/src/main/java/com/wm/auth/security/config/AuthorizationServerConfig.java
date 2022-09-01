@@ -5,6 +5,8 @@ import cn.hutool.core.util.StrUtil;
 import com.wm.auth.security.core.refresh.PreAuthenticatedUserDetailsService;
 import com.wm.auth.security.core.user.SysUserDetail;
 import com.wm.auth.security.core.user.SysUserDetailServiceImpl;
+import com.wm.auth.security.core.user.WxUserDetails;
+import com.wm.auth.security.extension.wechat.WechatTokenGranter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -78,17 +80,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpoints.tokenStore(jwtTokenStore());
         // 获取原有默认授权模式(默认包含了 授权码模式、密码模式、客户端模式、简化模式)的授权者
         List<TokenGranter> granterList = new ArrayList<>(Arrays.asList(endpoints.getTokenGranter()));
-        //这里可以添加自定义授权模式 TODO
+        //这里可以添加自定义授权模式
+        granterList.add(new WechatTokenGranter(endpoints.getTokenServices(),clientDetailsServiceImpl,
+                endpoints.getOAuth2RequestFactory(),WechatTokenGranter.GRANT_TYPE,authenticationManager));
 
         CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(granterList);
         endpoints
                 .authenticationManager(authenticationManager)
-                //.accessTokenConverter(jwtAccessTokenConverter()) 使用chain来替代
                 .tokenEnhancer(tokenEnhancerChain)
                 .tokenGranter(compositeTokenGranter)
 
-                .userDetailsService(sysUserDetailsServiceImpl).reuseRefreshTokens(true);
-                //.tokenServices(tokenServices(endpoints));
+                .userDetailsService(sysUserDetailsServiceImpl).reuseRefreshTokens(true)
+                .tokenServices(tokenServices(endpoints));
     }
 
 
@@ -124,7 +127,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     /**
-     * Token 内容增强。 返回的是TokenEnhancer
+     * Token内容增强。 返回的是TokenEnhancer
+     *
      */
     @Bean
     public TokenEnhancer tokenEnhancer() {
@@ -140,7 +144,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 if (StrUtil.isNotBlank(sysUserDetails.getAuthenticationIdentity())) {
                     additionalInfo.put("authenticationIdentity", sysUserDetails.getAuthenticationIdentity());
                 }
-            } /*else if (principal instanceof MemberUserDetails) {
+            }else if(principal instanceof WxUserDetails){
+                WxUserDetails wxUserDetails = (WxUserDetails) principal;
+                additionalInfo.put("phone",wxUserDetails.getPhone());
+                //其他额外信息 TODO
+                additionalInfo.put("authenticationIdentity", wxUserDetails.getAuthenticationIdentity());
+            }/*else if (principal instanceof MemberUserDetails) {
                 MemberUserDetails memberUserDetails = (MemberUserDetails) principal;
                 additionalInfo.put("memberId", memberUserDetails.getMemberId());
                 additionalInfo.put("username", memberUserDetails.getUsername());

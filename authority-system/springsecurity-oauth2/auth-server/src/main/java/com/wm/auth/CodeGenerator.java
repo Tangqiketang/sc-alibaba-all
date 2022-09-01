@@ -25,7 +25,7 @@ import java.util.Scanner;
 
 public class CodeGenerator {
 
-    private static final String MODULE_NAME = "auth-server";
+    private static final String MODULE_NAME = "authority-system/springsecurity-oauth2/auth-server";
 
     private static final String TEMPLATE_PATH = "/templates/mapper.xml.vm";
 
@@ -39,7 +39,7 @@ public class CodeGenerator {
     public static void entityGenerator() {
 
         String[] tables = new String[]{
-                "sys_menu","sys_permission","sys_role_menu","sys_role_permission"
+                "sys_wx_user"
         };
         InjectionConfig injectionConfig = new InjectionConfig() {
             //自定义属性注入:abc

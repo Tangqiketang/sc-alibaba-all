@@ -1,5 +1,6 @@
 package com.wm.auth.security.config;
 
+import com.wm.auth.security.extension.wechat.WechatAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
     private UserDetailsService sysUserDetailServiceImpl;
+    @Resource
+    private WechatAuthenticationProvider wechatAuthenticationProvider;
 
 
     @Override
@@ -52,7 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //Manager中添加各种provider
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(daoAuthenticationProvider());
+        auth.authenticationProvider(daoAuthenticationProvider())
+                .authenticationProvider(wechatAuthenticationProvider);
     }
 
     /**************************************************password*******************************************************/
@@ -74,5 +78,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
     /*************************************************wechat**********************************************************************/
+
+
+
 
 }

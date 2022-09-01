@@ -98,6 +98,12 @@
             <artifactId>spring-security-oauth2-jose</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-miniapp</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>
