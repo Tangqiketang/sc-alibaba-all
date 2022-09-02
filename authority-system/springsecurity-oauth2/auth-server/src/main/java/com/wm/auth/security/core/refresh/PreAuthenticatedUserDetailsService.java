@@ -1,9 +1,11 @@
 package com.wm.auth.security.core.refresh;
 
 import com.wm.auth.security.core.user.SysUserDetailServiceImpl;
+import com.wm.auth.security.core.user.WxUserDetails;
 import com.wm.common.util.oauth2.RequestUtils;
 import com.wm.common.util.oauth2.enums.AuthenticationIdentityEnum;
 import com.wm.common.util.oauth2.enums.IBaseEnum;
+import com.wm.core.model.exception.meta.ServiceException;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -52,16 +54,19 @@ public class PreAuthenticatedUserDetailsService<T extends Authentication> implem
         if(null==userDetailsService){
             userDetailsService = sysUserDetailServiceImpl;
         }
-        //可以根据clientId实现多种认证方式。这里默认使用password
+        //可以根据clientId和token中的用户标识扩展信息实现同一个客户端不同认证方式
         if(clientId.equals("xxx")){
 
         }else{
             switch (authenticationIdentityEnum){
-                default:
+                case OPENID:
+                    return sysUserDetailServiceImpl.loadUserByOpenId(((WxUserDetails)authentication.getPrincipal()).getOpenId());
+                case USERNAME:
                     return userDetailsService.loadUserByUsername(authentication.getName());
+                default:
+                    throw new ServiceException("10010","类型暂不支持");
             }
         }
-
         return null;
     }
 }

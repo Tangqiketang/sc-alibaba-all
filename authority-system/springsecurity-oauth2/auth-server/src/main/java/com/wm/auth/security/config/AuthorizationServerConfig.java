@@ -147,6 +147,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             }else if(principal instanceof WxUserDetails){
                 WxUserDetails wxUserDetails = (WxUserDetails) principal;
                 additionalInfo.put("phone",wxUserDetails.getPhone());
+                additionalInfo.put("openId",wxUserDetails.getOpenId());
                 //其他额外信息 TODO
                 additionalInfo.put("authenticationIdentity", wxUserDetails.getAuthenticationIdentity());
             }/*else if (principal instanceof MemberUserDetails) {

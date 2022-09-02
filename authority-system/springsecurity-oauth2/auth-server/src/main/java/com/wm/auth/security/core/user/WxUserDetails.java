@@ -17,6 +17,7 @@ import java.util.HashSet;
 public class WxUserDetails implements UserDetails {
     /*********扩展字段**************/
     private Long wxId;
+    private String openId;
     private String authenticationIdentity;
 
     private String phone;

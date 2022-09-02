@@ -59,6 +59,7 @@ public class WechatAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getPrincipal() {
+        //返回自己定义的
         return this.wxUserDetails;
     }
 

@@ -95,6 +95,7 @@ public class SysUserDetailServiceImpl implements UserDetailsService {
         WxUserDetails result = new WxUserDetails();
         result.setPhone(sysWxUser.getPhone());
         result.setWxId(sysWxUser.getId().longValue());
+        result.setOpenId(sysWxUser.getOpenId());
         result.setEnabled(true);
         result.setUsername(sysWxUser.getNickName());
         result.setAuthenticationIdentity(AuthenticationIdentityEnum.OPENID.getValue());
