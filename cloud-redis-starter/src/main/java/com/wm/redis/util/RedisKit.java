@@ -499,6 +499,18 @@ public class RedisKit {
     }
 
     /**
+     * 获取整个hash结构转成对象
+     * @param key
+     * @return
+     */
+    public List<Object> hget(String key){
+        BoundHashOperations<String, Object, Object> boundHashOps = redisTemplate.boundHashOps(key);
+        List<Object> result = boundHashOps.values();
+        return result;
+    }
+
+
+    /**
      * hmget获取整个hash结构
      * @param key
      * @return
