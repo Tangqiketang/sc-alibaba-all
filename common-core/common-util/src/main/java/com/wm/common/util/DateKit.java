@@ -1,5 +1,7 @@
 package com.wm.common.util;
 
+import lombok.Data;
+
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -300,6 +302,73 @@ public class DateKit {
  //农历日期类 LunarDate
  //计算耗时工具 CostUtil
  //时间自然语言分析工具类（NLP） TimeNLPUtil
+
+
+
+
+
+
+ /*********************************************************/
+
+ public static List<TimeSlot> mergeTimeSlots(List<TimeSlot> timeSlots) {
+     if (timeSlots.size() == 1) {
+         return timeSlots;
+     }
+     for (int i = 0; i < timeSlots.size(); i++) {
+         for (int j = i + 1; j < timeSlots.size(); j++) {
+             TimeSlot timeSlot1 = timeSlots.get(i);
+             TimeSlot timeSlot2 = timeSlots.get(j);
+             List<TimeSlot> mergeSlot = mergeTwo(timeSlot1, timeSlot2);
+             // 如果两个时间段能合并则递归继续合并
+             if (mergeSlot.size() == 1) {
+                 timeSlots.remove(timeSlot1);
+                 timeSlots.remove(timeSlot2);
+                 timeSlots.addAll(mergeSlot);
+                 mergeTimeSlots(timeSlots);
+             }
+         }
+     }
+     return timeSlots;
+ }
+
+    private static List<TimeSlot> mergeTwo(TimeSlot timeSlot1, TimeSlot timeSlot2) {
+        List<TimeSlot> result = new ArrayList<>();
+        LocalDateTime start1 = timeSlot1.getStartDate();
+        LocalDateTime start2 = timeSlot2.getStartDate();
+        LocalDateTime end1 = timeSlot1.getEndDate();
+        LocalDateTime end2 = timeSlot2.getEndDate();
+        // 如果两个时间段完全没有交集则直接返回
+        if (end1.isBefore(start2) || start1.isAfter(end2)) {
+            result.add(timeSlot1);
+            result.add(timeSlot2);
+        }
+        // 如果有完全包含则去掉小的那个
+        else if (!start1.isAfter(start2) && !end1.isBefore(end2)) {
+            result.add(timeSlot1);
+        } else if (!start2.isAfter(start1) && !end2.isBefore(end1)) {
+            result.add(timeSlot2);
+        }
+        // 有交集则合并
+        else if (start1.isBefore(start2) && end1.isBefore(end2)) {
+            timeSlot1.setEndDate(end2);
+            result.add(timeSlot1);
+        } else if (start2.isBefore(start1) && end2.isBefore(end1)) {
+            timeSlot2.setEndDate(end1);
+            result.add(timeSlot2);
+        }
+        return result;
+    }
+
+    @Data
+    private static class TimeSlot {
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+        public TimeSlot(LocalDateTime startDate, LocalDateTime endDate) {
+            this.startDate = startDate;
+            this.endDate = endDate;
+        }
+    }
+
 
 
 
