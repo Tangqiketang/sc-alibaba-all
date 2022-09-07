@@ -1,0 +1,105 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.0.100:8848  #nacos地址
+        namespace: f739f38b-f593-432b-9458-5912ed89dafd
+        refresh-enabled: true
+        group: DEFAULT_GROUP
+        file-extension: yml
+        shared-configs[0]:
+          data-id: common.yml # 共享配置
+          group: DEFAULT_GROUP
+          refresh: true
+      #暴露的地址
+      discovery:
+        namespace: ${spring.cloud.nacos.config.namespace}
+        server-addr: ${spring.cloud.nacos.config.server-addr}
+        ip: 192.168.0.100  #注册的ip地址
+    gateway:
+      discovery:
+        locator:
+          enabled: false  #不启用服务发现
+          lowerCaseServiceId: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            # 允许任何域名使用
+            allowedOriginPatterns: "*"
+            # 允许任何头
+            allowedHeaders: "*"
+            # 允许任何方法(post、get等)
+            allowedMethods: "*"
+            # sessionid 多次访问一致
+            allowCredentials: true
+            # 允许来自所有域名(allowedOrigins)的所有请求方式(allowedMethods)发出CORS请求
+            add-to-simple-url-handler-mapping: true
+      routes:
+        - id: service-hi
+          uri: lb://service-hi
+          predicates:
+            - Path=/servicehi/**
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+          filters:
+            #发送到下游之前,原来路径截取前面几位 /demo/hi  ->发送到serviceHi  /hi
+            - StripPrefix=1
+        - id: service-feign
+          uri: lb://service-feign
+          predicates:
+            - Path=/servicefeign/**
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+          filters:
+            - StripPrefix=1
+        - id: service-shardingjdbc
+          uri: lb://service-shardingjdbc
+          predicates:
+            - Path=/serviceshardingjdbc/**
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+          filters:
+            - StripPrefix=1
+        - id: service-web
+          uri: lb://service-web
+          predicates:
+            - Path=/serviceweb/**
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+          filters:
+            - StripPrefix=1
+        - id: auth-server
+          uri: lb://auth-server
+          predicates:
+            - Path=/authserver/**
+            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+          filters:
+            - StripPrefix=1
+
+
+####### 日志级别 #######
+logging:
+  file:
+    path: /opt/${spring.application.name}/logs/
+  level:
+    root: info
+    com:
+      wm:
+        gatewayserver: debug
+##### swagger ###################
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true # false关闭swagger-ui界面 但不关闭openapi
+
+
+security:
+  ignoreUrls:
+    # 登录接口
+    - /userrbac/oauth/token/*
+    - /serviceweb/camera/test
+
+
+token:
+  secret: TiWTxo77X25ijD8SPZzT4r8E+juzmWQRysqTc+fVmz/xv7uRBBd6VJYHn3xQeeSBz4NtbBRmxnSE/0FODPY7vA==
+  expire: 259200000
+  need: true

@@ -3,4 +3,6 @@ com.wm.common.config.GlobalExceptionController,\
 com.wm.common.config.JacksonConfig,\
 com.wm.common.config.LocalDateTimeSerializerConfig,\
 com.wm.common.config.threadpool.AsycThreadPoolConfig,\
-com.wm.common.config.feign.FeignConfig
+com.wm.common.config.feign.FeignConfig,\
+com.wm.common.config.resttemplate.RestTemplateConfig,\
+com.wm.common.util.RestTemplateKit

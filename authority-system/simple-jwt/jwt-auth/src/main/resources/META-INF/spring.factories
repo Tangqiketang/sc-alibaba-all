@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.wm.jwtauth.config.JwtConfig,\
+com.wm.jwtauth.util.JwtUtil,\
+com.wm.jwtauth.property.TokenProperty

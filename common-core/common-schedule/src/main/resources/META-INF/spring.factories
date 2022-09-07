@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.wm.quartz.core.CoreExecutor,\
+com.wm.quartz.config.QuartzConfig,\
+com.wm.quartz.demo.DemoUsage,\
+com.wm.quartz.demo.DemoJob

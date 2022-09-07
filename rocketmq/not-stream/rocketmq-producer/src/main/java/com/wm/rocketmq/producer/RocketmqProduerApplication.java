@@ -33,16 +33,36 @@ public class RocketmqProduerApplication {
         rocketSender.sendWM1();
         return "success";
     }
-    //tag
+
     @GetMapping("/testTopic2")
+    public String sendTopic2() {
+        rocketSender.sendWM2();
+        return "success";
+    }
+
+    @GetMapping("/testTopic3")
+    public String sendTopic3() {
+        rocketSender.sendWM3();
+        return "success";
+    }
+
+
+    //tag
+    @GetMapping("/testTopic2Tag")
     public String sendTopic2Tag() {
         rocketSender.sendTopic2Tag();
         return "success";
     }
     //批量
-    @GetMapping("/testTopic3")
-    public String sendTopic3() {
+    @GetMapping("/sendTopic3Tag3ByOrder")
+    public String sendTopic3Tag3ByOrder() {
         rocketSender.sendTopic3Tag3ByOrder();
+        return "success";
+    }
+
+    @GetMapping("/reply")
+    public String reply() {
+        rocketSender.reply();
         return "success";
     }
 

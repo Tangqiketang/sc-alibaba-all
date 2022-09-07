@@ -29,6 +29,7 @@ public enum ResultCode implements IResultCode, Serializable {
 
     AUTHORIZED_ERROR("A0300", "访问权限异常"),
     ACCESS_UNAUTHORIZED("A0301", "访问未授权"),
+    ACCESS_ROLE_UNAUTHORIZED("A0302", "角色未授权"),
 
 
     PARAM_ERROR("A0400", "用户请求参数错误"),
