@@ -333,10 +333,10 @@ public class DateKit {
 
     private static List<TimeSlot> mergeTwo(TimeSlot timeSlot1, TimeSlot timeSlot2) {
         List<TimeSlot> result = new ArrayList<>();
-        LocalDateTime start1 = timeSlot1.getStartDate();
-        LocalDateTime start2 = timeSlot2.getStartDate();
-        LocalDateTime end1 = timeSlot1.getEndDate();
-        LocalDateTime end2 = timeSlot2.getEndDate();
+        LocalDateTime start1 = timeSlot1.getStartTime();
+        LocalDateTime start2 = timeSlot2.getStartTime();
+        LocalDateTime end1 = timeSlot1.getEndTime();
+        LocalDateTime end2 = timeSlot2.getEndTime();
         // 如果两个时间段完全没有交集则直接返回
         if (end1.isBefore(start2) || start1.isAfter(end2)) {
             result.add(timeSlot1);
@@ -350,10 +350,10 @@ public class DateKit {
         }
         // 有交集则合并
         else if (start1.isBefore(start2) && end1.isBefore(end2)) {
-            timeSlot1.setEndDate(end2);
+            timeSlot1.setEndTime(end2);
             result.add(timeSlot1);
         } else if (start2.isBefore(start1) && end2.isBefore(end1)) {
-            timeSlot2.setEndDate(end1);
+            timeSlot2.setEndTime(end1);
             result.add(timeSlot2);
         }
         return result;
@@ -361,11 +361,11 @@ public class DateKit {
 
     @Data
     private static class TimeSlot {
-        private LocalDateTime startDate;
-        private LocalDateTime endDate;
-        public TimeSlot(LocalDateTime startDate, LocalDateTime endDate) {
-            this.startDate = startDate;
-            this.endDate = endDate;
+        private LocalDateTime startTime;
+        private LocalDateTime endTime;
+        public TimeSlot(LocalDateTime startTime, LocalDateTime endTime) {
+            this.startTime = startTime;
+            this.endTime = endTime;
         }
     }
 
