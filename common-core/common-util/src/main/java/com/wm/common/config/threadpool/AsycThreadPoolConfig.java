@@ -52,7 +52,7 @@ public class AsycThreadPoolConfig {
         executor.setThreadNamePrefix(threadNamePrefix);
         // 设置线程生存时间（秒）,当超过了核心线程出之外的线程在生存时间到达之后会被销毁
         executor.setKeepAliveSeconds(60);
-        /*CALLER_RUNS：不在新线程中执行任务，而是由调用者所在的线程来执行*/
+        /*如果添加到线程池失败，那么主线程会自己去执行该任务，不会等待线程池中的线程去执行*/
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         // 等待所有任务结束后再关闭线程池
         executor.setWaitForTasksToCompleteOnShutdown(true);
