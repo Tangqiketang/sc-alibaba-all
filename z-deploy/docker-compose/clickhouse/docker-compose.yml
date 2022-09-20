@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  clickhouse:
+    image: yandex/clickhouse-server:21.3.20-alpine
+    container_name: clickhouse
+    restart: always
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      # 默认配置
+      - /etc/localtime:/etc/localtime:ro
+      - ./config/docker_related_config.xml:/etc/clickhouse-server/config.d/docker_related_config.xml:rw
+      - ./config/config.xml:/etc/clickhouse-server/config.xml:rw
+      - ./config/users.xml:/etc/clickhouse-server/users.xml:rw
+      # 运行日志
+      - ./log:/var/log/clickhouse-server
+      # 数据持久
+      - ./data:/var/lib/clickhouse:rw
+    #deploy:
+    #  resources:
+    #    limits:
+    #      cpus: '2'
+    #      memory: 4096M
+    #    reservations:
+    #      memory: 4096M
+

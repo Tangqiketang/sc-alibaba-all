@@ -1,0 +1,17 @@
+先运行一个不需要文件映射的容器(把dockercompose中映射先注释了)，把数据和配置复制到宿主机
+docker cp emqx_emqx_1:/opt/emqx/etc/.   /home/docker-compose/project/emqx/etc
+docker cp emqx_emqx_1:/opt/emqx/data/.   /home/docker-compose/project/emqx/data
+
+同时给权限chmod -R +777 /home/docker-compose/project/emqx
+
+
+=========================
+tls-->auth-->acl
+ssl证书：
+vim emqx.conf,修改2个证书路径。server.key server.pem
+================================
+etc/plugins/emqx_auth_http.conf
+
+优化：
+    1.优化webhook连接池大小 默认http 32
+    2.

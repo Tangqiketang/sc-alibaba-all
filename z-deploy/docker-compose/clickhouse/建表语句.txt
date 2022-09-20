@@ -1,0 +1,50 @@
+-- `default`.t_device_prop_history definition
+-- 按天分区、保存一个月的数据、
+
+CREATE TABLE default.t_device_prop_history
+(
+    `in_time` DateTime,
+    `create_time` DateTime64(3,
+ 'Asia/Shanghai'),
+    `product_key` String,
+    `device_name` String,
+    `prop_value` String,
+    `identifier` String
+)
+ENGINE = MergeTree
+PARTITION BY toYYYYMMDD(create_time)
+ORDER BY (create_time,
+ product_key,
+ device_name)
+TTL in_time + toIntervalMonth(1)
+SETTINGS index_granularity = 8192;
+
+
+
+
+
+-- `default`.t_devicelog definition
+
+CREATE TABLE default.t_devicelog
+(
+    `in_time` DateTime64(3,
+ 'Asia/Shanghai'),
+    `trace_id` String,
+    `message_id` Nullable(String),
+    `message_content` Nullable(String),
+    `device_name` String,
+    `product_key` String,
+    `business_type` Int8,
+    `device_action` String,
+    `device_content` String,
+    `state` Int16,
+    `group_id` Nullable(String),
+    `create_time` DateTime
+)
+ENGINE = MergeTree
+PARTITION BY toYYYYMMDD(in_time)
+ORDER BY (in_time,
+ product_key,
+ device_name)
+TTL create_time + toIntervalMonth(1)
+SETTINGS index_granularity = 8192;
