@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+
+  redis:
+    image: redis:5.0.12
+    container_name: redis5.0
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime:ro # 设置容器时区与宿主机保持一致
+      - ../redis/etc/redis.conf:/etc/redis/redis.conf:ro
+      - ../redis/data:/data
+    command:
+      - redis-server
+      - /etc/redis/redis.conf
+    ports:
+      - 6379:6379
+    restart: always
+
