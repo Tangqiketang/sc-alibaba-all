@@ -1,0 +1,17 @@
+version: '3'
+services:
+
+  babycare:
+    build: .
+    container_name: babycare
+    volumes:
+      # 项目文件保存路径
+      - /home/baby_care/upload:/home/baby_care/upload
+      #项目中logback配置的日志文件路径
+      - /opt/babycare/logs/:/opt/babycare/logs/
+    environment:
+      TZ: Asia/Shanghai
+    command: java -jar babycare.jar --spring.profiles.active=prod
+    ports:
+      - "18380:18380"
+    restart: always
