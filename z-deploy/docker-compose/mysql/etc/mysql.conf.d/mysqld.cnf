@@ -13,6 +13,9 @@ default-character-set=utf8mb4
 #auto_increment_offset=1
 #slave-skip-errors = all
 
+##表名不区分大小写
+lower_case_table_names = 1
+
 server-id = 1
 pid-file    = /var/run/mysqld/mysqld.pid
 socket        = /var/run/mysqld/mysqld.sock
