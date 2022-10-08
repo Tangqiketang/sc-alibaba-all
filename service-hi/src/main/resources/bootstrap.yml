@@ -1,0 +1,10 @@
+server:
+  port: 8762  #8762-8764
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev  #==>bootstrap-dev.yml==>namespace==>applicationName-xx.yml
+  application:
+    name: service-hi

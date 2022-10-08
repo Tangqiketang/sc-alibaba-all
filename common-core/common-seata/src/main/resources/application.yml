@@ -1,0 +1,18 @@
+# 分布式事务配置
+seata:
+  #和/seata/config.txt中service.vgroupMapping.wm_tx_group=default对应
+  tx-service-group: wm_tx_group
+  #自动为Seata开启了代理数据源，实现集成对undo_log表操作
+  enable-auto-data-source-proxy: true
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 192.168.0.100:8848
+      namespace: 44fc0271-7010-4a1f-a2b4-cb07cbda7b18
+      group: SEATA_GROUP
+  config:
+    type: nacos
+    nacos:
+      server-addr: 192.168.0.100:8848
+      namespace: 44fc0271-7010-4a1f-a2b4-cb07cbda7b18
+      group: SEATA_GROUP

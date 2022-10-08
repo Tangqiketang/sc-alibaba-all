@@ -44,4 +44,16 @@ public class HiController {
     public String config() {
         return configTest;
     }
+
+    @GetMapping(value = "/hibody")
+    public String hibody(){
+        ServiceHiByFeign.Student student = new ServiceHiByFeign.Student();
+        student.setName("wmdoby");
+        student.setSex("sfsdfsex");
+        return serviceHiByFeign.homebody(student);
+    }
+
+
+
+
 }

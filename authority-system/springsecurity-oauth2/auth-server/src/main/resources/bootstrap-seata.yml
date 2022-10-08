@@ -1,12 +1,12 @@
 server:
-  port: 8900
+  port: 8081
 
 spring:
   cloud:
     nacos:
       config:
         server-addr: 192.168.0.100:8848  #nacos地址
-        namespace: f739f38b-f593-432b-9458-5912ed89dafd
+        namespace: 44fc0271-7010-4a1f-a2b4-cb07cbda7b18
         refresh-enabled: true
         group: DEFAULT_GROUP
         file-extension: yml
@@ -24,10 +24,10 @@ spring:
         port: 18765
         dashboard: localhost:8748
   datasource:
-    url: jdbc:mysql://192.168.40.131:3306/service-web?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.40.131:3306/auth-server?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimum-idle: 5
@@ -50,7 +50,7 @@ spring:
 ############# mybatis-plus      ##############
 mybatis-plus:
   executorType: reuse
-  mapper-locations: classpath*:com/wm/web/mapper/xml/*.xml
+  mapper-locations: classpath*:com/wm/auth/mapper/xml/*.xml
   global-config:
     banner: false
     db-config:
@@ -70,14 +70,18 @@ logging:
     root: info
     com:
       wm:
-        web: debug
+        auth: debug
 ##### swagger ###################
 springfox:
   documentation:
     swagger-ui:
       enabled: true # false关闭swagger-ui界面 但不关闭openapi
 
-#################################
+wechat:
+  weapp:
+    appid: wxeaab8dca5887e132
+    secret: 2038a316f39ee783e057566c2397779c
+
 
 # 分布式事务配置
 seata:

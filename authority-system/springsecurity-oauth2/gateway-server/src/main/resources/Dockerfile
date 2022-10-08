@@ -7,8 +7,8 @@
 
 FROM davidcaste/alpine-java-unlimited-jce:jre8
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
-RUN apk add --no-cache tzdata
-RUN mkdir -p /opt/upgrade/
+#RUN apk add --no-cache tzdata \
+RUN mkdir -p /opt/upgrade/  \
 RUN mkdir -p /opt/jre/  \
 && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 && echo "Asia/Shanghai" > /etc/timezone \

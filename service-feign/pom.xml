@@ -54,6 +54,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
+        <!-- feign默认使用jdk1.8的httpclient不支持http2.0,会将url和httpclient进行长连接复用,真实场景下反而影响效率。需要替换改用apache的同路由细粒度更大 -->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+        </dependency>
+
 
         <!--sentinel监控-->
         <dependency>

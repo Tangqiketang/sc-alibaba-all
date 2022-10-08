@@ -6,7 +6,7 @@ spring:
     nacos:
       config:
         server-addr: 192.168.0.100:8848  #nacos地址
-        namespace: f739f38b-f593-432b-9458-5912ed89dafd
+        namespace: 44fc0271-7010-4a1f-a2b4-cb07cbda7b18
         refresh-enabled: true
         group: DEFAULT_GROUP
         file-extension: yml
@@ -97,3 +97,29 @@ seata:
       server-addr: 192.168.0.100:8848
       namespace: 44fc0271-7010-4a1f-a2b4-cb07cbda7b18
       group: SEATA_GROUP
+  service:
+    vgroup-mapping:
+      wm_tx_group: default
+    disable-global-transaction: false #禁用全局事务(默认false)
+  enabled: true
+  client:
+    rm-report-retry-count: 5 #一阶段结果上报TC重试次数
+    rm-report-success-enable: true
+    rm-table-meta-check-enable: false #自动刷新缓存中的表结构
+    rm-async-commit-buffer-limit: 10000 #异步提交缓存队列长度
+    rm:
+      lock:
+        lock-retry-interval: 10 #校验或占用全局锁重试间隔默认10ms
+        lock-retry-times: 30 #校验或占用全局锁重试次数
+        lock-retry-policy-branch-rollback-on-conflict: true #分布式事务与其他全局回滚事务冲突时锁策略(优先释放本地锁)
+    tm-commit-retry-count: 3 #一阶段全局提交结果上报TC重试次数默认1
+    tm-rollback-retry-count: 3 #一阶段全局回滚结果上报TC重试次数默认1
+    undo:
+      undo-data-validation: true #二阶段回滚镜像校验默认true开启
+      undo-log-serialization: jackson #默认jackson
+      undo-log-table: undo_log #默认undo_log
+    log:
+      exception-rate: 100 #日志异常输出概率默认100
+    support:
+      spring:
+        datasource-autoproxy: true

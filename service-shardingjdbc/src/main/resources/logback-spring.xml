@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!--定义日志文件的存储地址 从springboot配置文件中获取路径-->
-    <springProperty scope="context" name="LOG_PATH" source="logging.path"/>
+    <springProperty scope="context" name="LOG_PATH" source="logging.file.path"/>
     <!--springboot配置文件中获取日志级别-->
     <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root"/>
     <springProperty scope="context" name="PROJECT_NAME" source="spring.application.name"/>

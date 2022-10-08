@@ -17,4 +17,9 @@ public class ServiceHiByFeignFallback implements ServiceHiByFeign {
     public String getHiFromServiceHi(String name) {
         return "sorry, you are fail,"+name;
     }
+
+    @Override
+    public String homebody(Student student) {
+        return "faile body xx";
+    }
 }

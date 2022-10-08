@@ -50,12 +50,16 @@ public class IpcCameraController {
     private IpcCameraMapper ipcCameraMapper;
 
 
+
     @ApiOperation(value = "新增相机", notes = "相机")
     @PostMapping("/insertCamera")
     @ResponseBody
     public BaseResp insertCamera(@Validated @RequestBody IpcCamera camera ){
         BaseResp rsp = new BaseResp();
         ipcCameraMapper.insert(camera);
+
+       // throw new RuntimeException();
+
         rsp.setCode("0");
         return rsp;
     }
