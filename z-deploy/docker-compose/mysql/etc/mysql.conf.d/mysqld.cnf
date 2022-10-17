@@ -56,9 +56,11 @@ skip-name-resolve
 log-output=FILE
 general_log = ON
 general_log_file=/var/lib/mysql/general.log
+###########开启慢查询日志
 slow_query_log = ON
 slow_query_log_file=/var/lib/mysql/slowquery.log
-long_query_time=10
+#########################慢查询阈值。默认10s设置为1s
+long_query_time = 1
 #log-error=/var/lib/mysql/error.log
 log_queries_not_using_indexes = OFF
 log_throttle_queries_not_using_indexes = 0
