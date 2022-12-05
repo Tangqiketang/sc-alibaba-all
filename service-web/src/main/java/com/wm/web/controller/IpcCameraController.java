@@ -128,6 +128,9 @@ public class IpcCameraController {
         //WHERE create_time BETWEEN #{startTime} AND #{endTime}
         //queryWrapper.eq(UserDeviceDetector::getImei,imei).in(UserDeviceDetector::getSleepStatusChange,Arrays.asList(1,2));
         //queryWrapper.apply("date_format(create_time,'%Y-%m-%d')={0}",queryDate);
+        //select b.user_id  from user_use_log b where b.visite_time <= '2022-6-05' and b.behavior_type =1 group by user_id  having count(*)>500;
+        //
+        //select b.id,b.user_id  from user_use_log b where b.visite_time <= '2022-6-05' and b.behavior_type =1 order by user_id ;
         Page<Object> list = null;
         result.setResult(list);
         return result;

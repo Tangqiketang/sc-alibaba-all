@@ -1,12 +1,19 @@
 #!/bin/sh
 
+#项目名称
+PROJECT_NAME="data-manager"
+#项目jar包
+PROJECT_JAR=$PROJECT_NAME".jar"
+ACTIVE_ENV="aliyun"
+
+
 usage() {
     echo "Usage: sh 执行脚本.sh [start|stop|restart|status]"
     exit 1
 }
 
 is_exist(){
-  pid=`ps -ef|grep babycare.jar|grep -v grep|awk '{print $2}' `
+  pid=`ps -ef|grep $PROJECT_JAR|grep -v grep|awk '{print $2}' `
   if [ -z "${pid}" ]; then
    return 1
   else
@@ -17,10 +24,10 @@ is_exist(){
 start(){
   is_exist
   if [ $? -eq "0" ]; then
-    echo ">>> babycare is already running PID=${pid} <<<"
+    echo ">>> $PROJECT_NAME is already running PID=${pid} <<<"
   else
-    nohup java -jar babycare.jar --spring.profiles.active=aliyun > /dev/null 2>&1 &
-    echo ">>> start babycare successed PID=$! <<<"
+    nohup java -jar $PROJECT_JAR --spring.profiles.active=$ACTIVE_ENV > /dev/null 2>&1 &
+    echo ">>> start $PROJECT_NAME successed PID=$! <<<"
    fi
   }
 
@@ -30,18 +37,18 @@ stop(){
     echo ">>> PID = $pid begin kill -9 $pid  <<<"
     kill -9  $pid
     sleep 2
-    echo ">>> babycare process stopped <<<"
+    echo ">>> $PROJECT_NAME process stopped <<<"
   else
-    echo ">>> babycare is not running <<<"
+    echo ">>> $PROJECT_NAME is not running <<<"
   fi
 }
 
 status(){
   is_exist
   if [ $? -eq "0" ]; then
-    echo ">>> babycare is running PID is ${pid} <<<"
+    echo ">>> $PROJECT_NAME is running PID is ${pid} <<<"
   else
-    echo ">>> babycare is not running <<<"
+    echo ">>> $PROJECT_NAME is not running <<<"
   fi
 }
 
