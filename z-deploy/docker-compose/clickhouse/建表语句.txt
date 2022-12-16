@@ -48,3 +48,16 @@ ORDER BY (in_time,
  device_name)
 TTL create_time + toIntervalMonth(1)
 SETTINGS index_granularity = 8192;
+
+
+###创建mysql引擎映射到mysql数据库
+create table device_label_ck
+(
+    id          Int32,
+    iot_id      String,
+    user_id     String,
+    label_id    Int32,
+    create_time DateTime,
+    update_time DateTime
+)
+    engine = MySQL('101.132.120.85:3396', 'data-manager-base', 'device_label', 'root', '3PPLuMe5lG0=');

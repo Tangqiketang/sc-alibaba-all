@@ -33,4 +33,9 @@ public class MybatisPlusConfig {
         return configuration -> configuration.setUseDeprecatedExecutor(false);
     }
 
+    @Bean
+    public EasySqlInjector easySqlInjector() {
+        return new EasySqlInjector();
+    }
+
 }
