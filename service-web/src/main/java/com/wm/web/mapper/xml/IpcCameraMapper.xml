@@ -28,7 +28,7 @@
         </where>
     </sql>
 
-
+    <!--sql连接参数增加了rewriteBatchedStatements=true后，jdbc底层会优化自带的batchinsert -->
     <insert id="batchInsertLabelScene" parameterType="java.util.List">
         insert into scene_label (id,scene_id,user_id,label_id,create_time,update_time)
         values
