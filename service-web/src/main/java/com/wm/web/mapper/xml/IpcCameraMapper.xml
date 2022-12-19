@@ -28,4 +28,13 @@
         </where>
     </sql>
 
+
+    <insert id="batchInsertLabelScene" parameterType="java.util.List">
+        insert into scene_label (id,scene_id,user_id,label_id,create_time,update_time)
+        values
+        <foreach collection ="list" item="item" separator="," >
+            (#{item.id},#{item.sceneId},#{item.userId},#{item.labelId},#{item.createTime},#{item.updateTime})
+        </foreach>
+    </insert>
+
 </mapper>
