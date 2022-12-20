@@ -13,6 +13,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
+ * 注意 被调用时异步方法不能在一个类中
  * @author wangmin
  * @date 2018/12/13
  */

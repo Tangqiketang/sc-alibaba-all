@@ -1,5 +1,6 @@
 package com.wm.lambda;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Data;
  * @create 2022-12-19 10:22
  */
 @Data
+@AllArgsConstructor
 public class Device {
 
     private String imei;
