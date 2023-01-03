@@ -38,7 +38,7 @@ public class CollectionKit {
     public static List<String> remove(List<String> list1,List<String> list2){
         List<String> result = new ArrayList<>(list1);
         if(!CollectionUtils.isEmpty(list2)){
-            result.remove(list2);
+            result.removeAll(list2);
         }
         return result;
     }
@@ -54,6 +54,14 @@ public class CollectionKit {
         return new ArrayList<>(source);
     }
 
+    public static void main(String[] args) {
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(1);list1.add(2);list1.add(3);
+        List<Integer> list2 = new ArrayList<>();
+        list2.add(1);list2.add(5);
+        list1.removeAll(list2);
 
+        System.out.println(JSON.toJSONString(list1));
+    }
 
 }

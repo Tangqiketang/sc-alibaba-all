@@ -35,7 +35,7 @@ public class LambdaTest {
 
     //根据某一个属性分组
     public static void groupByImei(){
-       // Map<String,Device> map1 =       list.stream().map(a->a).collect(Collectors.toMap(Device::getProductKey, Function.identity()));
+        //Map<String,Device> map1 =       list.stream().map(a->a).collect(Collectors.toMap(Device::getProductKey, Function.identity()));
         Map<String,Device> map2 =       list.stream().map(a->a).collect(Collectors.toMap(Device::getProductKey,a->a,(k1,k2)->k1));
         Map<String,List<Device>> map3 = list.stream().map(a->a).collect(Collectors.groupingBy(Device::getProductKey));
 
