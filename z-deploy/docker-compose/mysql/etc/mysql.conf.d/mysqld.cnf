@@ -54,7 +54,7 @@ open_files_limit = 65536
 skip-name-resolve
 ########log settings########
 log-output=FILE
-general_log = ON
+general_log = OFF
 general_log_file=/var/lib/mysql/general.log
 ###########开启慢查询日志
 slow_query_log = ON
