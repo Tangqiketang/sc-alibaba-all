@@ -10,6 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.GroupOperation;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.repository.support.PageableExecutionUtils;
@@ -70,15 +72,17 @@ public class MongoOpTest extends BaseTest{
         //id的问题 todo
     }
 
+
     @Test
     public void aggregate(){
-        // 根据性别进行分组统计，结果为个数和总值
+        // 管道 先过滤条件,根据性别进行分组统计，结果为个数和总值
         //db.user.aggregate([{$group:{_id:"$gender",count:{$sum:1},sum:{$sum:"$gender"}}}])
         //select gender as _id,count(*) as count,sum(gender) as sum from user group by gender; 注意_id是固定写法
-        Aggregation aggregation = Aggregation.newAggregation(Aggregation.group("gender").count().as("count").sum("gender").as("sum"));
+        MatchOperation matchOperation = Aggregation.match(Criteria.where("gender").in(1));
+        GroupOperation groupOperation = Aggregation.group("gender").count().as("count").sum("gender").as("sum");
+        Aggregation aggregation = Aggregation.newAggregation(matchOperation,groupOperation);
+
         AggregationResults<JSONObject> result = mongoTemplate.aggregate(aggregation, "user", JSONObject.class);
         System.out.println("query: " + aggregation + " | groupQuery " + result.getMappedResults());
     }
-
-
 }
