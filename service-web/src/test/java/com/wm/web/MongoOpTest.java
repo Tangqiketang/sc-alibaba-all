@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.repository.support.PageableExecutionUtils;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -78,7 +79,7 @@ public class MongoOpTest extends BaseTest{
         // 管道 先过滤条件,根据性别进行分组统计，结果为个数和总值
         //db.user.aggregate([{$group:{_id:"$gender",count:{$sum:1},sum:{$sum:"$gender"}}}])
         //select gender as _id,count(*) as count,sum(gender) as sum from user group by gender; 注意_id是固定写法
-        MatchOperation matchOperation = Aggregation.match(Criteria.where("gender").in(1));
+        MatchOperation matchOperation = Aggregation.match(Criteria.where("gender").in(Arrays.asList(0,1,2)));
         GroupOperation groupOperation = Aggregation.group("gender").count().as("count").sum("gender").as("sum");
         Aggregation aggregation = Aggregation.newAggregation(matchOperation,groupOperation);
 
