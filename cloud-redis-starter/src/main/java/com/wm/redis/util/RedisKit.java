@@ -4,10 +4,7 @@ import com.wm.redis.constant.BusinessTypeEnum;
 import com.wm.redis.constant.RedisKeyConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.BitFieldSubCommands;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisServerCommands;
+import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
@@ -895,5 +892,6 @@ public class RedisKit {
         Long increment = redisTemplate.opsForValue().increment(key);
         return date + businessEnum.getValue() + String.format("%0" + digit + "d", increment);
     }
+
 
 }

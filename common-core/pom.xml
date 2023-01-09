@@ -16,6 +16,7 @@
         <module>common-util</module>
         <module>common-schedule</module>
         <module>common-seata</module>
+        <module>common-mongo</module>
     </modules>
 
     <properties>

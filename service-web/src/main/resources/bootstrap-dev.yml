@@ -36,6 +36,10 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 30000
       connection-test-query: SELECT 1
+  data:
+    mongodb:
+      primary:
+        uri: mongodb://root:123@192.168.40.131:27017/iotdb
   jackson:
     default-property-inclusion: NON_NULL
     time-zone: GMT+8

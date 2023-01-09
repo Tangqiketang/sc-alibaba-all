@@ -4,7 +4,7 @@ services:
     restart: always
     # build: .
     image: mongo:4.4.8-rc0-focal
-    container_name: mongo
+    container_name: mongo-replica-1
     ports:
       - 27017:27017
     volumes:
@@ -12,11 +12,16 @@ services:
       - ./data/db:/data/db
       # 自定义数据备份目录，可以定时全量备份数据出来
       - ./mybackup:/mybackup
+      # conf文件夹
+      - ./conf:/conf
       - /etc/localtime:/etc/localtime
     environment:
       - TZ=Asia/Shanghai
       # 缓存大小配置为使用 1.5GB ， 考虑服务器中还有其他服务需要占用内存，可自定义大小
       - wiredTigerCacheSizeGB=1.5
+      # 配置root用户， 只需要在第一台机器中配置即可（也可以都配置成一样的，如果不一样，效果未知，可以自己测试一下），其他副本集节点会自动同步过去
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=123
 
     # --auth 开启权限认证       --noauth 关闭权限认证，找回密码时使用此配置重启服务
     command: mongod --auth

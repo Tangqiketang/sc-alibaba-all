@@ -2,6 +2,7 @@ package com.wm.redis.redissionlock;
 
 import com.wm.redis.constant.RedisKeyConstant;
 import org.redisson.api.RLock;
+import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -63,4 +64,9 @@ public class RedissonDistributedLock implements DistributedLock{
             }
         }
     }
+
+    public RReadWriteLock getReadWriteLock(String key){
+        return redisson.getReadWriteLock(key);
+    }
+
 }

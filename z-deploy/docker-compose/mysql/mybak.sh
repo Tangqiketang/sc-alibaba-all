@@ -8,7 +8,7 @@ pub_ip="xxxx"　　#源服务器外网ip
 port=3306
 
 time mysql -h${ip} -P${port} -uroot -pxxxx -e \'show databases;\' | grep -Ev "Database|information_schema|mysql|performance_schema" | grep -v "^test$" | xargs mysqldump -uroot -pxxxx -h${ip} -P${port} --single-transaction --master-data=2 --flush-logs -BRE --set-gtid-purged=OFF --events > ./${pub_ip}_mysql.sql
-#time mysqldump -uroot -pxxxx -h${ip} -P${port} --single-transaction --master-data=2 --flush-logs -BRE --set-gtid-purged=OFF --events zombie108 > ./zombie108_mysql.sql
+#time mysqldump -uroot -pxxxx -h${ip} -P${port} --single-transaction --master-data=2 --flush-logs -BRE --set-gtid-purged=OFF --events zombie108 > ./zombie108_mysql.mongodb常用操作.md
 
 if [ $? == 0 ];thentime mysql -h127.0.0.1 -P3306 -uroot -pxxx < ./${pub_ip}_mysql.sql  mysql-000166.sql
 fi
