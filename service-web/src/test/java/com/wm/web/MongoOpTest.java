@@ -2,19 +2,24 @@ package com.wm.web;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mongodb.bulk.BulkWriteResult;
 import com.wm.mongo.entity.User;
 import org.junit.Test;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.*;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.repository.support.PageableExecutionUtils;
+import org.springframework.data.util.Pair;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -29,14 +34,77 @@ public class MongoOpTest extends BaseTest{
 
     @Resource
     private MongoTemplate mongoTemplate;
-
+    //=================================== insert ==============================================/
     @Test
     public void simpleInsert(){
-        User user = new User();user.setUsername("用户名399");
-        user.setAge(390);user.setGender(1);
-        user.setReportTimestamp(new Date());user.setLng(120.0101);
-        mongoTemplate.insert(user,"user");
+        //插入新建记录
+        User user = new User();user.setUsername("用户名499");
+        user.setAge(490);user.setGender(1);
+        user.setReportTimestamp(new Date());user.setLng(120.0404);
+        mongoTemplate.insert(user);
+        //mongoTemplate.insert(user,"user");
+        //mongoTemplate.insert(userList,"user");
     }
+    //=================================== update ==============================================/
+    @Test
+    public void simpleInsertOrUpdate(){
+        //根据id更新记录。注意null值也会更新进去！！ mongoTemplate.findById("63b8028468f87570e3fbd366",JSONObject.class,"user");
+        User user = new User();
+        user.setId("43211111111");user.setAge(666);
+        user.setUsername("用户名666");user.setLng(121.0001);
+        //有就更新没有 则插入
+        mongoTemplate.save(user);
+    }
+
+    @Test
+    public void updateByCriteria(){
+        Query query = new Query();
+        //query.addCriteria(Criteria.where("_id").is("63bce6707fd4433e52e3fffc"));
+        query.addCriteria(Criteria.where("age").is(111));
+        Update update = Update.update("username", "test99999");
+        //所有符合条件的都更新
+        mongoTemplate.updateMulti(query, update, "user");
+        //mongoTemplate.upsert(query,update,"user"); //没有则插入,有则更新但是只更新第一条
+    }
+
+    @Test
+    public void batchUpdate(){
+        List<User> list = new ArrayList<>();
+        User user1 = new User();
+        user1.setUsername("test1");
+        user1.setAge(111);
+
+        User user2 = new User();
+        user2.setUsername("test2");
+        user2.setAge(55);
+
+        list.add(user1);list.add(user2);
+
+        List<Pair<Query, Update>> updateList = new ArrayList<>(list.size());
+        //UNORDERED是平行处理，即使某条记录出错了，其余的也会继续处理
+        //ORDERED是队列排序处理，只要中途有个失败了，那么后续的操作流程就会终止了
+        BulkOperations operations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, "user");
+        list.forEach(data -> {
+            //如果query查询到有数据就更新
+            Query query = new Query(new Criteria("age").is(data.getAge()));
+            Update update = new Update();
+            //如果userId是主键，必须使用setOnInsert()
+            update.set("username",data.getUsername());
+            update.set("age",data.getAge());
+
+            Pair<Query, Update> updatePair = Pair.of(query, update);
+            updateList.add(updatePair);
+        });
+
+        //没有符合条件的则插入，有符合条件的更新所有满足条件的记录
+        operations.upsert(updateList);
+
+        //必须执行才行
+        BulkWriteResult result = operations.execute();
+    }
+
+
+    //=================================== query ==============================================/
 
     //使用对象的方式返回，id主键会自动转成整个string
     @Test
@@ -79,7 +147,6 @@ public class MongoOpTest extends BaseTest{
         JSONObject result = mongoTemplate.findById("63b8028468f87570e3fbd366",JSONObject.class,"user");
         System.out.println(JSON.toJSONString(result));
     }
-
 
     @Test
     public void aggregate(){
