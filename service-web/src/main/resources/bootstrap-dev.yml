@@ -40,6 +40,7 @@ spring:
     mongodb:
       primary:
         uri: mongodb://root:123@192.168.40.131:27017/iotdb
+      auto-index-creation: false
   jackson:
     default-property-inclusion: NON_NULL
     time-zone: GMT+8
