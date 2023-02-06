@@ -61,3 +61,6 @@ create table device_label_ck
     update_time DateTime
 )
     engine = MySQL('101.132.120.85:3396', 'data-manager-base', 'device_label', 'root', '3PPLuMe5lG0=');
+
+更新字段：
+alter table device_info update is_subdev=1 where parent_product_key !=null

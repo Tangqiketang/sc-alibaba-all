@@ -1,5 +1,7 @@
 package com.wm.web;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.bulk.BulkWriteResult;
@@ -19,10 +21,8 @@ import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.data.util.Pair;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * 描述:
@@ -48,12 +48,17 @@ public class MongoOpTest extends BaseTest{
     //=================================== update ==============================================/
     @Test
     public void simpleInsertOrUpdate(){
-        //根据id更新记录。注意null值也会更新进去！！ mongoTemplate.findById("63b8028468f87570e3fbd366",JSONObject.class,"user");
-        User user = new User();
-        user.setId("43211111111");user.setAge(666);
-        user.setUsername("用户名666");user.setLng(121.0001);
+        //1.根据id更新记录。注意null值也会更新进去！！
+        User updateUser = new User();
+        updateUser.setId("43211111111");updateUser.setAge(666);
+        updateUser.setUsername("用户名666");updateUser.setLng(121.0001);
         //有就更新没有 则插入
-        mongoTemplate.save(user);
+        mongoTemplate.save(updateUser);
+
+        //2.
+        User orginUser = mongoTemplate.findById("63b8028468f87570e3fbd366",User.class,"user");
+        BeanUtil.copyProperties(updateUser,orginUser, CopyOptions.create().setIgnoreNullValue(true));
+        mongoTemplate.save(updateUser);
     }
 
     @Test
@@ -64,7 +69,7 @@ public class MongoOpTest extends BaseTest{
         Update update = Update.update("username", "test99999");
         //所有符合条件的都更新
         mongoTemplate.updateMulti(query, update, "user");
-        //mongoTemplate.upsert(query,update,"user"); //没有则插入,有则更新但是只更新第一条
+        //mongoTemplate.upsert(query,update,"user"); //没有则插入,有则更新但是只更新第一条，适用于id查询
     }
 
     @Test
@@ -141,6 +146,26 @@ public class MongoOpTest extends BaseTest{
         System.out.println(JSON.toJSONString(result));
     }
 
+    //分页查询
+    @Test
+    public void findUsersPage() {
+        String username = "用户名";
+        int pageNo = 1; //当前页
+        int pageSize = 10; //每页的大小
+
+        Query query = new Query(); //条件构建部分
+        String regex = String.format("%s%s%s", "^.*", username, ".*$");
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        query.addCriteria(Criteria.where("username").regex(pattern));
+        int totalCount = (int) mongoTemplate.count(query, User.class); //查询记录数
+        //其中的skip表示跳过的记录数，当前页为1则跳过0条，为2则跳过10条，（也就是跳过第一页的10条数据）
+        List<User> userList = mongoTemplate.find(query.skip((pageNo - 1) * pageSize).limit(pageSize), User.class); //分页查询
+
+        Map<String, Object> pageMap = new HashMap<>();
+        pageMap.put("list", userList);
+        pageMap.put("totalCount",totalCount);
+        System.out.println(pageMap);
+    }
 
     @Test
     public void queryById(){
@@ -169,5 +194,5 @@ public class MongoOpTest extends BaseTest{
         System.out.println("query: " + aggregation + " | groupQuery " + result.getMappedResults());
     }
 
-    //insert update 事务
+    //insert update 事务 地理位置操作
 }

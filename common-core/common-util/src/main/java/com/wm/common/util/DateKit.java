@@ -5,6 +5,7 @@ import lombok.Data;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Date;
@@ -268,27 +269,19 @@ public class DateKit {
 
 
     /************************ 时间计算******************************************/
-    /**
-     * 获取相隔几秒
-     * @param startTime
-     * @param endTime
-     * @return
-     */
-    public long getSecondsBetween(LocalDateTime startTime,LocalDateTime endTime){
-        Duration duration = Duration.between(startTime,endTime);
-        return duration.getSeconds();
-    }
 
     /**
-     * 获取相隔几天
-     * @param startDate
-     * @param endDate
+     * 获取时间间隔
+     * @param startDateTime
+     * @param endDateTime
+     * @param chronoUnit
      * @return
      */
-    public long getDaysBetween(LocalDate startDate,LocalDate endDate){
-        Period period = startDate.until(endDate);
-        return period.getDays();
+    public static long getPeriodBetween(LocalDateTime startDateTime, LocalDateTime endDateTime,ChronoUnit chronoUnit){
+        //return startDate.until(endDate, ChronoUnit.SECONDS);
+        return startDateTime.until(endDateTime, chronoUnit);
     }
+
 
 
  /*****************************************************第三方jar包  *******************************************/

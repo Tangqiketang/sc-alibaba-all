@@ -24,14 +24,25 @@
     2.4 按条件删除
         把username为用户名6的记录删除
         db.user.deleteOne({"username":"用户名6"})
+    2.5 插入引用关系文档
+        往用户表中插入地址id
+        db.usertest.insertOne({"_id":ObjectId("53402597d852426020000004"),
+                        "address": {
+                            "$db": "iotdb",
+                            "$ref": "address",
+                            "$id": ObjectId("52ffc4a5d85242602e000000")
+                            },
+            "username": "Tom Benzamin4"
+        })
 3.查询
+    db.user.find({条件},{返回哪些字段})
     3.1 查找所有
         db.user.find();
         db.user.find().limit(100).pretty();
         db.user.find().limit(100).sort({"username":1}).pretty(); //按照username升序排序
     3.2 按条件查询
-    等同于 where gender=1 and age<=20
-        db.user.find({"gender":1,"age":{$lte:20}})
+    等同于 select username,age from user where gender=1 and age<=20
+        db.user.find({"gender":1,"age":{$lte:20}},{"username":1,"age":1})
     等同于 where (gender=1) or (age<=10)
         db.user.find({$or:[{"gender":1},{"age":{$lte:10}}]})
     等同于 where username="用户名3" and (gender=2 or age<=20)
@@ -56,11 +67,16 @@
 
 5.创建索引
     5.1后台运行创建索引，非唯一索引，索引名称为
-        db.user.createIndex({"username":1},{background:true,unique:false,name:"idx_username"})
+        db.user.createIndex({gender:1,"username":1},{background:true,unique:false,name:"idx_gender_username"})
     5.2查看索引
         db.user.getIndexes()
     5.3删除索引
-        db.user.dropIndex("idx_username")
+        db.user.dropIndex("idx_gender_username")
+    5.4利用索引
+        索引在ram内存，并且不包含id。排除掉id，防止回表
+        db.user.find({gender:1},{username:1,_id:0})
+    5.5强制利用某个索引
+        db.user.find({gender:1},{user_name:1,_id:0}).hint({gender:1,user_name:1})
 6.数据备份
     进入容器运行备份
     mongodump    -h 127.0.0.1       -u root -p 123  -d iotdb  -o mybackup/ --authenticationDatabase admin
@@ -68,5 +84,8 @@
     mongorestore -h 127.0.0.1:27017 -u root -p 123  -d iotdb  /mybackup/iotdb --authenticationDatabase admin
 7.监控
     mongostat -u root -p 123 --authenticationDatabase admin
+8.事务
+    只支持单文档的原子性操作。
+    解决方案
 
 
