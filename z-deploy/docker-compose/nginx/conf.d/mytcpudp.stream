@@ -1,0 +1,16 @@
+    upstream mqttweight{
+        server 192.168.40.131:18884 weight=5;
+        server 192.168.40.131:18885 weight=5;
+    }
+
+
+
+    server{
+        listen 18883;
+        proxy_pass mqttweight;
+    }
+
+
+
+
+
