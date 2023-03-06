@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,9 +19,8 @@ import java.time.LocalDateTime;
  * @since 2022-06-04
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @ApiModel(value="IpcCamera对象", description="")
+@NoArgsConstructor
 public class IpcCamera extends Model<IpcCamera> {
 
     private static final long serialVersionUID = 1L;

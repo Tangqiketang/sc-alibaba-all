@@ -14,7 +14,6 @@
     <module>service-hi</module>
     <module>cloud-logging-starter</module>
     <module>dubbo-sample</module>
-    <module>service-shardingjdbc</module>
     <module>service-web</module>
     <module>wm-practice</module>
     <module>cloud-redis-starter</module>
@@ -22,6 +21,7 @@
     <module>rocketmq</module>
     <module>mqtt-module</module>
     <module>authority-system</module>
+      <module>service-web-ndb</module>
   </modules>
 
   <properties>
@@ -31,6 +31,7 @@
     <spring.boot.version>2.2.13.RELEASE</spring.boot.version>
     <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
     <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
+    <mybatis-plus.version>3.4.1</mybatis-plus.version>
     <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
     <maven.plugin.version>3.8.1</maven.plugin.version>
     <swagger.version>3.0.0</swagger.version>
@@ -177,6 +178,30 @@
         <artifactId>spring-security-jwt</artifactId>
         <version>${security-jwt.version}</version>
       </dependency>
+
+      <!--mybatis-plus  -->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${mybatis-plus.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-generator</artifactId>
+        <version>${mybatis-plus.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-extension</artifactId>
+        <version>${mybatis-plus.version}</version>
+      </dependency>
+      <!--多数据源 -->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+        <version>${mybatis-plus.version}</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 

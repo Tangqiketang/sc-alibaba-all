@@ -14,7 +14,6 @@
     <!-- 其它第三方依赖包 -->
     <logger name="com.alibaba.nacos" level="warn" />
     <logger name="com.zaxxer.hikari" level="warn"/>
-    <logger name="org.mongodb.driver" additivity="false"/>
 
 
     <!--写入日志到控制台的appender,用默认的,但是要去掉charset,否则windows下tomcat下乱码-->

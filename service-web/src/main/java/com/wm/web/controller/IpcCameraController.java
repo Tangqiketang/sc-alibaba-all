@@ -49,7 +49,16 @@ public class IpcCameraController {
     @Resource
     private IpcCameraMapper ipcCameraMapper;
 
-
+    @ApiOperation(value = "查询所有相机", notes = "查询所有相机")
+    @GetMapping("/list")
+    @ResponseBody
+    public BaseResp list(){
+        BaseResp rsp = new BaseResp();
+        List<IpcCamera> list = ipcCameraMapper.selectList(new LambdaQueryWrapper<IpcCamera>());
+        rsp.setCode("0");
+        rsp.setResult(list);
+        return rsp;
+    }
 
     @ApiOperation(value = "新增相机", notes = "相机")
     @PostMapping("/insertCamera")

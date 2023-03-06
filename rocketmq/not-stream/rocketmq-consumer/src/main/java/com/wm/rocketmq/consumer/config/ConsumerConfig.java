@@ -42,17 +42,24 @@ public class ConsumerConfig {
         consumer.setConsumeMessageBatchMaxSize(32);
         consumer.registerMessageListener((MessageListenerConcurrently) (msgs, context)
                 -> {
-            List<JSONObject> userInfos = new ArrayList<>(msgs.size());
-            Map<Integer, Integer> queueMsgMap = new HashMap<>(8);
-            msgs.forEach(msg -> {
-                userInfos.add((JSONObject) JSONObject.parse(msg.getBody()));
-                queueMsgMap.compute(msg.getQueueId(), (key, val) -> val == null ? 1 : ++val);
-            });
-            //处理批量消息，如批量插入：userInfoMapper.insertBatch(userInfos);
-            System.out.println(Thread.currentThread().getName()+"||"+System.currentTimeMillis()/1000+"||"+"wm3:"+userInfos.size());
 
+            try{
+                List<JSONObject> userInfos = new ArrayList<>(msgs.size());
+                Map<Integer, Integer> queueMsgMap = new HashMap<>(8);
+                msgs.forEach(msg -> {
+                    userInfos.add((JSONObject) JSONObject.parse(msg.getBody()));
+                    queueMsgMap.compute(msg.getQueueId(), (key, val) -> val == null ? 1 : ++val);
+                });
+                //处理批量消息，如批量插入：userInfoMapper.insertBatch(userInfos);
+                System.out.println(Thread.currentThread().getName()+"||"+System.currentTimeMillis()/1000+"||"+"wm3:"+userInfos.size());
+            }catch (Exception e){
+                //通知mq把消息放入重试队列中。推荐返回枚举。不过也支持返回null,或直接抛出异常。
+                return ConsumeConcurrentlyStatus.RECONSUME_LATER;
+            }
+            //成功
             return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
         });
+
         try {
             consumer.start();
         } catch (MQClientException e) {

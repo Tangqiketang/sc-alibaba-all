@@ -26,7 +26,7 @@ public class RocketSender {
     @Resource
     RocketMQTemplate rocketMQTemplate;
 
-    //同步消息
+    //同步消息。同步消息发送失败，会重试其他broker. 异步只会重试同一个broker
     public void sendWM1(){
         for(int i=0;i<100;i++){
             JSONObject msg = new JSONObject();
@@ -64,7 +64,7 @@ public class RocketSender {
             public void onException(Throwable throwable) { log.error("xxxx"); }
         });
     }
-    //不关心发送结果
+    //不关心发送结果。oneway发送失败时，不会有重试机制。
     public void sendWM2OneWay(){
         JSONObject msg = new JSONObject();
         msg.put("mycontent","wm02");
@@ -96,7 +96,8 @@ public class RocketSender {
         }
     }
 
-    /**顺序消费,按照id或则如orderId(不是消息id)hash之后进同一个队列 **/
+    /**顺序消费,按照id或则如orderId(不是消息id)hash之后进同一个队列
+     * 顺序消费没有重试机制**/
     public void sendTopic3Tag3ByOrder(){
         Random random = new Random();
         int id = 3;
