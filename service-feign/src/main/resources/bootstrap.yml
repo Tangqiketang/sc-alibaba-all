@@ -6,15 +6,30 @@ spring:
   application:
     name: service-feign
 
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 feign:
-  hystrix:
+  sentinel:
     enabled: true
-  httpclient:
-    enabled: true
-    #feign的最大连接数
-    max-connections: 200
-    #feign单个路径的最大连接数
-    max-connections-per-route: 50
+  client:
+    ##开启ApacheHttpclient取代JDK原生的URLConnection
+    httpclient:
+      enabled: true
+      #feign的最大连接数
+      max-connections: 200
+      #feign单个路径的最大连接数
+      max-connections-per-route: 50
+    config:
+      ##设置的全局openFeign超时时间,这样就会覆盖掉ribbon本身的3秒超时
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+      ##单独设置某个服务的超时时间
+      service-hi:
+        connectTimeout: 2000
+        readTimeout: 2000
   compression:
     request:
       enable: true
@@ -23,3 +38,13 @@ feign:
       min-request-size: 2048
     response:
       enable: true
+
+
+
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-package com.wm.common.config.mybatis;
+package com.wm.web.config.mybatis;
 
 
 import org.apache.ibatis.type.BaseTypeHandler;

@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 描述:
@@ -28,15 +25,29 @@ public class ServiceHiApplication {
     @Value("${server.port}")
     String port;
 
+    //普通表单
     @RequestMapping("/hi")
     public String home(@RequestParam(value = "name", defaultValue = "wm") String name) {
+        try{
+            Thread.sleep(500);
+        }catch (Exception e){}
+
         return "hi " + name + " ,i am from port:" + port;
     }
-
-    @RequestMapping("/hibody")
+    //json
+    @PostMapping("/hibody")
     public String homebody(@RequestBody Student student) {
         return JSON.toJSONString(student);
     }
-
+    //pojo
+    @PostMapping("/hibody2")
+    public String homebody2(Student student) {
+        return JSON.toJSONString(student);
+    }
+    //url带参数
+    @GetMapping("/hibody3/{id}")
+    public String homebody3(@PathVariable("id ") Integer id) {
+        return "hi id:"+id;
+    }
 
 }

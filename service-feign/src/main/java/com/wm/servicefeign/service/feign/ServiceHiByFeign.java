@@ -3,20 +3,26 @@ package com.wm.servicefeign.service.feign;
 import com.wm.servicefeign.service.feign.fallback.ServiceHiByFeignFallback;
 import lombok.Data;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.cloud.openfeign.SpringQueryMap;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(value = "service-hi",fallback = ServiceHiByFeignFallback.class)
 public interface ServiceHiByFeign {
-
+    //普通表单
     @RequestMapping(value = "/hi",method = RequestMethod.GET)
     String getHiFromServiceHi(@RequestParam(value = "name") String name);
 
-
-    @RequestMapping(value = "/hibody",method = RequestMethod.GET)
+    //json
+    @PostMapping(value = "/hibody")
     String homebody(@RequestBody Student student);
+
+    //pojo表单
+    @PostMapping(value = "/hibody2")
+    String homebody2(@SpringQueryMap Student student);
+
+    //url带参数
+    @GetMapping(value = "/hibody3/{id}")
+    String homebody3(@PathVariable("id")Integer id);
 
 
     @Data

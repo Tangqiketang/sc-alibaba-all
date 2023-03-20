@@ -19,13 +19,13 @@ import javax.annotation.Resource;
 @Service
 public class ServiceHiByLoadBalancer {
 
-    @Bean
+    @Bean(name = "bl")
     @LoadBalanced  //如果使用这个注解,则必须使用服务名称进行调用
     RestTemplate restTemplate() {
         return new RestTemplate();
     }
 
-    @Resource
+    @Resource(name = "bl")
     private RestTemplate restTemplate;
 
     // 以下注入负载均衡客户端LoadBalancerClient是一个接口,下面只有一个RibbonLoadBalancerClient实现类
@@ -33,7 +33,7 @@ public class ServiceHiByLoadBalancer {
     private LoadBalancerClient loadBalancerClient;
 
 
-
+    //注意降级方法必须为static
     @SentinelResource(value="hiserviceByLoadBalancer",fallback = "hiError",fallbackClass = ServiceHiByLoadBalancer.class,
             blockHandler = "testBlockHandler",blockHandlerClass = ServiceHiByLoadBalancer.class)
     public String hiserviceByLoadBalancer(String name){
@@ -41,10 +41,10 @@ public class ServiceHiByLoadBalancer {
         return restTemplate.getForObject("http://service-hi/hi?name="+name,String.class);
     }
 
-    public String hiError(String name) {
+    public static String hiError(String name) {
         return "hi,"+name+",sorry,error!";
     }
-    public String testBlockHandler(String name, BlockException ex) {
+    public static String testBlockHandler(String name, BlockException ex) {
         return "hi,"+name+",testBlockHandler!";
     }
 

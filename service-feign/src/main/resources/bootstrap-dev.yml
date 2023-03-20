@@ -20,6 +20,17 @@ spring:
       transport:
         port: 18765
         dashboard: localhost:8748
+      ##取消控制台懒加载，项目启动就连sentinel
+      eager: true
+      datasource:
+        rule-flow:
+          nacos:
+            server-addr: ${spring.cloud.nacos.config.server-addr}  #nacos地址
+            namespace: ${spring.cloud.nacos.config.namespace}
+            dataId: ${spring.application.name}-flow
+            group: ${spring.cloud.nacos.config.group}
+            data-type: json
+            rule-type: flow
 
 logging:
   level:

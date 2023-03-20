@@ -54,6 +54,18 @@ spring:
             max-lifetime: 1800000
             connection-timeout: 30000
             connection-test-query: SELECT 1
+        click:
+          driverClassName: ru.yandex.clickhouse.ClickHouseDriver
+          url: jdbc:clickhouse://192.168.40.131:8123/device_log
+          username: mydev
+          password: zDYQYhT1
+          hikari:
+            minimum-idle: 5
+            maximum-pool-size: 10
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            connection-timeout: 30000
+            connection-test-query: SELECT 1
   jackson:
     default-property-inclusion: NON_NULL
     time-zone: GMT+8

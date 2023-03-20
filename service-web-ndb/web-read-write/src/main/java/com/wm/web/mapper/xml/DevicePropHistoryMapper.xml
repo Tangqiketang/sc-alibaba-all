@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wm.web.mapper.DevicePropHistoryMapper">
+
+    <!-- 通用查询映射结果 11-->
+    <resultMap id="BaseResultMap" type="com.wm.web.model.entity.DevicePropHistory">
+        <id column="create_time" property="createTime" />
+        <id column="product_key" property="productKey" />
+        <id column="device_name" property="deviceName" />
+        <result column="in_time" property="inTime" />
+        <result column="prop_value" property="propValue" />
+        <result column="identifier" property="identifier" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        in_time, create_time, product_key, device_name, prop_value, identifier
+    </sql>
+
+</mapper>

@@ -28,13 +28,13 @@ public class HiController {
     @Value("${wm.configtest}")
     private String configTest;
 
-    //通过loadBalancer去调用其他服务
+    //使用负载的restTemplate调用，通过loadBalancer去调用其他服务。
     @GetMapping(value = "/hi")
     public String hi(@RequestParam String name) {
         return serviceHiByLoadBalancer.hiserviceByLoadBalancer( name );
     }
 
-    //通过feign去调用其他服务
+    //通过openfeign去调用其他服务,失败降级
     @GetMapping(value = "/hi2")
     public String hi2(@RequestParam String name) {
         return serviceHiByFeign.getHiFromServiceHi(name);

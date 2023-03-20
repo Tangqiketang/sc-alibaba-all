@@ -22,4 +22,12 @@ public class ServiceHiByFeignFallback implements ServiceHiByFeign {
     public String homebody(Student student) {
         return "faile body xx";
     }
+
+    @Override
+    public String homebody2(Student student) { return "faile body2 xx"; }
+
+    @Override
+    public String homebody3(Integer id) {
+        return "id:"+id;
+    }
 }

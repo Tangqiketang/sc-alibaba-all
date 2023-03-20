@@ -20,4 +20,23 @@ public class Test {
         System.out.println(payload);
     }
 
+    public int getLenth(String s){
+        int[] compare = new int[128];
+        for(int i = 0; i < 128; i++) {
+            compare[i] = -1;
+        }
+        int length = s.length();
+
+        int result = 0;
+        int start = 0; // 窗口开始位置
+        for(int i = 0; i < length; i++) {
+            int asc = s.charAt(i);
+            start = Math.max(start, compare[asc] + 1);
+            result   = Math.max(result, i - start + 1);
+            compare[asc] = i;
+        }
+
+        return result;
+    }
+
 }

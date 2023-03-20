@@ -22,6 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.WebAsyncTask;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.Min;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
 /**
@@ -203,6 +205,39 @@ public class IpcCameraController {
 
         //return JSON.toJSONString(null);
     }
+
+    /*============     ===================================================================================**/
+
+    @GetMapping(path = "get")
+    public WebAsyncTask<String> get(long sleep, boolean error) {
+
+        Callable<String> callable = () -> {
+            System.out.println("do some thing");
+            Thread.sleep(sleep);
+            if (error) {
+                System.out.println("出现异常，返回!!!");
+                throw new RuntimeException("异常了!!!");
+            }
+            return "hello world";
+        };
+        // 指定3s的超时
+        WebAsyncTask<String> webTask = new WebAsyncTask<>(3000, callable);
+        webTask.onCompletion(() -> System.out.println("over!!!"));
+
+        webTask.onTimeout(() -> {
+            System.out.println("超时了");
+            return "超时返回!!!";
+        });
+
+        webTask.onError(() -> {
+            System.out.println("出现异常了!!!");
+            return "异常返回";
+        });
+        return webTask;
+    }
+
+
+
 
 }
 

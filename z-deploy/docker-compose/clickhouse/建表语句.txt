@@ -13,9 +13,7 @@ CREATE TABLE default.t_device_prop_history
 )
 ENGINE = MergeTree
 PARTITION BY toYYYYMMDD(create_time)
-ORDER BY (create_time,
- product_key,
- device_name)
+ORDER BY (create_time,product_key,device_name)
 TTL in_time + toIntervalMonth(1)
 SETTINGS index_granularity = 8192;
 
