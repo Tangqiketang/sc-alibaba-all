@@ -1,6 +1,7 @@
 package com.wm.rocketmq.producer;
 
 import com.wm.rocketmq.producer.sender.RocketSender;
+import com.wm.rocketmq.producer.transaction.OrderSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,7 +27,8 @@ public class RocketmqProduerApplication {
 
     @Resource
     RocketSender rocketSender;
-
+    @Resource
+    OrderSender orderSender;
 
     @GetMapping("/testTopic1")
     public String sendTopic1() {
@@ -65,5 +67,12 @@ public class RocketmqProduerApplication {
         rocketSender.reply();
         return "success";
     }
+    //事务
+    @GetMapping("/tran")
+    public String tran() {
+        orderSender.asyncDecreaseStockTransaction(15158,"134652",111);
+        return "success";
+    }
+
 
 }

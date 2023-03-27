@@ -132,7 +132,7 @@ public class RocketSender {
                 .setHeader("args", args.toJSONString()) // 设置 Tag
                 .build();
         System.out.println("beforeSend:"+System.currentTimeMillis());
-        rocketMQTemplate.send(springMsg);
+        rocketMQTemplate.sendMessageInTransaction("WM4-TOPIC",springMsg,springMsg);
         System.out.println("AfterSend:"+System.currentTimeMillis());
     }
 

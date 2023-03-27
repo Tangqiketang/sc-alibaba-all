@@ -18,6 +18,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.wm</groupId>
+            <artifactId>cloud-redis-starter</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>

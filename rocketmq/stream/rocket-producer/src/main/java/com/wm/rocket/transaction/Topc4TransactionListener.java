@@ -17,7 +17,7 @@ import org.springframework.messaging.Message;
 public class Topc4TransactionListener implements RocketMQLocalTransactionListener {
 
 
-    /**执行此方法前，已经发送了一条事务消息到broker，但是消息对消费者还未可见 **/
+    /**执行此方法前，本地已经发送了一条事务消息到broker，但是消息对消费者还未可见。 **/
     @Override
     public RocketMQLocalTransactionState executeLocalTransaction(Message msg, Object arg) {
         String args = msg.getHeaders().get("args",String.class);
@@ -36,7 +36,7 @@ public class Topc4TransactionListener implements RocketMQLocalTransactionListene
         return RocketMQLocalTransactionState.UNKNOWN;
     }
 
-    /** 在事务消息长时间未提交或回滚时，broker会来查询**/
+    /** 在上面的本地事务长时间未提交时，broker会来查询**/
     @Override
     public RocketMQLocalTransactionState checkLocalTransaction(Message msg) {
         System.out.println("checkTime:"+System.currentTimeMillis());

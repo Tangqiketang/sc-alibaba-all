@@ -246,7 +246,7 @@ public class RedisKit {
     /**
      * 递增
      * @param key   键
-     * @param delta 要增加几(大于0)
+     * @param delta 要增加几(大于0)  1  -1
      * @return
      */
     public long incr(String key, long delta) {

@@ -92,7 +92,7 @@ public class RocketSendService {
         args.put("args2","2");
 
         Message<JSONObject> springMsg = MessageBuilder.withPayload(msg)
-                .setHeader("args", args.toJSONString()) // 设置 Tag
+                .setHeader("args", args.toJSONString())
                 .build();
         System.out.println("beforeSend:"+System.currentTimeMillis());
         myOutput.wm4Output().send(springMsg);
