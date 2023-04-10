@@ -1,0 +1,37 @@
+server:
+  port: 8866
+spring:
+  application:
+    name: kafka-producer
+  #-------------------------------------kafka config start----------------------------------
+  kafka:
+    bootstrap-servers: 192.168.40.131:19093,192.168.40.131:19094,192.168.40.131:19095
+    producer:
+      retries: 3
+      # 发送端凑够16KB的数据就发送出去
+      batch-size: 16384
+      # 32M 本地消息内存缓存
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      compression-type: lz4
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 1
+      properties:
+        ##自定义topic发送到哪个partition
+        partitioner.class: com.wm.kafka.config.MyPartition
+        ##批量提交达不到阈值时,最多延迟提交时间
+        linger.ms: 50
+
+
+#-------------------------------------kafka config end----------------------------------
+
+
+
+
+
+
+
+

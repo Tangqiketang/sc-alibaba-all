@@ -194,5 +194,7 @@ public class MongoOpTest extends BaseTest{
         System.out.println("query: " + aggregation + " | groupQuery " + result.getMappedResults());
     }
 
-    //insert update 事务 地理位置操作
+    //=================================== 地理位置操作 ==============================================/
+
+    //insert update 事务
 }

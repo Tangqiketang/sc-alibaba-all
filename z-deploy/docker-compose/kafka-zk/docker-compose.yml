@@ -1,0 +1,98 @@
+version: '3'
+services:
+  zookeeper:
+    image: zookeeper
+    container_name: zookeeper
+    restart: always
+    ports:
+      - 2181:2181
+
+### kafka_2.13-2.8.1 配置文件不需要映射，直接环境变量environment注入
+  kafka1:
+    image: wurstmeister/kafka
+    container_name: kafka1
+    ports:
+      - "19093:9092"
+    environment:
+      KAFKA_BROKER_ID: 0
+      ##同一个topic的3个partition就会在N个broker中生成不同的topic-x文件
+      KAFKA_NUM_PARTITIONS: 3
+      ##包含leader在内，一共2个副本
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+      ##设置1000条刷盘一次，默认10000条
+      KAFKA_LOG_FLUSH_INTERVAL_MESSAGES: 1000
+      ##设置每秒刷盘一次，默认就是1秒
+      KAFKA_LOG_FLUSH_INTERVAL_MS: 1000
+      KAFKA_ZOOKEEPER_CONNECT: 192.168.40.131:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.40.131:19093
+    volumes:
+      - ./kafka/kafka-1/logs:/opt/kafka/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./kafka/kafka-1/data/kafka:/kafka
+    restart: always
+
+  kafka2:
+    image: wurstmeister/kafka
+    container_name: kafka2
+    ports:
+      - "19094:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+      ##设置1000条刷盘一次，默认10000条
+      KAFKA_LOG_FLUSH_INTERVAL_MESSAGES: 1000
+      ##设置每秒刷盘一次，默认就是1秒
+      KAFKA_LOG_FLUSH_INTERVAL_MS: 1000
+      KAFKA_ZOOKEEPER_CONNECT: 192.168.40.131:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.40.131:19094
+    volumes:
+      - ./kafka/kafka-2/logs:/opt/kafka/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./kafka/kafka-2/data/kafka:/kafka
+    restart: always
+
+  kafka3:
+    image: wurstmeister/kafka
+    container_name: kafka3
+    ports:
+      - "19095:9092"
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+      ##设置1000条刷盘一次，默认10000条
+      KAFKA_LOG_FLUSH_INTERVAL_MESSAGES: 1000
+      ##设置每秒刷盘一次，默认就是1秒
+      KAFKA_LOG_FLUSH_INTERVAL_MS: 1000
+      KAFKA_ZOOKEEPER_CONNECT: 192.168.40.131:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.40.131:19095
+    volumes:
+      - ./kafka/kafka-3/logs:/opt/kafka/logs
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./kafka/kafka-3/data/kafka:/kafka
+    restart: always
+
+#  kafka-manager:
+#    image: sheepkiller/kafka-manager              ## 镜像：开源的web管理kafka集群的界面
+#    container_name: kafka-manager
+#    restart: always
+#    environment:
+#      ZK_HOSTS: 192.168.40.131:2181
+#    ports:
+#      - "19000:9000"                               ## 暴露端口
+
+  kafka-eagle:
+    image: gui66497/kafka_eagle
+    container_name: kafka-eagle
+    restart: always
+    ports:
+      - "18048:8048"
+    environment:
+      ZKSERVER: "192.168.40.131:2181"
+    volumes:
+      - ./eagle/conf/system-config.properties:/kafka-eagle/conf/system-config.properties
+      - ./eagle/logs:/kafka-eagle/logs

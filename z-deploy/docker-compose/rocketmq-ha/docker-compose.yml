@@ -1,0 +1,125 @@
+version: '3'
+services:
+  namesrv01:
+    image: apache/rocketmq:4.9.3
+    container_name: rmqnamesrv01
+    environment:
+      - TZ=Asia/Shanghai
+      - "JAVA_OPTS_EXT=-Xms512m -Xmx512m"
+    ports:
+      - 19876:9876
+    restart: always
+    volumes:
+      - ./data/namesrv01/logs:/home/rocketmq/logs
+    command: ./mqnamesrv
+
+  namesrv02:
+    image: apache/rocketmq:4.9.3
+    container_name: rmqnamesrv02
+    environment:
+      - TZ=Asia/Shanghai
+      - "JAVA_OPTS_EXT=-Xms512m -Xmx512m"
+    ports:
+      - 29876:9876
+    restart: always
+    volumes:
+      - ./data/namesrv02/logs:/home/rocketmq/logs
+    command: ./mqnamesrv
+
+  broker-a:
+    user: root
+    image: apache/rocketmq:4.9.3
+    container_name: rmqbroker-a
+    depends_on:
+      - namesrv01
+      - namesrv02
+    ports:
+      - 10909:10909
+      - 10911:10911
+      - 10912:10912
+    environment:
+      - NAMESRV_ADDR=192.168.40.131:19876;192.168.40.131:29876
+      - TZ=Asia/Shanghai
+      - "JAVA_OPT_EXT=-Xms512m -Xmx512m"
+    volumes:
+      - ./data/broker-a/logs:/root/logs
+      - ./data/broker-a/store:/root/store
+      - ./conf/2m-2s-sync/broker-a.properties:/home/rocketmq/rocketmq-4.9.3/conf/2m-2s-sync/broker-a.properties
+    command: ./mqbroker -c /home/rocketmq/rocketmq-4.9.3/conf/2m-2s-sync/broker-a.properties
+
+  broker-b:
+    user: root
+    image: apache/rocketmq:4.9.3
+    container_name: rmqbroker-b
+    depends_on:
+      - namesrv01
+      - namesrv02
+    ports:
+      - 20909:20909
+      - 20911:20911
+      - 20912:10912
+    environment:
+      - NAMESRV_ADDR=192.168.40.131:19876;192.168.40.131:29876
+      - TZ=Asia/Shanghai
+      - "JAVA_OPT_EXT=-Xms512m -Xmx512m"
+    volumes:
+      - ./data/broker-b/logs:/root/logs
+      - ./data/broker-b/store:/root/store
+      - ./conf/2m-2s-sync/broker-b.properties:/home/rocketmq/rocketmq-4.9.3/conf/2m-2s-sync/broker-b.properties
+    command: ./mqbroker -c /home/rocketmq/rocketmq-4.9.3/conf/2m-2s-sync/broker-b.properties
+
+  broker-a-s:
+    user: root
+    image: apache/rocketmq:4.9.3
+    container_name: rmqbroker-a-s
+    depends_on:
+      - namesrv01
+      - namesrv02
+    ports:
+      - 10809:10809
+      - 10811:10811
+      - 10812:10912
+    environment:
+      - NAMESRV_ADDR=192.168.40.131:19876;192.168.40.131:29876
+      - TZ=Asia/Shanghai
+      - "JAVA_OPT_EXT=-Xms512m -Xmx512m"
+    volumes:
+      - ./data/broker-a-s/logs:/root/logs
+      - ./data/broker-a-s/store:/root/store
+      - ./conf/2m-2s-sync/broker-a-s.properties:/home/rocketmq/rocketmq-4.9.3/conf/2m-2s-sync/broker-a-s.properties
+    command: ./mqbroker -c /home/rocketmq/rocketmq-4.9.3/conf/2m-2s-sync/broker-a-s.properties
+
+  broker-b-s:
+    user: root
+    image: apache/rocketmq:4.9.3
+    container_name: rmqbroker-b-s
+    depends_on:
+      - namesrv01
+      - namesrv02
+    ports:
+      - 20809:20809
+      - 20811:20811
+      - 20812:10912
+    environment:
+      - NAMESRV_ADDR=192.168.40.131:19876;192.168.40.131:29876
+      - TZ=Asia/Shanghai
+      - "JAVA_OPT_EXT=-Xms512m -Xmx512m"
+    volumes:
+      - ./data/broker-b-s/logs:/root/logs
+      - ./data/broker-b-s/store:/root/store
+      - ./conf/2m-2s-sync/broker-b-s.properties:/home/rocketmq/rocketmq-4.9.3/conf/2m-2s-sync/broker-b-s.properties
+    command: ./mqbroker -c /home/rocketmq/rocketmq-4.9.3/conf/2m-2s-sync/broker-b-s.properties
+
+  dashboard:
+    image: apacherocketmq/rocketmq-dashboard:1.0.0
+    container_name: rmqdashboard
+    restart: always
+    ports:
+      - 8076:8080
+    depends_on:
+      - namesrv01
+      - namesrv02
+    environment:
+      - TZ=Asia/Shanghai
+      - NAMESRV_ADDR=192.168.40.131:19876;192.168.40.131:29876
+

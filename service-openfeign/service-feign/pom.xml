@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>sc-alibaba-all</artifactId>
+        <artifactId>service-openfeign</artifactId>
         <groupId>com.wm</groupId>
         <version>0.0.1</version>
     </parent>

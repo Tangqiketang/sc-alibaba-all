@@ -1,0 +1,38 @@
+server:
+  port: 8867
+spring:
+  application:
+    name: kafka-consumer
+  #-------------------------------------kafka config start----------------------------------
+  kafka:
+    bootstrap-servers: 192.168.40.131:19093
+    consumer:
+      # 指定默认消费者group id
+      broker-id: 1
+      # group-id: kafka-group
+      group-id: test-consumer-group
+       # earliest:当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，从头开始消费
+      # latest:当各分区下有已提交的offset时，从提交的offset开始消费；无提交的offset时，消费新产生的该分区下的数据
+      # none:topic各分区都存在已提交的offset时，从offset后开始消费；只要有一个分区不存在已提交的offset，则抛出异常
+      auto-offset-reset: latest
+      ##取消自动提交
+      enable-auto-commit: false
+      # 自动提交的时间间隔,在spring boot 2.X 版本中这里采用的是值的类型为Duration 需要符合特定的格式，如1S,1M,2H,5D
+      auto-commit-interval: 1S
+      max-poll-records: 100
+      # 指定消息key和消息体的编解码方式
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      ack-mode: manual
+      #每个listener拥有一个处理线程
+      concurrency: 4
+#-------------------------------------kafka config end----------------------------------
+
+
+
+
+
+
+
+
