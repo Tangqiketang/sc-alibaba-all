@@ -1,7 +1,6 @@
 package com.wm.dubbocomsumer.controller;
 
 import com.wm.dubbocomsumer.service.DubboService;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -18,8 +17,4 @@ public class TestController {
     @Resource
     private DubboService dubboService;
 
-    @GetMapping("test")
-    public String test(){
-        return dubboService.test();
-    }
 }

@@ -1,6 +1,8 @@
 package com.wm.dubbocomsumer;
 
+import com.wm.core.model.exception.meta.ServiceException;
 import com.wm.dubbocomsumer.service.DubboService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +20,7 @@ import javax.annotation.Resource;
 @SpringBootApplication
 @EnableDubbo
 @RestController
+@Slf4j
 public class DubboConsumerApplication {
 
     public static void main(String[] args) {
@@ -29,7 +32,12 @@ public class DubboConsumerApplication {
 
     @RequestMapping("/test")
     public String home() {
-        return dubboService.test();
+        try{
+            dubboService.test();
+        }catch (ServiceException e){
+            log.info("抓到异常了");
+        }
+        return null;
     }
 
 }

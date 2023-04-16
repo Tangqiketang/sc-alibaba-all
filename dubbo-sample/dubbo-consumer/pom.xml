@@ -17,7 +17,11 @@
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.wm</groupId>
+            <artifactId>common-util</artifactId>
+            <version>0.0.1</version>
+        </dependency>
         <!--dubbo包和升级版本的依赖包 -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>

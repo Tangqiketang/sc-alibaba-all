@@ -7,7 +7,7 @@ package com.wm.core.model.exception.meta;
  * @Date: 9:13 2020/7/8
  */
 
-public enum SysExceptionEnum implements ExceptionEnum {
+public enum SysExceptionEnum implements ExceptionEnum{
 
     UNKNOWN_ERROR("-1", "未知错误"),
     BAD_REQUEST_PARAM_MISS("400", "非法请求，参数缺失"),

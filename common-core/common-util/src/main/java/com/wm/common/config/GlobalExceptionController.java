@@ -66,8 +66,8 @@ public class GlobalExceptionController {
 	@ResponseBody
 	public BaseResp handleReqException(HttpServletRequest req, ServiceException ex, HttpServletResponse response) throws UnsupportedEncodingException{
 		BaseResp rsp = new BaseResp();
-		rsp.setCode(ex.getExceptionEnum().getCode());
-		rsp.setDesc(ex.getExceptionEnum().getMessage());
+		rsp.setCode(ex.getCode());
+		rsp.setDesc(ex.getMessage());
 		return rsp;
 	}
 	
