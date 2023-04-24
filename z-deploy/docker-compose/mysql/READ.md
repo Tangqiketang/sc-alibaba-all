@@ -4,8 +4,9 @@ grant all PRIVILEGES on test1_sharding.* to root@'%' identified by '123456';
 
 
 备份
-docker exec -it dockermysql mysqldump -uroot -proot!Q2w  data-manager > data-manager.sql
-
+https://www.zhihu.com/question/38374712
+docker exec -it mysql_master_1 mysqldump -uroot -proot!Q2w  data-manager > data-manager.sql
+docker exec -it mysql_master_1 mysqldump --opt --single-transaction  --default-character-set=utf8  -uroot -p123456 -A > allwmmysql.sql
 =========================================================
 千万级别表数据更新：
     mysql在表数据量很大的时候，如果修改表结构会导致锁表，业务请求被阻塞。
@@ -13,6 +14,13 @@ docker exec -it dockermysql mysqldump -uroot -proot!Q2w  data-manager > data-man
     所以一般都采用pt工具( Percona Toolkit)
     pt-online-schema-change --user='root' --host='localhost' --ask-pass --alter "add index idx_user_id(room_id,create_time)"
 D=fission_show_room_v2,t=room_favorite_info --execute
+
+
+
+
+===================================================================================================
+mysql
+
 
 
 

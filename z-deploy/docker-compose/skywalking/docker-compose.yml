@@ -1,0 +1,25 @@
+version: '3'
+services:
+  skywalking-server:
+    image: apache/skywalking-oap-server:8.9.1
+    container_name: skywalking-oap-server
+    environment:
+      - TZ=Asia/Shanghai
+      - SW_STORAGE=elasticsearch
+      - SW_STORAGE_ES_CLUSTER_NODES=192.168.40.131:9200
+      - "JAVA_OPTS=-Xms1024m -Xmx1024m"
+    ports:
+      - 12800:12800
+      - 11800:11800
+    restart: always
+  skywalking-ui:
+    depends_on:
+      - skywalking-server
+    image: apache/skywalking-ui:8.9.1
+    container_name: skywalking-ui
+    environment:
+      - TZ=Asia/Shanghai
+      - SW_OAP_ADDRESS=http://192.168.40.131:12800
+    ports:
+      - 13800:8080
+    restart: always

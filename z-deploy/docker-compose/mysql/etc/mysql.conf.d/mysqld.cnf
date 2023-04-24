@@ -8,7 +8,10 @@ default-character-set=utf8mb4
 [mysqld]
 ###开启日志binlog
 #binlog-ignore-db = mysql,information_schema       #忽略写入binlog日志的库
-#log-bin=mysql-bin
+log-bin=mysql-bin
+expire_logs_days=10
+binlog_format = ROW
+
 #auto_increment_increment=2
 #auto_increment_offset=1
 #slave-skip-errors = all

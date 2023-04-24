@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: yk-i2v-intranet
+  namespace: default
+  labels:
+    app: yk-i2v
+spec:
+  type: ClusterIP
+  ports:
+    - name: web
+      port: 8061
+      targetPort: 8061
+    - name: grpc
+      port: 30000
+      targetPort: 30000
+    - name: dubbo
+      port: 20890
+      targetPort: 20890
+  selector:
+    app: yk-i2v
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yk-i2v
+  labels: {app: yk-i2v}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: yk-i2v}
+  template:
+    metadata:
+      labels: {app: yk-i2v}
+    spec:
+      terminationGracePeriodSeconds: 30
+      tolerations:
+        - {key: node-role.kubernetes.io/master, operator: Exists, effect: NoSchedule}
+      containers:
+        - name: yk-i2v
+          image: 61.164.57.186:8082/yk_i2v:0.0.1
+          imagePullPolicy: Always
+          readinessProbe:
+            failureThreshold: 5
+            httpGet: {path: /actuator, port: 8061}
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+          livenessProbe:
+            failureThreshold: 5
+            httpGet: {path: /actuator, port: 8061}
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            periodSeconds: 10
+          volumeMounts:
+            - {name: logs, mountPath: /logs}
+          resources:
+            limits: {cpu: 3.0, memory: 3000Mi}
+            requests: {cpu: 0.1, memory: 2000Mi}
+          env:
+            - name: springApplicationName
+              valueFrom:
+                fieldRef: {fieldPath: metadata.name}
+            - {name: webPort, value: '8061'}
+            - {name: gateway, value: www.hikailink-cloud.com}
+            - {name: serverIp, value: www.hikailink-cloud.com}
+            - name: DUBBO_IP_TO_REGISTRY
+              valueFrom:
+                fieldRef: {fieldPath: status.podIP}
+            - {name: rabbitmqIp, value: 172.16.59.177}
+            - {name: rabbitmqUsername, value: cetitiHkzl}
+            - {name: rabbitmqPassword, value: AlibabaCetiti}
+            - {name: mongodbCluster, value: '172.16.59.177:20000'}
+            - {name: mongodbUsername, value: Hik706706}
+            - {name: mongodbPassword, value: Alibaba&Cetiti}
+            - {name: zookeeperCluster, value: 'zookeeper://172.16.59.178:2181?backup=172.16.59.177:2181,172.16.59.179:2181'}
+            - {name: kafkaCluster, value: '172.16.59.178:9092,172.16.59.177:9092,172.16.59.179:9092'}
+            - {name: redisCluster, value: '172.16.59.178:7000,172.16.59.178:7002,172.16.59.177:7000,172.16.59.177:7002,172.16.59.179:7000,172.16.59.179:7002'}
+            - {name: mongodbName, value: yk_i2v}
+            - {name: mysqlIp, value: 172.16.59.177}
+            - {name: mysqlPort, value: '3306'}
+            - {name: mysqlUsername, value: platform}
+            - {name: mysqlPassword, value: platform@123}
+            - {name: JAVA_TOOL_OPTIONS, value: ' -Xms2000m -Xmx2000m '}
+          ports:
+            - {containerPort: 8061}
+            - {containerPort: 20890}
+      imagePullSecrets:
+        - {name: dockercfg-1}
+      volumes:
+        - name: logs
+          nfs: {path: /mnt/java/yk_i2v, server: 172.16.59.178}
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata: {name: yk-i2v, namespace: default}
+spec:
+  scaleTargetRef: {apiVersion: apps/v1, kind: Deployment, name: yk-i2v}
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 90
+
+---
