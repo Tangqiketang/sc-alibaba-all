@@ -25,6 +25,7 @@ kubectl get pods       -A               查看所有命名空间中的pod,-A表�
 kubectl get pods       -A -o wide       查看所有命名空间中的pod,-A表示所有命名空间,-o wide显示所在ip和node
 kubectl get pods,deployments,svc  -A -o wide       查看所有命名空间中的pod、deployments、service,-A表示所有命名空间,-o wide显示所在ip和node
 kubectl describe pod nginx
+kubectl get endpoints -A  获取
 #2.=========================================进入pod==============
 kubectl exec -it pod/nginx-6799fc88d8-98cc4  -- /bin/bash
 

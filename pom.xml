@@ -262,5 +262,13 @@
 
   </build>
 
+  <distributionManagement>
+    <repository>
+      <!--这里的id需要和settings.xml中的server的id一致-->
+      <id>custom_hosted</id>
+      <name>custom_hosted</name>
+      <url>http://192.168.40.131:8931/repository/custom_hosted/</url>
+    </repository>
+  </distributionManagement>
 
 </project>

@@ -1,0 +1,4 @@
+1.skywalking服务器容器化部署，接入es
+2.下载客户端。解压，根目录下包含了客户端代理jar包
+3.启动添加skywalking的客户端代理。 多个项目可以共用一个agent
+-javaagent:C:\MyDadaBase\IdeaWorkspace\HubGit\sc-alibaba-all\z-deploy\docker-compose\skywalking\skywalking-agent\skywalking-agent.jar  -Dskywalking.agent.service_name=service-feign -Dskywalking.collector.backend_service=192.168.40.131:11800

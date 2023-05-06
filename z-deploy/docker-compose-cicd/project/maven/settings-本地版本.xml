@@ -22,21 +22,21 @@ under the License.
 <!--
  | This is the configuration file for Maven. It can be specified at two levels:
  |
- |  1. User Level. This settings.xml file provides configuration for a single user,
- |                 and is normally provided in ${user.home}/.m2/settings.xml.
+ |  1. User Level. This settings-私服版本.xml file provides configuration for a single user,
+ |                 and is normally provided in ${user.home}/.m2/settings-私服版本.xml.
  |
  |                 NOTE: This location can be overridden with the CLI option:
  |
- |                 -s /path/to/user/settings.xml
+ |                 -s /path/to/user/settings-私服版本.xml
  |
- |  2. Global Level. This settings.xml file provides configuration for all Maven
+ |  2. Global Level. This settings-私服版本.xml file provides configuration for all Maven
  |                 users on a machine (assuming they're all using the same Maven
  |                 installation). It's normally provided in
- |                 ${maven.conf}/settings.xml.
+ |                 ${maven.conf}/settings-私服版本.xml.
  |
  |                 NOTE: This location can be overridden with the CLI option:
  |
- |                 -gs /path/to/global/settings.xml
+ |                 -gs /path/to/global/settings-私服版本.xml
  |
  | The sections in this sample file are intended to give you a running start at
  | getting the most out of your Maven installation. Where appropriate, the default
@@ -53,15 +53,14 @@ under the License.
   <localRepository>/path/to/local/repo</localRepository>
   -->
 
-<localRepository>/home/docker-compose/docker-compose-cicd/project/maven/apache-maven-3.6.3/respository</localRepository>
-
-
+  <localRepository>C:\MyDadaBase\Develop\apache-maven-3.6.0\repository</localRepository>
 
   <!-- interactiveMode
    | This will determine whether maven prompts you when it needs input. If set to false,
    | maven will use a sensible default value, perhaps based on some other setting, for
    | the parameter in question.
-   |
+   |作用：表示maven是否需要和用户交互以获得输入
+   |如果maven需要和用户交互以获得输入，则设置成true，反之则应为false。默认为true。
    | Default: true
   <interactiveMode>true</interactiveMode>
   -->
@@ -69,7 +68,9 @@ under the License.
   <!-- offline
    | Determines whether maven should attempt to connect to the network when executing a build.
    | This will have an effect on artifact downloads, artifact deployment, and others.
-   |
+   |作用：表示maven是否需要在离线模式下运行。
+   |如果构建系统需要在离线模式下运行，则为true，默认为false。
+   |当由于网络设置原因或者安全因素，构建服务器不能连接远程仓库的时候，该配置就十分有用。
    | Default: false
   <offline>false</offline>
   -->
@@ -78,6 +79,10 @@ under the License.
    | This is a list of additional group identifiers that will be searched when resolving plugins by their prefix, i.e.
    | when invoking a command line like "mvn prefix:goal". Maven will automatically add the group identifiers
    | "org.apache.maven.plugins" and "org.codehaus.mojo" if these are not already contained in the list.
+   |当插件的组织id（groupId）没有显式提供时，供搜寻插件组织Id（groupId）的列表。
+   |该元素包含一个pluginGroup元素列表，每个子元素包含了一个组织Id（groupId）。
+   |当我们使用某个插件，并且没有在命令行为其提供组织Id（groupId）的时候，Maven就会使用该列表。
+   |默认情况下该列表包含了org.apache.maven.plugins和org.codehaus.mojo。
    |-->
   <pluginGroups>
     <!-- pluginGroup
@@ -92,20 +97,6 @@ under the License.
    | specification in this list marked as active will be used.
    |-->
   <proxies>
-    <!-- proxy
-     | Specification for one proxy, to be used in connecting to the network.
-     |
-    <proxy>
-      <id>optional</id>
-      <active>true</active>
-      <protocol>http</protocol>
-      <username>proxyuser</username>
-      <password>proxypass</password>
-      <host>proxy.host.net</host>
-      <port>80</port>
-      <nonProxyHosts>local.net|some.host.com</nonProxyHosts>
-    </proxy>
-    -->
   </proxies>
 
   <!-- servers
@@ -113,27 +104,26 @@ under the License.
    | Authentication profiles can be used whenever maven must make a connection to a remote server.
    |-->
   <servers>
-    <!-- server
-     | Specifies the authentication information to use when connecting to a particular server, identified by
-     | a unique name within the system (referred to by the 'id' attribute below).
-     |
-     | NOTE: You should either specify username/password OR privateKey/passphrase, since these pairings are
-     |       used together.
-     |
+    <!--私服账号密码 -->
     <server>
-      <id>deploymentRepo</id>
-      <username>repouser</username>
-      <password>repopwd</password>
+      <id>custom_group</id>
+      <username>admin</username>
+      <password>314159Aa</password>
     </server>
-    -->
 
-    <!-- Another sample, using keys to authenticate.
     <server>
-      <id>siteServer</id>
-      <privateKey>/path/to/private/key</privateKey>
-      <passphrase>optional; leave empty if not used.</passphrase>
+      <id>custom_hosted</id>
+      <username>admin</username>
+      <password>314159Aa</password>
     </server>
-    -->
+
+    <server>
+      <id>custom_snapshots</id>
+      <username>admin</username>
+      <password>314159Aa</password>
+    </server>
+
+
   </servers>
 
   <!-- mirrors
@@ -148,24 +138,54 @@ under the License.
    | server for that repository.
    |-->
   <mirrors>
-    <!-- mirror
-     | Specifies a repository mirror site to use instead of a given repository. The repository that
-     | this mirror serves has an ID that matches the mirrorOf element of this mirror. IDs are used
-     | for inheritance and direct lookup purposes, and must be unique across the set of mirrors.
-     |
-    <mirror>
-      <id>mirrorId</id>
-      <mirrorOf>repositoryId</mirrorOf>
-      <name>Human Readable Name for this Mirror.</name>
-      <url>http://my.repository.com/repo/path</url>
-    </mirror>
-     -->
 
+    <!--私服 -->
+    <!--
     <mirror>
-      <id>alimaven</id>
+      <id>custom_group</id>
       <mirrorOf>central</mirrorOf>
-      <name>aliyun_maven</name>
+      <name>custom_group</name>
+      <url>http://192.168.40.131:8931/repository/custom_group/</url>
+    </mirror>
+    -->
+
+    <!-- 国内的镜像网站（下载速度应该快上不少） -->
+    <mirror>
+      <id>huaweiyun</id>
+      <mirrorOf>huawei</mirrorOf>
+      <name>华为云公共仓库</name>
+      <url>https://mirrors.huaweicloud.com/repository/maven/</url>
+    </mirror>
+    <mirror>
+      <id>aliyun</id>
+      <mirrorOf>ali</mirrorOf>
+      <name>阿里云公共仓库</name>
       <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+    </mirror>
+    <mirror>
+      <id>tencentyun</id>
+      <mirrorOf>tx</mirrorOf>
+      <name>腾讯云公共仓库</name>
+      <url>http://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+    </mirror>
+    <!-- 国外的镜像网站（下载速度可能较慢） -->
+    <mirror>
+      <id>repo2</id>
+      <mirrorOf>mvpublic</mirrorOf>
+      <name>Maven Central Public Repository</name>
+      <url>http://repo2.maven.org/maven2/</url>
+    </mirror>
+    <mirror>
+      <id>ibiblio</id>
+      <mirrorOf>ibiblio</mirrorOf>
+      <name>ibiblio Repository</name>
+      <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
+    </mirror>
+    <mirror>
+      <id>jboss-public-repository-group</id>
+      <mirrorOf>jboss</mirrorOf>
+      <name>JBoss Public Repository Group</name>
+      <url>http://repository.jboss.org/nexus/content/groups/public</url>
     </mirror>
 
 
@@ -173,7 +193,7 @@ under the License.
 
   <!-- profiles
    | This is a list of profiles which can be activated in a variety of ways, and which can modify
-   | the build process. Profiles provided in the settings.xml are intended to provide local machine-
+   | the build process. Profiles provided in the settings-私服版本.xml are intended to provide local machine-
    | specific paths and repository locations which allow the build to work in the local environment.
    |
    | For example, if you have an integration testing plugin - like cactus - that needs to know where
@@ -181,90 +201,36 @@ under the License.
    | dereferenced during the build process to configure the cactus plugin.
    |
    | As noted above, profiles can be activated in a variety of ways. One way - the activeProfiles
-   | section of this document (settings.xml) - will be discussed later. Another way essentially
+   | section of this document (settings-私服版本.xml) - will be discussed later. Another way essentially
    | relies on the detection of a system property, either matching a particular value for the property,
    | or merely testing its existence. Profiles can also be activated by JDK version prefix, where a
    | value of '1.4' might activate a profile when the build is executed on a JDK version of '1.4.2_07'.
    | Finally, the list of active profiles can be specified directly from the command line.
    |
-   | NOTE: For profiles defined in the settings.xml, you are restricted to specifying only artifact
+   | NOTE: For profiles defined in the settings-私服版本.xml, you are restricted to specifying only artifact
    |       repositories, plugin repositories, and free-form properties to be used as configuration
    |       variables for plugins in the POM.
    |
    |-->
+
+
   <profiles>
-    <!-- profile
-     | Specifies a set of introductions to the build process, to be activated using one or more of the
-     | mechanisms described above. For inheritance purposes, and to activate profiles via <activatedProfiles/>
-     | or the command line, profiles have to have an ID that is unique.
-     |
-     | An encouraged best practice for profile identification is to use a consistent naming convention
-     | for profiles, such as 'env-dev', 'env-test', 'env-production', 'user-jdcasey', 'user-brett', etc.
-     | This will make it more intuitive to understand what the set of introduced profiles is attempting
-     | to accomplish, particularly when you only have a list of profile id's for debug.
-     |
-     | This profile example uses the JDK version to trigger activation, and provides a JDK-specific repo.
+
     <profile>
-      <id>jdk-1.4</id>
-
-      <activation>
-        <jdk>1.4</jdk>
-      </activation>
-
+      <id>custom_group</id>
       <repositories>
         <repository>
-          <id>jdk14</id>
-          <name>Repository for JDK 1.4 builds</name>
-          <url>http://www.myhost.com/maven/jdk14</url>
-          <layout>default</layout>
-          <snapshotPolicy>always</snapshotPolicy>
+          <id>custom_group</id>
+          <name>custom_group</name>
+          <url>http://192.168.40.131:8931/repository/custom_group/</url>
         </repository>
       </repositories>
     </profile>
-    -->
-
-    <!--
-     | Here is another profile, activated by the system property 'target-env' with a value of 'dev',
-     | which provides a specific path to the Tomcat instance. To use this, your plugin configuration
-     | might hypothetically look like:
-     |
-     | ...
-     | <plugin>
-     |   <groupId>org.myco.myplugins</groupId>
-     |   <artifactId>myplugin</artifactId>
-     |
-     |   <configuration>
-     |     <tomcatLocation>${tomcatPath}</tomcatLocation>
-     |   </configuration>
-     | </plugin>
-     | ...
-     |
-     | NOTE: If you just wanted to inject this configuration whenever someone set 'target-env' to
-     |       anything, you could just leave off the <value/> inside the activation-property.
-     |
-    <profile>
-      <id>env-dev</id>
-
-      <activation>
-        <property>
-          <name>target-env</name>
-          <value>dev</value>
-        </property>
-      </activation>
-
-      <properties>
-        <tomcatPath>/path/to/tomcat/instance</tomcatPath>
-      </properties>
-    </profile>
-    -->
   </profiles>
 
-  <!-- activeProfiles
-   | List of profiles that are active for all builds.
-   |
   <activeProfiles>
-    <activeProfile>alwaysActiveProfile</activeProfile>
-    <activeProfile>anotherAlwaysActiveProfile</activeProfile>
+    <activeProfile>custom_group</activeProfile>
   </activeProfiles>
-  -->
+
+
 </settings>
