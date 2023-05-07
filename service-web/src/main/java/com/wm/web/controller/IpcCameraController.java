@@ -10,6 +10,7 @@ import com.wm.redis.constant.BusinessTypeEnum;
 import com.wm.redis.spi.TestSpiService;
 import com.wm.redis.util.RedisKit;
 import com.wm.web.aop.annotation.NoRepeatSubmit;
+import com.wm.web.groupValidate.IpcCameraInsertGroup;
 import com.wm.web.mapper.IpcCameraMapper;
 import com.wm.web.model.entity.IpcCamera;
 import com.wm.web.service.IIpcCameraService;
@@ -65,7 +66,7 @@ public class IpcCameraController {
     @ApiOperation(value = "新增相机", notes = "相机")
     @PostMapping("/insertCamera")
     @ResponseBody
-    public BaseResp insertCamera(@Validated @RequestBody IpcCamera camera ){
+    public BaseResp insertCamera(@Validated({IpcCameraInsertGroup.class}) @RequestBody IpcCamera camera ){
         BaseResp rsp = new BaseResp();
         ipcCameraMapper.insert(camera);
 

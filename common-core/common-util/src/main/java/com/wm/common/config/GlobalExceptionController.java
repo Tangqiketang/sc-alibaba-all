@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -70,7 +71,8 @@ public class GlobalExceptionController {
 		rsp.setDesc(ex.getMessage());
 		return rsp;
 	}
-	
+
+
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
@@ -106,6 +108,10 @@ public class GlobalExceptionController {
 		}else if(e instanceof IllegalArgumentException){
 			rsp.setCode(SysExceptionEnum.BAD_REQUEST_PARAM_ERROR.getCode());
 			rsp.setDesc(SysExceptionEnum.BAD_REQUEST_PARAM_ERROR.getMessage());
+		}else if(e instanceof MethodArgumentNotValidException){
+			MethodArgumentNotValidException evalid = (MethodArgumentNotValidException)e;
+			rsp.setCode(SysExceptionEnum.BAD_REQUEST_PARAM_ERROR.getCode());
+			rsp.setDesc(evalid.getBindingResult().getAllErrors().get(0).getDefaultMessage());
 		} else {
 			log.error("[{}]_{}", SysExceptionEnum.SYSTEM_ERROR.getCode(), e.getMessage(), e);
 			rsp.setCode(SysExceptionEnum.SYSTEM_ERROR.getCode());
