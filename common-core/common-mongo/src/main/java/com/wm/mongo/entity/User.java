@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 描述:
+ * 描述: mongo
  *
  * @auther WangMin
  * @create 2023-01-10 11:16

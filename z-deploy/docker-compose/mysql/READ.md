@@ -15,7 +15,7 @@ docker exec -it mysql_master_1 mysqldump --opt --single-transaction  --default-c
     pt-online-schema-change --user='root' --host='localhost' --ask-pass --alter "add index idx_user_id(room_id,create_time)"
 D=fission_show_room_v2,t=room_favorite_info --execute
 
-
+https://blog.csdn.net/baidu_34007305/article/details/112944448 同步数据
 
 
 ===================================================================================================

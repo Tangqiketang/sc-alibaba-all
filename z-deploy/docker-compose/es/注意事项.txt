@@ -2,3 +2,4 @@
 2.vim /etc/sysctl.conf
 最后添加vm.max_map_count=262144
 3./sbin/sysctl -p
+4.分词压缩文件要解压缩 unzip elasticsearch-analysis-ik-7.8.0.zip

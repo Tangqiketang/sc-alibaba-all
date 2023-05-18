@@ -17,6 +17,7 @@
         <module>common-schedule</module>
         <module>common-seata</module>
         <module>common-mongo</module>
+        <module>common-es</module>
     </modules>
 
     <properties>

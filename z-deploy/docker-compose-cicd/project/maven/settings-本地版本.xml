@@ -152,38 +152,38 @@ under the License.
     <!-- 国内的镜像网站（下载速度应该快上不少） -->
     <mirror>
       <id>huaweiyun</id>
-      <mirrorOf>huawei</mirrorOf>
+      <mirrorOf>central</mirrorOf>
       <name>华为云公共仓库</name>
       <url>https://mirrors.huaweicloud.com/repository/maven/</url>
     </mirror>
     <mirror>
       <id>aliyun</id>
-      <mirrorOf>ali</mirrorOf>
+      <mirrorOf>central</mirrorOf>
       <name>阿里云公共仓库</name>
       <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
     </mirror>
     <mirror>
       <id>tencentyun</id>
-      <mirrorOf>tx</mirrorOf>
+      <mirrorOf>central</mirrorOf>
       <name>腾讯云公共仓库</name>
       <url>http://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
     </mirror>
     <!-- 国外的镜像网站（下载速度可能较慢） -->
     <mirror>
       <id>repo2</id>
-      <mirrorOf>mvpublic</mirrorOf>
+      <mirrorOf>central</mirrorOf>
       <name>Maven Central Public Repository</name>
       <url>http://repo2.maven.org/maven2/</url>
     </mirror>
     <mirror>
       <id>ibiblio</id>
-      <mirrorOf>ibiblio</mirrorOf>
+      <mirrorOf>central</mirrorOf>
       <name>ibiblio Repository</name>
       <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
     </mirror>
     <mirror>
       <id>jboss-public-repository-group</id>
-      <mirrorOf>jboss</mirrorOf>
+      <mirrorOf>central</mirrorOf>
       <name>JBoss Public Repository Group</name>
       <url>http://repository.jboss.org/nexus/content/groups/public</url>
     </mirror>
