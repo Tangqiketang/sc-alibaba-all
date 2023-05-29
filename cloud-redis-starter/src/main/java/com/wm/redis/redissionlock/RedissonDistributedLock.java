@@ -7,6 +7,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @auther WangMin
  * @create 2022-06-22 17:18
  */
+@Component
 @ConditionalOnClass(RedissonClient.class)
 @ConditionalOnProperty(prefix = "wm.redission.lock", name="enable",havingValue = "true",matchIfMissing = false)
 public class RedissonDistributedLock implements DistributedLock{
