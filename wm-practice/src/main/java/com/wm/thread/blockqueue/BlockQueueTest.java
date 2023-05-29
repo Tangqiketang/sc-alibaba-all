@@ -21,6 +21,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 @Slf4j
 public class BlockQueueTest implements ApplicationRunner {
 
+    //private static final Map<String, RunnableScheduledFuture<?>> scheduleMap = new ConcurrentHashMap<>();
 
     static private LinkedBlockingDeque<List<JSONObject>> queue = new LinkedBlockingDeque<>(100000);
 

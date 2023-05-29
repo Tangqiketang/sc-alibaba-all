@@ -40,7 +40,7 @@
 
 #3.创建数据库索引index及表结构map
    3.1 PUT /wmtestdb1
-      {
+      {                                                                                                                                            
          "settings": {"number_of_shards": 5,"number_of_replicas": 1 }
       }
    3.2 PUT /wmtestdb1/_mapping
