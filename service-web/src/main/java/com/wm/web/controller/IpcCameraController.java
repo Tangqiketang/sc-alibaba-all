@@ -10,6 +10,7 @@ import com.wm.redis.constant.BusinessTypeEnum;
 import com.wm.redis.spi.TestSpiService;
 import com.wm.redis.util.RedisKit;
 import com.wm.web.aop.annotation.NoRepeatSubmit;
+import com.wm.web.event.EventRegistry;
 import com.wm.web.groupValidate.IpcCameraInsertGroup;
 import com.wm.web.mapper.IpcCameraMapper;
 import com.wm.web.model.entity.IpcCamera;
@@ -52,6 +53,9 @@ public class IpcCameraController {
     @Resource
     private IpcCameraMapper ipcCameraMapper;
 
+    @Resource
+    private EventRegistry eventRegistry;
+
     @ApiOperation(value = "查询所有相机", notes = "查询所有相机")
     @GetMapping("/list")
     @ResponseBody
@@ -60,6 +64,9 @@ public class IpcCameraController {
         List<IpcCamera> list = ipcCameraMapper.selectList(new LambdaQueryWrapper<IpcCamera>());
         rsp.setCode("0");
         rsp.setResult(list);
+
+        eventRegistry.printXX("");
+
         return rsp;
     }
 

@@ -5,6 +5,8 @@ grant all PRIVILEGES on test1_sharding.* to root@'%' identified by '123456';
 
 备份
 https://www.zhihu.com/question/38374712
+mysqldump -uroot -p123456  uniubi_construction > wm_cons_bak.sql
+
 docker exec -it mysql_master_1 mysqldump -uroot -proot!Q2w  data-manager > data-manager.sql
 docker exec -it mysql_master_1 mysqldump --opt --single-transaction  --default-character-set=utf8  -uroot -p123456 -A > allwmmysql.sql
 =========================================================

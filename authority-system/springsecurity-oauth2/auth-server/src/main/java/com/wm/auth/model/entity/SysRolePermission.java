@@ -1,7 +1,6 @@
 package com.wm.auth.model.entity;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,10 +29,5 @@ public class SysRolePermission extends Model<SysRolePermission> {
     @ApiModelProperty(value = "按钮权限id")
     private Integer permissionId;
 
-
-    @Override
-    protected Serializable pkVal() {
-        return null;
-    }
 
 }

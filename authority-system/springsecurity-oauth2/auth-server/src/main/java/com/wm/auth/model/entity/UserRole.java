@@ -1,10 +1,9 @@
 package com.wm.auth.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -34,11 +33,5 @@ public class UserRole extends Model<UserRole> {
 
     @ApiModelProperty(value = "角色ID")
     private Integer roleId;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.userId;
-    }
 
 }
