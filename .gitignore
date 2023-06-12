@@ -3,3 +3,5 @@
 /service-feign/target/classes/
 /rocket-consumer/target/classes/
 /rocket-producer/target/
+/target/
+target
