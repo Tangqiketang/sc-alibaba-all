@@ -2,7 +2,6 @@ package com.wm.lambda;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -44,8 +43,8 @@ public class LambdaTest {
                                                                                 .collect(Collectors.toList());
         Collections.sort(list,(d1,d2)->d1.getPrice().compareTo(d2.getPrice()));
 
-
-
+        //Device dev = Stream.of(list).filter().findAny().;
+        //System.out.println("dev:"+dev);
     }
 
     //对某个属性进行操作
