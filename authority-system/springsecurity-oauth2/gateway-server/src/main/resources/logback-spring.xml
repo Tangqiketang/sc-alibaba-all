@@ -81,5 +81,12 @@
         </root>
     </springProfile>
 
+    <!--开发thinkpad环境:打印控制台-->
+    <springProfile name="thinkpad">
+        <root level="${LOG_LEVEL}">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="asyncFileAppender"/>
+        </root>
+    </springProfile>
 
 </configuration>

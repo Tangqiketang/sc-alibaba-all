@@ -1,6 +1,7 @@
 package com.wm.auth.security.core.user;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import java.util.Collection;
  * @create 2022-07-15 16:52
  */
 @Data
+@Accessors(chain = true)
 public class SysUserDetail implements UserDetails {
 
     /*****************扩展字段*******************/
