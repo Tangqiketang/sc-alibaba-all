@@ -1,0 +1,16 @@
+version: "3.1"
+services:
+  postgresql:
+    image: postgres:12-alpine
+    container_name: postgresql
+    environment:
+      TZ: Asia/Shanghai
+      POSTGRES_DB: postgres
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "123456"
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+

@@ -15,6 +15,7 @@
     <modules>
         <module>service-shardingjdbc</module>
         <module>web-read-write</module>
+        <module>web-postgresql</module>
     </modules>
 
     <properties>

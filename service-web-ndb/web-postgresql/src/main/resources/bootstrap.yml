@@ -1,0 +1,7 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: thinkpad  #==>bootstrap-dev.yml==>namespace==>applicationName-xx.yml
+  application:
+    name: web-pg
