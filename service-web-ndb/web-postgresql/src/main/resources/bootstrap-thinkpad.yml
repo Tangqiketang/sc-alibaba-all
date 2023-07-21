@@ -24,7 +24,7 @@ spring:
         port: 18765
         dashboard: localhost:8748
   datasource:
-    url: jdbc:postgresql://192.168.40.131:5432/postgres?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:postgresql://192.168.40.131:5432/postgres?useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai&&stringtype=unspecified
     username: root
     password: 123456
     driver-class-name: org.postgresql.Driver

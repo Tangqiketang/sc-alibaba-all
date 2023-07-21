@@ -41,6 +41,10 @@ public class TestUserController {
     public BaseResp insert(){
         BaseResp rsp = new BaseResp();
         TestUser po = new TestUser().setName("wm").setAge(11).setCreateTime(LocalDate.now());
+        TestUser.Family family = new TestUser.Family().setNick("NICK昵称");
+/*        List<TestUser.Family> list = new ArrayList<>();
+        list.add(family);*/
+        po.setFamily(family);
         testUserMapper.insert(po);
         return rsp;
     }

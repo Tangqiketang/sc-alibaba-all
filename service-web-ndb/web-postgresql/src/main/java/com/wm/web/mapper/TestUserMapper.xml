@@ -7,7 +7,7 @@
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="age" property="age" />
-        <result column="family" property="family" />
+        <result column="family" property="family" jdbcType="JAVA_OBJECT" typeHandler="com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler"/>
         <result column="create_time" property="createTime" />
     </resultMap>
 
