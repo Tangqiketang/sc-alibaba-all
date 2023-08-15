@@ -16,9 +16,12 @@
 ##0.6   
     在为对象定义好label后，其他对象可以使用label selector来定义其作用的对象
    
+##0.7在manager节点打印join命令
+    kubeadm token create --print-join-command
+##0.8在worker节点加入
+    kubeadm reset
+    kubeadm join 192.168.40.131:6443 --token ws3vhc.9mb1dawjnr1mivbg --discovery-token-ca-cert-hash sha256:8cd0dafab
 
-    
-   
 
 #1.=========================================查看pod/service==============
 kubectl get pods       -A               查看所有命名空间中的pod,-A表示所有命名空间

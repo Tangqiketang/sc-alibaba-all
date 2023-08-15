@@ -1,8 +1,11 @@
 package com.wm.lambda;
 
+import cn.hutool.core.collection.CollUtil;
+
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 描述:
@@ -15,12 +18,17 @@ public class LambdaTest {
     private static List<Device> list = new ArrayList<>();
     private static Map<String,Device> map = new HashMap();
 
+    private static Map<String,List<Device>> mapList = new HashMap<>();
+
     static {
         Device d1 = new Device("imei11","proKey11","devName11",1d);
         Device d2 = new Device("imei22","proKey22","devName22",2d);
 
         Device d3 = new Device("imei33","proKey11","devName33",1d);
         list.add(d1);list.add(d2);list.add(d3);
+
+        mapList.put("key1",list);
+
     }
 
 
@@ -63,7 +71,19 @@ public class LambdaTest {
         double     sumPrice =  list.stream().mapToDouble(Device::getPrice).sum();
         BigDecimal sumPrice2 = list.stream().map(a-> BigDecimal.valueOf(a.getPrice())).reduce(BigDecimal.ZERO,BigDecimal::add);
 
+        //获取每个设备的名字的单词去重 flatMap->从n个集合中的元素展平到一个流
+        List<String> deviceNameWordDistinctList = list.stream()
+                .map(device->device.getDeviceName().split(""))
+                .flatMap(name->Arrays.stream(name))
+                .distinct().collect(Collectors.toList());
+        System.out.println(Arrays.deepToString(deviceNameWordDistinctList.toArray())); //[d, e, v, N, a, m, 1, 2, 3] */
 
+        //list.stream().flatMap(device->Stream.of(device)).distinct().collect(Collectors.toList());
+
+
+        //字符串拆分并去重
+        ArrayList<String> strList = CollUtil.newArrayList("ADEF", "ABC", "GHI");
+        List<String> collect = strList.stream().flatMap(ele -> Stream.of(ele.split(""))).distinct().collect(Collectors.toList());
     }
 
 
@@ -87,12 +107,18 @@ public class LambdaTest {
     /* =====================================Map============================================ */
     //遍历
     public void mapFor(){
+        //Map<String,Device>
         map.forEach((k,v)->{
         });
+
+        //Map<String,List<Device>>  展平成--> List<Device>
+        mapList.entrySet().stream().flatMap(entry->entry.getValue().stream()).collect(Collectors.toList());
     }
 
 
+
     public static void main(String[] args) {
-        groupByImei();
+        //groupByImei();
+        aggre();
     }
 }
