@@ -22,7 +22,7 @@
     <module>service-web-ndb</module>
     <module>kafka</module>
     <module>service-openfeign</module>
-    <module>flink</module>
+    <module>flink-all</module>
   </modules>
 
   <properties>

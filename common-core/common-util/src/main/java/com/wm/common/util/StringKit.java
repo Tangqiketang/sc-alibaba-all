@@ -102,4 +102,34 @@ public class StringKit {
      */
     public String capitalize(String fieldName){ return StringUtils.capitalize(fieldName); }
 
+
+    public static String string2Hex(String source){
+        byte[] bytes = source.getBytes();
+        return BinaryKit.byte2HexStr(bytes);
+    }
+
+    public static void main(String[] args) {
+        String source = "{\n" +
+                "  \"dataType\": null,\n" +
+                "  \"engineId\": null,\n" +
+                "  \"tagId\": \"111\",\n" +
+                "  \"tagIdDec\": null,\n" +
+                "  \"x\": null,\n" +
+                "  \"y\": null,\n" +
+                "  \"z\": null,\n" +
+                "  \"valid\": null,\n" +
+                "  \"timestamp\": null,\n" +
+                "  \"sn\": null,\n" +
+                "  \"bettery\": null,\n" +
+                "  \"temperature\": null,\n" +
+                "  \"anchors\": null,\n" +
+                "  \"events\": null,\n" +
+                "  \"heartRates\": null, \n" +
+                "  \"bloodPressure\": null,\n" +
+                "  \"bloodOxygen\": null,\n" +
+                "  \"velocity\": null\n" +
+                "}";
+        System.out.println(string2Hex(source));
+    }
+
 }
