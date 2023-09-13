@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: jobmanager
-          image: flink:1.9
+          image: flink:1.13
           args:
             - jobmanager
           ports:
@@ -30,4 +30,3 @@ spec:
           env:
             - name: JOB_MANAGER_RPC_ADDRESS
               value: flink-jobmanager
-

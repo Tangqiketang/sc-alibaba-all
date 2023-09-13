@@ -19,6 +19,7 @@
 
     <modules>
         <module>flink-cdc</module>
+        <module>flink-tutorial</module>
     </modules>
 
 </project>
