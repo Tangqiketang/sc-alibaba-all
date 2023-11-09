@@ -7,7 +7,7 @@
     设置容器不自动重启        docker update --restart=no 5d195d6251f9  
 # 查看资源情况
     docker ps -a --no-trunc  查看完整command
-    docker inspect id
+    docker inspect id |grep "" -C 3   查看容器详情
     /var/lib/docker/containers  系统日志
     find / -name hostconfig.json   容器资源限制等配置
     docker清除日志： http://t.zoukankan.com/zhaobowen-p-13374855.html  cat /dev/null > xxxjson.log

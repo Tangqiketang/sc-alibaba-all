@@ -2,8 +2,12 @@ package com.wm.common.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Date;
 import java.util.Objects;
@@ -79,6 +83,42 @@ public class FileKit {
         return returnBool;
     }
 
+    /**
+     * 从项目resource目录下获取文件流
+     * @param response
+     * @param fileName  static/systemLogo/a.jpg
+     * @param contentType image/gif ：gif图片格式;
+     *                    image/jpeg ：jpg图片格式;
+     *                    image/png：png图片格式;
+     *                    text/xml ：  XML格式;
+     *                    text/plain ：纯文本格式;
+     *                    text/html ： HTML格式;
+     * @return 返回 /resource/static/systemLogo/a.jpg 流
+     */
+    public void getFileStreamFromProjectResource(HttpServletResponse response,String fileName,String contentType){
+        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        try {
+            Resource[] resources = resolver.getResources(fileName);
+            Resource resource = resources[0];
+            InputStream fis = resource.getInputStream();
+
+            byte[] buffer = new byte[((InputStream)fis).available()];
+            fis.read(buffer);
+            fis.close();
+            response.reset();
+
+            OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+            response.setContentType(contentType);
+            outputStream.write(buffer);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
+            log.error("无法从项目resource文件夹下获取到文件");
+            throw new RuntimeException(e);
+        }
+
+
+    }
 
 
 

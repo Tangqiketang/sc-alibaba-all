@@ -1,5 +1,7 @@
 package com.wm.common.util;
 
+import cn.hutool.core.util.HexUtil;
+
 import java.math.BigInteger;
 
 /**
@@ -227,6 +229,51 @@ public class BinaryKit {
         }
     }
     /************************ ************************************************/
+    /**
+     * 生成CRC16校验码
+     * @param msg
+     * @return
+     */
+    public static String getCrc16(String msg) {
+        byte[] bytes = HexUtil.decodeHex(msg);
+        int CRC = 0x0000ffff;
+        int POLYNOMIAL = 0x0000a001;
+        int i, j;
+        for (i = 0; i < bytes.length; i++) {
+            CRC ^= ((int) bytes[i] & 0x000000ff);
+            for (j = 0; j < 8; j++) {
+                if ((CRC & 0x00000001) != 0) {
+                    CRC >>= 1;
+                    CRC ^= POLYNOMIAL;
+                } else {
+                    CRC >>= 1;
+                }
+            }
+        }
+        byte[] result = new byte[2];
+        result[1] = (byte) ((CRC >> 8) & 0xff);
+        result[0] = (byte) (CRC & 0xff);
+        return HexUtil.encodeHexStr(result);
+    }
+
+    /**
+     * CRC8校验码
+     * @param hexString
+     * @return
+     */
+    private static String crc8(String hexString) {
+        BigInteger sum = BigInteger.ZERO;
+        for (int i = 0; i < hexString.length(); i += 2) {
+            String hex = hexString.substring(i, Math.min(i + 2, hexString.length()));
+            sum = sum.add(new BigInteger(hex, 16));
+        }
+        if (sum.compareTo(BigInteger.valueOf(0xFF)) > 0) {
+            sum = sum.and(BigInteger.valueOf(0xFF));
+        }
+        String result = sum.toString(16);
+        return result.length() == 2 ? result : "0" + result;
+    }
+
     // -1L 二进制 111111111111
     //
     public static void main(String[] args) {
