@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wm.web.groupValidate.IpcCameraInsertGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -45,6 +46,8 @@ public class IpcCamera extends Model {
     private String cameraName;
 
     @TableField("camera_company")
+    //json转换时指定字段映射
+    @JsonProperty("my_xxxxxxxxxxxxxxxxxcompany")
     private String cameraCompany;
 
     @TableField("camera_model_type")

@@ -39,7 +39,7 @@ spring:
   data:
     mongodb:
       primary:
-        uri: mongodb://root:123@192.168.40.131:27017/iotdb
+        uri: mongodb://admin:123@192.168.40.131:27017/iotdb
       auto-index-creation: false
 #  elasticsearch:
 #    rest:

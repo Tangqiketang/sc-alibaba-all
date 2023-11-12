@@ -1,6 +1,7 @@
 package com.wm.web.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
@@ -33,11 +34,15 @@ public class DemoVo {
     @ApiModelProperty(value = "integer")
     private Integer age;
 
-
+    //json转换时指定字段映射
+    @JsonProperty("my_xxxxxxxxxxxxxxxxxcompany")
+    private String cameraCompany;
 
     @ApiModelProperty(value = "订单创建时间")
+    //jsonFormat用于json序列化时
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
+    //DateFormat是spring框架，一般用于表单提交
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 

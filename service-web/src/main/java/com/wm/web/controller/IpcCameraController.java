@@ -10,7 +10,8 @@ import com.wm.redis.constant.BusinessTypeEnum;
 import com.wm.redis.spi.TestSpiService;
 import com.wm.redis.util.RedisKit;
 import com.wm.web.aop.annotation.NoRepeatSubmit;
-import com.wm.web.event.EventRegistry;
+import com.wm.web.event.uwb.UwbChangeEvent;
+import com.wm.web.event.uwb.UwbSeatData;
 import com.wm.web.groupValidate.IpcCameraInsertGroup;
 import com.wm.web.mapper.IpcCameraMapper;
 import com.wm.web.model.entity.IpcCamera;
@@ -20,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.context.ApplicationContext;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -54,7 +56,7 @@ public class IpcCameraController {
     private IpcCameraMapper ipcCameraMapper;
 
     @Resource
-    private EventRegistry eventRegistry;
+    private ApplicationContext applicationContext;
 
     @ApiOperation(value = "查询所有相机", notes = "查询所有相机")
     @GetMapping("/list")
@@ -65,7 +67,11 @@ public class IpcCameraController {
         rsp.setCode("0");
         rsp.setResult(list);
 
-        eventRegistry.printXX("");
+        //eventRegistry.printXX("");
+        UwbSeatData uwbSeatData = new UwbSeatData();
+        uwbSeatData.setX("111");
+        UwbChangeEvent event = new UwbChangeEvent(uwbSeatData);
+        applicationContext.publishEvent(event);
 
         return rsp;
     }
