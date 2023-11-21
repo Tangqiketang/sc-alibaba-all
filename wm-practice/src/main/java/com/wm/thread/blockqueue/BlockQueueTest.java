@@ -23,6 +23,8 @@ public class BlockQueueTest implements ApplicationRunner {
 
     //private static final Map<String, RunnableScheduledFuture<?>> scheduleMap = new ConcurrentHashMap<>();
 
+    //PriorityBlockingQueue<> priorityBlockingQueue = new PriorityBlockingQueue();
+
     static private LinkedBlockingDeque<List<JSONObject>> queue = new LinkedBlockingDeque<>(100000);
 
     static public void push(List<JSONObject> dto){

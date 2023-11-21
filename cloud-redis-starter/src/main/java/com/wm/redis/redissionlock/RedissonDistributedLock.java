@@ -1,6 +1,8 @@
 package com.wm.redis.redissionlock;
 
 import com.wm.redis.constant.RedisKeyConstant;
+import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBlockingDeque;
 import org.redisson.api.RLock;
 import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
@@ -18,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @create 2022-06-22 17:18
  */
 @Component
+@Slf4j
 @ConditionalOnClass(RedissonClient.class)
 @ConditionalOnProperty(prefix = "wm.redission.lock", name="enable",havingValue = "true",matchIfMissing = false)
 public class RedissonDistributedLock implements DistributedLock{
@@ -71,4 +74,33 @@ public class RedissonDistributedLock implements DistributedLock{
         return redisson.getReadWriteLock(key);
     }
 
+
+    /**
+     * 消息生产
+     * @param key
+     * @param msg
+     */
+    public void msgProduce(String key,String msg) {
+        RBlockingDeque<String> blockDeque = redisson.getBlockingDeque(key);
+        try {
+            blockDeque.putFirst(msg); // 消息写入队列头部
+            log.info("将消息: {} 插入到队列{}。", msg,key);
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+        }
+    }
+    /**
+     * 从队列尾部阻塞读取消息，若没有消息，线程就会阻塞等待新消息插入，防止 CPU 空转
+     */
+    public void msgConsume(String key) {
+        RBlockingDeque<String> blockDeque = redisson.getBlockingDeque(key);
+        while (true) {
+            try {
+                String msg = blockDeque.takeLast();  // 从队列中取出消息
+                log.info("从队列 {} 中读取到消息：{}.", key, msg);
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+            }
+        }
+    }
 }
