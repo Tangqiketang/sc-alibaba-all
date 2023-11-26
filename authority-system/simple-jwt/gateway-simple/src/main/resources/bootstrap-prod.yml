@@ -18,7 +18,7 @@ spring:
       discovery:
         namespace: ${spring.cloud.nacos.config.namespace}
         server-addr: ${spring.cloud.nacos.config.server-addr}
-        ip: 127.0.0.1  #注册的ip地址
+        ip: 192.168.40.131  #注册的ip地址
     sentinel:
       transport:
         port: 18765

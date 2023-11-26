@@ -12,7 +12,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
@@ -43,7 +42,7 @@ public class NettyTcpServer implements ApplicationListener<ApplicationStartedEve
     @Resource
     private MessageHandler messageHandler;
 
-    @Autowired
+    @Resource
     private NacosDiscoveryProperties nacosDiscoveryProperties;
 
     @Override

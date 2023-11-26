@@ -45,66 +45,11 @@
         <appender-ref ref="FILE"/>
     </appender>
 
+    <!--root是全文根目录 日志输出级别 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="asyncFileAppender"/>
+    </root>
 
-    <!--开发环境:打印控制台-->
-    <springProfile name="dev">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="asyncFileAppender"/>
-        </root>
-    </springProfile>
-
-    <!--开发环境:打印控制台-->
-    <springProfile name="seata">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="asyncFileAppender"/>
-        </root>
-    </springProfile>
-
-
-    <!--hik环境:打印控制台-->
-    <springProfile name="hik">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="asyncFileAppender"/>
-        </root>
-    </springProfile>
-
-
-    <!--生产环境:打印控制台和输出到文件-->
-    <springProfile name="prod">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="asyncFileAppender"/>
-        </root>
-    </springProfile>
-
-
-    <!--开发环境:打印控制台-->
-    <springProfile name="homedev">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="asyncFileAppender"/>
-        </root>
-    </springProfile>
-
-    <!--测试环境:打印控制台-->
-    <springProfile name="test">
-        <!-- 打印sql -->
-        <logger name="com.sun.example" level="DEBUG"/>
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="asyncFileAppender"/>
-        </root>
-    </springProfile>
-
-    <!--开发thinkpad环境:打印控制台-->
-    <springProfile name="thinkpad">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="asyncFileAppender"/>
-        </root>
-    </springProfile>
 
 </configuration>
