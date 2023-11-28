@@ -167,7 +167,7 @@ public class IpcCameraController {
     @GetMapping("/test12")
     @ResponseBody
     public String test12(){
-        return iIpcCameraService.asycDo();
+        return iIpcCameraService.asycDo("haha");
     }
 
 

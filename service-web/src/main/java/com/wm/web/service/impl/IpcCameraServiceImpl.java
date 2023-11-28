@@ -34,7 +34,7 @@ public class IpcCameraServiceImpl extends ServiceImpl<IpcCameraMapper, IpcCamera
 
     @Async(value = "wmTaskExecutor")
     @Override
-    public String asycDo() {
+    public String asycDo(String foo) {
         return String.valueOf(System.currentTimeMillis());
     }
 }

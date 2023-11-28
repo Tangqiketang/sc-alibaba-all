@@ -2,9 +2,10 @@ package com.wm.web.aop.log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.wm.core.model.exception.meta.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ClassUtils;
-import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
@@ -57,7 +58,7 @@ public class WebLogAspect {
      * @param joinPoint
      * @throws Throwable
      */
-    @Before("webLogPointcut()")
+/*    @Before("webLogPointcut()")
     public void doBefore(JoinPoint joinPoint) {
 
         // 接收到请求，记录请求内容
@@ -90,6 +91,51 @@ public class WebLogAspect {
         }
 
         log.debug("请求方式：{},请求Url : {},请求参数:{}",request.getMethod(),request.getRequestURL().toString(), JSON.toJSONString(list));
+    }*/
+
+
+    @Around("webLogPointcut()")
+    public Object around(ProceedingJoinPoint joinPoint) {
+
+        // 接收到请求，记录请求内容
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        startTime = System.currentTimeMillis();
+        String[] parameterNames = ((MethodSignature) joinPoint.getSignature()).getParameterNames();
+
+        Object[] args = joinPoint.getArgs();
+        List<Object> list = new ArrayList<>();
+        for (int i = 0; i < args.length; i++) {
+            JSONObject jsonObject = new JSONObject();
+            //过滤入参为MultipartFile，Request, Response
+            if (args[i] instanceof MultipartFile) {
+                jsonObject.put(parameterNames[i], "Object[MultipartFile]");
+            } else if (args[i] instanceof HttpServletRequest) {
+                jsonObject.put(parameterNames[i], "Object[HttpServletRequest]");
+            } else if (args[i] instanceof HttpServletResponse) {
+                jsonObject.put(parameterNames[i], "Object[HttpServletResponse]");
+            } else if (isBasicType(args[i])) {
+                jsonObject.put(parameterNames[i], args[i]);
+            } else if (args[i] instanceof Collection) {
+                //集合类型，List，Map，Set
+                jsonObject.put(parameterNames[i], args[i]);
+            }else {
+                //自定义对象
+                jsonObject = (JSONObject) JSON.toJSON(args[i]);
+            }
+            list.add(jsonObject);
+        }
+        try{
+            Object result =joinPoint.proceed();
+            log.debug("请求方式:{},请求Url:{},请求参数:{},响应参数:{}",request.getMethod(),request.getRequestURL().toString(), JSON.toJSONString(list),JSON.toJSONString(result));
+            return result;
+        }catch (Throwable e){
+            log.debug("请求方式:{},请求Url:{},请求参数:{}",request.getMethod(),request.getRequestURL().toString(), JSON.toJSONString(list));
+            throw new ServiceException("500","aop异常");
+        }
+
+
+
     }
 
 
@@ -115,14 +161,14 @@ public class WebLogAspect {
      * @param ret
      * @throws Throwable
      */
-    @AfterReturning(returning = "ret", pointcut = "webLogPointcut()")
+/*    @AfterReturning(returning = "ret", pointcut = "webLogPointcut()")
     public void doAfterReturning(Object ret) throws Throwable {
         endTime = System.currentTimeMillis();
         //log.debug("请求结束时间：{}" + LocalDateTime.now());
       //  log.debug("请求耗时：{}" + (endTime - startTime));
         // 处理完请求，返回内容
         log.debug("请求返回 : {}" + ret);
-    }
+    }*/
 
     /**
      * 异常通知：
@@ -131,11 +177,11 @@ public class WebLogAspect {
      *
      * @param throwable
      */
-    @AfterThrowing(value = "webLogPointcut()", throwing = "throwable")
+/*    @AfterThrowing(value = "webLogPointcut()", throwing = "throwable")
     public void doAfterThrowing(Throwable throwable) {
         // 保存异常日志记录
        // log.error("发生异常时间：{}" + LocalDateTime.now());
        // log.error("抛出异常：{}" + throwable.getMessage());
-    }
+    }*/
 
 }
