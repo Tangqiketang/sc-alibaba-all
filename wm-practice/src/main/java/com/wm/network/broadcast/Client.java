@@ -3,6 +3,7 @@ package com.wm.network.broadcast;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author wangmin
@@ -34,6 +35,10 @@ public class Client {
                         System.out.println(ip+"离开了");
                     }
                     System.out.println(ip+"说"+data);
+
+                    byte[] msg = "我收到了".getBytes(StandardCharsets.UTF_8);
+                    DatagramPacket datagramPacket = new DatagramPacket(msg, msg.length, packet.getAddress(), packet.getPort());
+                    socket.send(datagramPacket);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
