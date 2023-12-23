@@ -13,7 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.wm.servicefeign.service.feign"})
 public class ServiceFeignApplication {
 
     public static void main(String[] args) {

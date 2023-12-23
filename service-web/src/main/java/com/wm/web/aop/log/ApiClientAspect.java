@@ -1,4 +1,4 @@
-package com.wm.web.aop.aspect;
+package com.wm.web.aop.log;
 
 import com.alibaba.fastjson.JSON;
 import com.wm.core.model.exception.meta.ServiceException;
@@ -10,8 +10,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 /**
- * 调用其他服务打印日志
- * TODO
+ * 接口方法日志
  *
  */
 @Aspect
@@ -26,12 +25,13 @@ public class ApiClientAspect {
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint joinPoint){
         Object[] args = joinPoint.getArgs();
+        String methodName = joinPoint.getSignature().getName();
         try {
             Object result = joinPoint.proceed();
-            log.info("xiaoniao平台调用参数为:{},结果为:{}", JSON.toJSONString(args),JSON.toJSONString(result));
+            log.info("xiaoniao平台调用方法为:{},参数为:{},结果为:{}",methodName ,JSON.toJSONString(args),JSON.toJSONString(result));
             return result;
         } catch (Throwable e) {
-            log.info("xiaoniao平台调用参数为:{},异常为:{}", JSON.toJSONString(args),e.getMessage());
+            log.info("xiaoniao平台调用方法为:{},参数为:{},异常为:{}",methodName, JSON.toJSONString(args),e.getMessage());
             throw new ServiceException("500", "小鸟平台请求异常");
         }
     }

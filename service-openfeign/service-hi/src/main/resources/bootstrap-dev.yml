@@ -2,7 +2,7 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: 192.168.0.100:8848  #nacos地址
+        server-addr: 192.168.40.131:8848  #nacos地址
         namespace: f739f38b-f593-432b-9458-5912ed89dafd
         refresh-enabled: true
         group: DEFAULT_GROUP
@@ -15,7 +15,7 @@ spring:
       discovery:
         namespace: ${spring.cloud.nacos.config.namespace}
         server-addr: ${spring.cloud.nacos.config.server-addr}
-        ip: 192.168.0.100  #注册的ip地址
+        ip: 192.168.0.48  #注册的ip地址
     sentinel:
       transport:
         port: 18765

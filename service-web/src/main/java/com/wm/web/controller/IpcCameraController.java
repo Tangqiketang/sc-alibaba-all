@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,7 @@ public class IpcCameraController {
     @ApiOperation(value = "查询所有相机", notes = "查询所有相机")
     @GetMapping("/list")
     @ResponseBody
+    @Cacheable(cacheNames="key",keyGenerator="myKeyGenerator")
     public BaseResp list(){
         BaseResp rsp = new BaseResp();
         List<IpcCamera> list = ipcCameraMapper.selectList(new LambdaQueryWrapper<IpcCamera>());

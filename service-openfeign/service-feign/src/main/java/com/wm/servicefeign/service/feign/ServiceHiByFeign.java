@@ -1,12 +1,13 @@
 package com.wm.servicefeign.service.feign;
 
-import com.wm.servicefeign.service.feign.fallback.ServiceHiByFeignFallback;
 import lombok.Data;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(value = "service-hi",fallback = ServiceHiByFeignFallback.class)
+//@FeignClient(value = "service-hi",fallback = ServiceHiByFeignFallback.class,configuration = HiFeignClientConfig.class)
+//@FeignClient(value = "service-hi",fallback = ServiceHiByFeignFallback.class)
+@FeignClient(name = "service-hi")
 public interface ServiceHiByFeign {
     //普通表单
     @RequestMapping(value = "/hi",method = RequestMethod.GET)

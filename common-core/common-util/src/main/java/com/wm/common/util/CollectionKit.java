@@ -1,13 +1,11 @@
 package com.wm.common.util;
 
 import com.alibaba.fastjson.JSON;
-import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 描述:
@@ -53,6 +51,21 @@ public class CollectionKit {
     public static <T> List<T> newCopy(List<T> source){
         return new ArrayList<>(source);
     }
+
+    /**
+     *
+     * @param list  list{1,2,3}
+     * @param split  ,
+     * @return      1,2,3
+     */
+    public static String list2Array(List<Integer> list,String split){
+        if(!CollectionUtils.isEmpty(list)){
+            return StringUtils.join(list.toArray(),split);
+        }
+        return "";
+    }
+
+
 
     public static void main(String[] args) {
         List<Integer> list1 = new ArrayList<>();

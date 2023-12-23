@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * 描述:
+ * 描述: controller
  *
  * @auther WangMin
  * @create 2022-12-16 14:20
@@ -127,10 +127,10 @@ public class WebLogAspect {
         }
         try{
             Object result =joinPoint.proceed();
-            log.debug("请求方式:{},请求Url:{},请求参数:{},响应参数:{}",request.getMethod(),request.getRequestURL().toString(), JSON.toJSONString(list),JSON.toJSONString(result));
+            log.debug("小鸟宇泛请求方式:{},请求Url:{},请求参数:{},响应参数:{}",request.getMethod(),request.getRequestURL().toString(), JSON.toJSONString(list),JSON.toJSONString(result));
             return result;
         }catch (Throwable e){
-            log.debug("请求方式:{},请求Url:{},请求参数:{}",request.getMethod(),request.getRequestURL().toString(), JSON.toJSONString(list));
+            log.error("小鸟宇泛请求方式:{},请求Url:{},请求参数:{}",request.getMethod(),request.getRequestURL().toString(), JSON.toJSONString(list),e);
             throw new ServiceException("500","aop异常");
         }
 

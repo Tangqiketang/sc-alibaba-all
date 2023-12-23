@@ -48,3 +48,5 @@
         docker service scale unicloud_gateway=2
     1.8 滚动更新
         docker service update --image registry.unicloud.com:9990/digibird/minio:1.0  unicloud_recording-minio
+    1.9 
+        docker service update unicloud_gateway --force
