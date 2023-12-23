@@ -5,6 +5,12 @@ import java.net.*;
 
 public class Server1 {
 
+    /**
+     * 1.无线路由的情况下组播，客户端无法接收到
+     *
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception{
         int port=20000;
         MulticastSocket ms=null;

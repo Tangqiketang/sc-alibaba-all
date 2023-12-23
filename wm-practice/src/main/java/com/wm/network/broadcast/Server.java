@@ -20,7 +20,10 @@ public class Server {
         System.out.println("获取到广播地址为:"+getLocalBroadCast());
         System.out.println("遍历获取到的广播地址为:"+JSON.toJSONString(listAllBroadcastAddresses()));
         //255.255.255.255和192.168.0.255的区别
-        broadcast("Hello", InetAddress.getByName("255.255.255.255"));
+        while (true){
+            broadcast("Hello--wm", InetAddress.getByName("255.255.255.255"),4445);
+            Thread.sleep(1000);
+        }
     }
 
     /**
@@ -29,14 +32,14 @@ public class Server {
      * @param address
      * @throws IOException
      */
-    public static void broadcast(String broadcastMessage, InetAddress address) throws IOException {
+    public static void broadcast(String broadcastMessage, InetAddress address,Integer port) throws IOException {
         socket = new DatagramSocket();
         socket.setBroadcast(true);
 
         byte[] buffer = broadcastMessage.getBytes();
 
         DatagramPacket packet
-                = new DatagramPacket(buffer, buffer.length, address, 4445);
+                = new DatagramPacket(buffer, buffer.length, address, port);
         socket.send(packet);
         socket.close();
     }
