@@ -35,7 +35,7 @@ public class Client {
                         System.out.println(ip+"离开了");
                     }
                     System.out.println(ip+"说"+data);
-
+                    //回复
                     byte[] msg = "我收到了".getBytes(StandardCharsets.UTF_8);
                     DatagramPacket datagramPacket = new DatagramPacket(msg, msg.length, packet.getAddress(), packet.getPort());
                     socket.send(datagramPacket);

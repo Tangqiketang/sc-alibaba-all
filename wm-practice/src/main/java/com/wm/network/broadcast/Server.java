@@ -21,7 +21,7 @@ public class Server {
         System.out.println("遍历获取到的广播地址为:"+JSON.toJSONString(listAllBroadcastAddresses()));
         //255.255.255.255和192.168.0.255的区别
         while (true){
-            broadcast("Hello--wm", InetAddress.getByName("255.255.255.255"),4445);
+            broadcast("Hello--wm", InetAddress.getByName("192.168.0.255"),4445);
             Thread.sleep(1000);
         }
     }
