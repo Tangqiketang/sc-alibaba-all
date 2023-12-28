@@ -5,6 +5,8 @@
     进入容器                docker exec -it mysql /bin/bash 
     查找日志                docker logs -f -t --tail 200 mysql  
     设置容器不自动重启        docker update --restart=no 5d195d6251f9  
+    查日志  docker logs -f -t --tail 200  ssssss
+    容器重启  docker restart  `docker ps | grep 容器名称 | awk '{print $1}' `
 # 查看资源情况
     docker ps -a --no-trunc  查看完整command
     docker inspect id |grep "" -C 3   查看容器详情
