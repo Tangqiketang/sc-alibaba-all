@@ -17,6 +17,13 @@
     docker container update 39dc5c20f9a8  --cpus=2  --memory="1g" --memory-swap="2g"
 
 # 网络相关
+    网络有 网桥模式-默认、
+          host：容器和宿主机共享network namespace,相当于本地网络
+          container： –net=container:NAME_or_ID
+    networks:
+    - "host"
+
+
     docker network create testnet
 
     run参数：加入网桥

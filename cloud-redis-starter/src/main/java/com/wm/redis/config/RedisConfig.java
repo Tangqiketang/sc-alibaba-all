@@ -21,6 +21,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 描述:redis配置及spring cachemanager
@@ -102,8 +103,12 @@ public class RedisConfig extends CachingConfigurerSupport {
             StringBuilder sb = new StringBuilder();
             sb.append(target.getClass().getName());
             sb.append(":" + method.getName() + ":");
-            for (Object obj : objects) {
-                sb.append(obj.toString());
+            if(!Objects.isNull(objects)){
+                for (Object obj : objects) {
+                    if(null!=obj){
+                        sb.append(obj.toString());
+                    }
+                }
             }
             return sb.toString();
         };
@@ -114,7 +119,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     private RedisCacheConfiguration getDefConf(RedisSerializer<String> redisKeySerializer, RedisSerializer<Object> redisValueSerializer) {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
-                .computePrefixWith(cacheName -> springCachePrex.concat(":").concat(cacheName).concat(":"))
+                //.computePrefixWith(cacheName -> springCachePrex.concat(":").concat(cacheName).concat(":"))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisKeySerializer))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisValueSerializer));
     }
