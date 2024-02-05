@@ -45,6 +45,7 @@ public class WebLogAspect {
 
     /**
      * 定义请求日志切入点，其切入点表达式有多种匹配方式,这里是指定路径
+     * @Pointcut("within(cn.chaotic..controller..*)")
      */
     @Pointcut("execution(public * com.wm.web.controller.*.*(..))")
     public void webLogPointcut() {
