@@ -14,8 +14,16 @@
     find / -name hostconfig.json   容器资源限制等配置
     docker清除日志： http://t.zoukankan.com/zhaobowen-p-13374855.html  cat /dev/null > xxxjson.log
 # 资源限制
-    docker container update 39dc5c20f9a8  --cpus=2  --memory="1g" --memory-swap="2g"
-
+    ## docker container update 39dc5c20f9a8  --cpus=2  --memory="1g" --memory-swap="2g"
+    
+    ## docker-compose中设置，且需要用兼容模式才会生效docker-compose --compatibility up -d
+    deploy:
+      resources:
+         limits:
+            cpus: "2.00"
+            memory: 5G
+         reservations:
+            memory: 200M
 # 网络相关
     网络有 网桥模式-默认、
           host：容器和宿主机共享network namespace,相当于本地网络

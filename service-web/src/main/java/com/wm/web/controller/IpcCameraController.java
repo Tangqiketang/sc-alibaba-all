@@ -51,6 +51,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/camera")
 @Api(value = "相机",tags={"相机相关"})
 @Slf4j
+@Validated
 public class IpcCameraController {
 
     @Resource
@@ -81,6 +82,7 @@ public class IpcCameraController {
     @ApiOperation(value = "新增相机", notes = "相机")
     @PostMapping("/insertCamera")
     @ResponseBody
+    //注意，嵌套入参，如list<IpcCamera>需要用@valid才有作用，类上加上@validated
     public BaseResp insertCamera(@Validated({IpcCameraInsertGroup.class}) @RequestBody IpcCamera camera ){
         BaseResp rsp = new BaseResp();
         ipcCameraMapper.insert(camera);

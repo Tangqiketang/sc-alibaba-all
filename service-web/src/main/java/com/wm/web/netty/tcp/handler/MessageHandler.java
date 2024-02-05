@@ -14,6 +14,8 @@ import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 
 /**
@@ -44,6 +46,8 @@ public class MessageHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         InetSocketAddress insocket = (InetSocketAddress) ctx.channel().remoteAddress();
         String clientIp = insocket.getAddress().getHostAddress();
+        this.getmac(clientIp);
+
         int clientPort = insocket.getPort();
         String addr = NettyContextCache.parseChannelRemoteAddr(ctx.channel());
         //获取连接通道唯一标识
@@ -58,6 +62,30 @@ public class MessageHandler extends ChannelInboundHandlerAdapter {
             log.info("【客户端:{}】,【channelId:{}】连接成功",addr,channelId);
         }
     }
+
+    private String getmac(String clientIp) {
+        String macAddress="";
+        try{
+            String command = "arp -a " + clientIp;
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.contains(clientIp)) {
+                    macAddress = line.split(" ")[3];
+                    break;
+                }
+            }
+            reader.close();
+        }catch (Exception e){
+            log.error("获取mac地址失败");
+        }
+        log.info("mac地址是:{}",macAddress);
+        return macAddress;
+    }
+
     /**
      * @param ctx
      * @DESCRIPTION: 有客户端终止连接服务器会触发此函数
