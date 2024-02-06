@@ -130,8 +130,11 @@ public class WebLogAspect {
             Object result =joinPoint.proceed();
             log.debug("小鸟宇泛请求方式:{},请求Url:{},请求参数:{},响应参数:{}",request.getMethod(),request.getRequestURL().toString(), JSON.toJSONString(list),JSON.toJSONString(result));
             return result;
+        }catch (ServiceException e){
+            log.error("请求方式:{},请求Url:{},请求参数:{}",request.getMethod(),request.getRequestURL().toString(), JSON.toJSONString(list),e);
+            throw e;
         }catch (Throwable e){
-            log.error("小鸟宇泛请求方式:{},请求Url:{},请求参数:{}",request.getMethod(),request.getRequestURL().toString(), JSON.toJSONString(list),e);
+            log.error("请求方式:{},请求Url:{},请求参数:{}",request.getMethod(),request.getRequestURL().toString(), JSON.toJSONString(list),e);
             throw new ServiceException("500","aop异常");
         }
 

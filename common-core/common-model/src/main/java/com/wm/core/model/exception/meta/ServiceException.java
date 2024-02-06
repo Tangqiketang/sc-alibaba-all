@@ -12,6 +12,15 @@ public class ServiceException extends RuntimeException implements Serializable{
     private String code;
     private String message;
 
+
+    /**
+     * 不写入堆栈信息，提高性能
+     */
+    @Override
+    public Throwable fillInStackTrace() {
+        return this;
+    }
+
     public ServiceException(String code,String message){
         this.code = code;
         this.message = message;
