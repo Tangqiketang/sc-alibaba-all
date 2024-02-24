@@ -2,6 +2,8 @@
 grant all privileges on babycare.* to 'superwm'@'%' identified by '9NEtMDXitYI=' ;
 grant all PRIVILEGES on test1_sharding.* to root@'%' identified by '123456';
 
+授权某个ip可以访问
+grant all privileges on *.* to root@192.168.0.40 identified by 'root' with grant option;
 
 备份
 https://www.zhihu.com/question/38374712

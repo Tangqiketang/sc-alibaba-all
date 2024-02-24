@@ -2,8 +2,8 @@ gitlab:暂无
 
 harbor:
     1.vim /etc/docker/daemon.json 添加支持http的不安全url  再docker重启！！！
-    2.下载包到/docker-compose-cicd/project/harbor/harbor-xxx-offline.tar.gz
-    3.把yml配置替换了,修改端口、data目录、log目录
+    2.下载包到/home/docker-compose-cicd/project/harbor/harbor-xxx-offline.tar.gz
+    3.把解压文件中的yml配置替换了（原先是harbor.yml.tmpl所以直接放进去就行）,修改端口、data目录、log目录
     4../prepare
     5../install
     6.重启之后  docker-compose up -d/docker-compose down

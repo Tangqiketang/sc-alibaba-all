@@ -12,9 +12,9 @@ public class Client1 {
         MulticastSocket ms=null;
         InetAddress group=null;
         try{
-            ms=new MulticastSocket(20000);
+            ms=new MulticastSocket(Server1.port);
             //只有发送到这个组播组里面的数据才会接收  224.0.0.0~239.255.255.255
-            group=InetAddress.getByName("234.1.2.4");
+            group=InetAddress.getByName(Server1.ip);
             ms.joinGroup(group);
             byte[] buffer=new byte[8194];
             System.out.println("接收数据包启动！（启动时间：）" + new java.util.Date() + ")");

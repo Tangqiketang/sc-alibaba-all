@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 public class Client {
 
     public static void main(String[] args) throws Exception{
-        DatagramSocket reveSocket = new DatagramSocket(4445);
+        DatagramSocket reveSocket = new DatagramSocket(30303);
         new Thread(new Rece3(reveSocket)).start();
     }
 
@@ -31,9 +31,7 @@ public class Client {
                     socket.receive(packet);
                     String ip = packet.getAddress().getHostAddress();
                     String data = new String(packet.getData(),0,packet.getLength());
-                    if("bye".equals(data)) {
-                        System.out.println(ip+"离开了");
-                    }
+
                     System.out.println(ip+"说"+data);
                     //回复
                     byte[] msg = "我收到了".getBytes(StandardCharsets.UTF_8);

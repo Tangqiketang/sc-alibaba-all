@@ -14,8 +14,10 @@ public class TestFinal {
         System.out.println(device);
     }*/
 
+    private static final int num = 0;
+
     public static void main(String[] args) {
-        SonClass sonClass = new SonClass();
+/*        SonClass sonClass = new SonClass();
         FatherClass fatherClass = new FatherClass();
         fatherClass.setName("father");
         fatherClass.setAge(50);
@@ -23,7 +25,13 @@ public class TestFinal {
         sonClass.setAge(18);
         sonClass.setFair("头发");
         System.out.println("son："+sonClass.toString());
-        System.out.println(fatherClass.toString());
+        System.out.println(fatherClass.toString());*/
+        changeNum(num);
+        System.out.println(num);
+    }
+
+    private static void changeNum(int num) {
+        num = 1;
     }
 
 

@@ -21,8 +21,8 @@ public class Server {
         System.out.println("遍历获取到的广播地址为:"+JSON.toJSONString(listAllBroadcastAddresses()));
         //255.255.255.255和192.168.0.255的区别
         while (true){
-            broadcast("Hello--wm", InetAddress.getByName("192.168.0.255"),4445);
-            Thread.sleep(1000);
+            broadcast("Hello--wm"+ System.currentTimeMillis()/1000, InetAddress.getByName("192.168.0.255"),30303);
+            Thread.sleep(2000);
         }
     }
 
@@ -37,11 +37,19 @@ public class Server {
         socket.setBroadcast(true);
 
         byte[] buffer = broadcastMessage.getBytes();
-
         DatagramPacket packet
                 = new DatagramPacket(buffer, buffer.length, address, port);
         socket.send(packet);
+
+
+        byte[] buf = new byte[500];
+        DatagramPacket datagramPacket2 = new DatagramPacket(buf, buf.length);
+        socket.setSoTimeout(5000);
+        socket.receive(datagramPacket2);
         socket.close();
+
+
+        //socket.close();
     }
 
 
