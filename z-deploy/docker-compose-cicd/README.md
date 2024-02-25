@@ -7,7 +7,12 @@ harbor:
     4../prepare
     5../install
     6.重启之后  docker-compose up -d/docker-compose down
-
+    7.登录harbor,只需要k8s-master节点登录即可
+        docker login 192.168.40.131:8090     admin/Harbor12345
+    8.自动登录
+    vim  /etc/rc.local 写入
+    /home/docker-compose-cicd/project/harbor/docker-login.sh &
+    9.设置策略,定时删除历史镜像，只保留最新的3个
 
 jenkins:
     1.配置中文输入法 sshserver这些

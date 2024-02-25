@@ -41,3 +41,12 @@
     docker network prune 清除没有容器使用的网桥
 # 容器导出为镜像
     docker export 1e560fca3906 > ubuntu.tar 导出容器
+# 删除无效的None镜像
+    1.docker images  | grep none
+    2.docker images  | grep none | awk '{print $3}'
+    3.合成一句：docker images  | grep none | awk '{print $3}' | xargs docker rmi
+    或
+    # 清除无标签镜像
+    docker image prune -f
+    # 清除停止的容器
+    docker container prune -f
