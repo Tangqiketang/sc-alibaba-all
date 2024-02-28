@@ -10,7 +10,7 @@ cd /usr/local/src/nginx-1.23.2
 ./configure --user=www --group=www --with-http_ssl_module --with-http_stub_status_module --with-stream --prefix=/usr/local/nginx-1.23.2 
 make && make install
 ln -sfT /usr/local/nginx-1.23.2 /usr/local/nginx
-echo -e '##### nginx \nexport PATH=/usr/local/nginx/sbin:$PATH' >>/etc/profile
+echo '##### nginx \nexport PATH=/usr/local/nginx/sbin:$PATH' >>/etc/profile
 echo "[Unit]
 Description=nginx - high performance web server
 Documentation=http://nginx.org/en/docs/
@@ -30,7 +30,7 @@ WantedBy=multi-user.target" > /lib/systemd/system/nginx.service
 systemctl daemon-reload
 systemctl enable nginx
 rm -rf /usr/local/nginx/conf/nginx.conf
-echo -e 'user www www;
+echo 'user www www;
 worker_processes 1;
 worker_rlimit_nofile 65535;
 events {
