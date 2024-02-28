@@ -31,14 +31,16 @@ systemctl daemon-reload
 systemctl enable nginx
 rm -rf /usr/local/nginx/conf/nginx.conf
 echo 'user www www;
-worker_processes 1;
-worker_rlimit_nofile 65535;
+worker_processes auto;
+worker_limit_nofile 65535;
 events {
-    worker_connections 10240;
+      accept_mutex on;   #设置网路连接序列化，防止惊群现象发生，默认为on
+      multi_accept on;  #设置一个进程是否同时接受多个网络连接，默认为off
+      worker_connections 1024; #最大连接数，默认为512
 }
 http {
-    include mime.types;
-    default_type application/octet-stream;
+    include mime.types;   #文件扩展名与文件类型映射表
+    default_type application/octet-stream;  #默认文件类型，默认为text/plain
     #sendfile on;
     keepalive_timeout 65;
     disable_symlinks off; # 允许nginx目录使用软链接
@@ -105,11 +107,21 @@ log_format main '\$remote_addr - \$remote_user [\$time_local] \$scheme \$http_ho
     #提高I/O性能
     #tcp_nodelay on;
 	
-    #关闭access_log
+    #关闭access_log,可以独立配置
     access_log off;
 	
     # include 必须放在最后
     include extra/*.conf;
+}
+#stream模块和http模块是并列级别的,ngx_stream_core_module模块由1.9.0版,提供用于tcp/UDP数据流的代理和负载均衡
+stream {
+    log_format basic '$remote_addr [$time_local] '
+                 '$protocol $status $bytes_sent $bytes_received '
+                 '$session_time';
+    #关闭access_log,可以独立配置
+    access_log off;
+    # 引入tcpudp stream引用配置
+    include extra/*.stream;
 }' > /usr/local/nginx/conf/nginx.conf
 mkdir /usr/local/nginx/conf/extra
 systemctl start nginx
