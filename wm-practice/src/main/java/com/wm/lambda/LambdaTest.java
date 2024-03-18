@@ -46,6 +46,9 @@ public class LambdaTest {
         Map<String,Device> map2 =       list.stream().map(a->a).collect(Collectors.toMap(Device::getProductKey,a->a,(k1,k2)->k1));
         Map<String,List<Device>> map3 = list.stream().map(a->a).collect(Collectors.groupingBy(Device::getProductKey));
 
+        //分组按照productKey分组，同时变换vo
+        //Map<String, List<RangeDataVO>> result = rangeDataPOList.stream().collect(Collectors.groupingBy(Device::getProductKey, Collectors.mapping(rangeDataFacadeService::convertToVO, Collectors.toList())));
+
         //排序
         List<Device> sortedList =       list.stream().sorted((d1,d2)->d1.getPrice().compareTo(d2.getPrice()))
                                                                                 .collect(Collectors.toList());
